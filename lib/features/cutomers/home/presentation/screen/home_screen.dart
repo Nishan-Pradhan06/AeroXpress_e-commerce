@@ -1,5 +1,7 @@
+import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/widget/padding.dart';
 import '../../data/model/product_list.dart';
 import '../widgets/icon_with_btn_counter.dart';
@@ -45,7 +47,13 @@ class HomeHeader extends StatelessWidget {
         children: [
           const Expanded(child: SearchField()),
           const SizedBox(width: 16),
-          IconBtnWithCounter(svgSrc: bellIcon, numOfitem: 3, press: () {}),
+          IconBtnWithCounter(
+            svgSrc: bellIcon,
+            numOfitem: 3,
+            press: () {
+              context.pushNamed(AppRoutesName.notificationScreen);
+            },
+          ),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:deal_sell/common/extension/path_extension.dart';
 import 'package:deal_sell/core/services/once_cache_service.dart';
 import 'package:deal_sell/features/auth/presentation/screens/forget_password.dart';
+import 'package:deal_sell/features/cutomers/notification/screen/notifcation_screen.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:go_router/go_router.dart';
 import '../core/dl/dependency_injection.dart';
@@ -62,6 +63,11 @@ final router = GoRouter(
       path: AppRoutesName.helpScreen.path,
       name: AppRoutesName.helpScreen,
       builder: (context, state) => HelpCenterScreen(),
+    ),
+    GoRoute(
+      path: AppRoutesName.notificationScreen.path,
+      name: AppRoutesName.notificationScreen,
+      builder: (context, state) => NotificationScreen(),
     ),
   ],
 );

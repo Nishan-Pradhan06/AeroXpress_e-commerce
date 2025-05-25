@@ -10,6 +10,7 @@ class AppRoutesName {
   static const String bottomNavBar = 'bottomNavBar';
   static const String themeSelectionScreen = 'themeSelectionScreen';
   static const String helpScreen = 'helpScreen';
+  static const String notificationScreen = 'notificationScreen';
 
   static const String driverDocumentPage = 'driverDocumentPage';
   static const String passengerHome = 'passenger-home';
