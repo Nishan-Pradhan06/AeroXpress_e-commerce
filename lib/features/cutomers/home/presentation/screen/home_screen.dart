@@ -10,6 +10,7 @@ import '../widgets/search_field.dart';
 import '../widgets/section_title.dart';
 import '../widgets/special_offer_card.dart';
 import 'product_details_screen.dart';
+import 'search_bottom_sheet_page.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -45,7 +46,19 @@ class HomeHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Expanded(child: SearchField()),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.white,
+                  builder: (context) => SearchBottomSheet(),
+                );
+              },
+              child: const AbsorbPointer(child: SearchField()),
+            ),
+          ),
           const SizedBox(width: 16),
           IconBtnWithCounter(
             svgSrc: bellIcon,
