@@ -12,14 +12,11 @@ class AppRoutesName {
   static const String helpScreen = 'helpScreen';
   static const String notificationScreen = 'notificationScreen';
 
-  static const String driverDocumentPage = 'driverDocumentPage';
-  static const String passengerHome = 'passenger-home';
-  static const String findDriver = 'findDriver';
-  static const String setting = 'setting';
-  static const String changePassword = 'changePassword';
-  static const String selectLanguage = 'selectLanguage';
-  static const String locationPermissionHandler = 'location-permission-handler';
-  static const String verifyOpt = 'verify-opt';
-  static const String draggableLocation = 'draggable-location';
-  static const String enterRoute = 'enter-route';
+  //#--------------VENDOR ROUTES NAME-------------##
+  static const String vendorDashboard = 'vendorDashboard';
+  static const String vendorProducts = 'vendorProducts';
+  static const String vendorOrders = 'vendorOrders';
+  static const String vendorAnalytics = 'vendorAnalytics';
+  static const String vendorCustomers = 'vendorCustomers';
+  static const String vendorSettings = 'vendorSettings';
 }
