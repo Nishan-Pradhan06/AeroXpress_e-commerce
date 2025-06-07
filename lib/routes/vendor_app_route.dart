@@ -1,12 +1,19 @@
 import 'package:deal_sell/common/extension/path_extension.dart';
+import 'package:deal_sell/features/vendor/dashboard/dashboard_page.dart';
+import 'package:deal_sell/features/vendor/vendor_bottom_nav_bar/vendor_btn_nav.dart';
 import 'package:go_router/go_router.dart';
 import 'app_route_names.dart';
 
 List<GoRoute> vendorAppRoutes = [
   GoRoute(
+    path: AppRoutesName.vendorBottomNavBar.path,
+    name: AppRoutesName.vendorBottomNavBar,
+    builder: (context, state) => const VendorBtnNavBar(),
+  ),
+  GoRoute(
     path: AppRoutesName.vendorDashboard.path,
     name: AppRoutesName.vendorDashboard,
-    builder: (context, state) => const DashboardScreen(),
+    builder: (context, state) => const DashboardPage(),
   ),
   GoRoute(
     path: AppRoutesName.vendorProducts.path,

@@ -1,7 +1,15 @@
+import 'package:deal_sell/features/vendor/dashboard/widget/bottom_nav.dart';
+import 'package:deal_sell/features/vendor/dashboard/widget/dashboard_card.dart';
+import 'package:deal_sell/features/vendor/dashboard/widget/quick_action.dart';
+import 'package:deal_sell/features/vendor/dashboard/widget/recent_orders.dart';
+import 'package:deal_sell/features/vendor/dashboard/widget/stats_overview.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-
-
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import '../../../core/theme/app_theme.dart';
+import 'widget/navigation_rail.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -11,10 +19,13 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-int selectedIndex = 0;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+//     return Scaffold(body: EvQuickActions());
+//   }
+// }
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -36,8 +47,6 @@ int selectedIndex = 0;
                 ),
                 const VerticalDivider(width: 1, thickness: 1),
               ],
-
-              
 
               // Main Content
               Expanded(
@@ -172,29 +181,6 @@ int selectedIndex = 0;
     }
   }
 
-  void _navigateToScreen(int index) {
-    switch (index) {
-      case 0:
-        context.go('/dashboard');
-        break;
-      case 1:
-        context.go('/products');
-        break;
-      case 2:
-        context.go('/orders');
-        break;
-      case 3:
-        context.go('/customers');
-        break;
-      case 4:
-        context.go('/analytics');
-        break;
-      case 5:
-        context.go('/settings');
-        break;
-    }
-  }
-
   Widget _buildContent(bool isDesktop, bool isTablet, bool isMobile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,20 +205,6 @@ int selectedIndex = 0;
                   children: [EvRecentOrders(), const Gap(24), EvQuickActions()],
                 ),
               ),
-
-              const Gap(24),
-
-              // Right Sidebar
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    _buildInventoryAlert(),
-                    const Gap(24),
-                    _buildRecentActivity(),
-                  ],
-                ),
-              ),
             ],
           ),
         ] else ...[
@@ -240,148 +212,7 @@ int selectedIndex = 0;
           EvRecentOrders(),
           const Gap(24),
           EvQuickActions(),
-          const Gap(24),
-          _buildInventoryAlert(),
-          const Gap(24),
-          _buildRecentActivity(),
         ],
-      ],
-    );
-  }
-
-  Widget _buildInventoryAlert() {
-    return EvDashboardCard(
-          title: 'Inventory Alerts',
-          icon: PhosphorIconsRegular.warning,
-          iconColor: AppColors.warning,
-          child: Column(
-            children: [
-              _buildAlertItem(
-                'Low Stock',
-                '3 products need restocking',
-                AppColors.warning,
-              ),
-              const Gap(12),
-              _buildAlertItem(
-                'Out of Stock',
-                '1 product unavailable',
-                AppColors.error,
-              ),
-              const Gap(12),
-              _buildAlertItem(
-                'Expiring Soon',
-                '2 products expire in 7 days',
-                AppColors.info,
-              ),
-            ],
-          ),
-        )
-        .animate()
-        .fadeIn(duration: 500.ms, delay: 300.ms)
-        .slideX(begin: 0.3, end: 0);
-  }
-
-  Widget _buildAlertItem(String title, String subtitle, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.2)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
-          const Gap(12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: Theme.of(context).textTheme.labelLarge),
-                Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecentActivity() {
-    return EvDashboardCard(
-          title: 'Recent Activity',
-          icon: PhosphorIconsRegular.clockCounterClockwise,
-          iconColor: AppTheme.primaryPurple,
-          child: Column(
-            children: [
-              _buildActivityItem(
-                'New order received',
-                '#12345 - \$125.00',
-                '2 min ago',
-                PhosphorIconsRegular.shoppingCart,
-                AppColors.success,
-              ),
-              const Gap(16),
-              _buildActivityItem(
-                'Product updated',
-                'iPhone 15 Pro - Stock updated',
-                '15 min ago',
-                PhosphorIconsRegular.package,
-                AppColors.info,
-              ),
-              const Gap(16),
-              _buildActivityItem(
-                'Customer review',
-                'Great service! 5 stars',
-                '1 hour ago',
-                PhosphorIconsRegular.star,
-                AppColors.warning,
-              ),
-            ],
-          ),
-        )
-        .animate()
-        .fadeIn(duration: 600.ms, delay: 400.ms)
-        .slideX(begin: 0.4, end: 0);
-  }
-
-  Widget _buildActivityItem(
-    String title,
-    String subtitle,
-    String time,
-    IconData icon,
-    Color color,
-  ) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(icon, size: 16, color: color),
-        ),
-        const Gap(12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: Theme.of(context).textTheme.labelLarge),
-              Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-        ),
-        Text(
-          time,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-          ),
-        ),
       ],
     );
   }

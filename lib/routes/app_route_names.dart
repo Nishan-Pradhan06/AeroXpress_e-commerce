@@ -13,6 +13,7 @@ class AppRoutesName {
   static const String notificationScreen = 'notificationScreen';
 
   //#--------------VENDOR ROUTES NAME-------------##
+  static const String vendorBottomNavBar = 'vendorBottomNavBar';
   static const String vendorDashboard = 'vendorDashboard';
   static const String vendorProducts = 'vendorProducts';
   static const String vendorOrders = 'vendorOrders';

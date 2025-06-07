@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [BlocProvider(create: (context) => sl<OnBoardingCubit>())],
       child: ShadApp.custom(
-        appBuilder: (BuildContext context, ThemeData theme) {
+        appBuilder: (context) {
           return MaterialApp.router(
             title: 'Deal Sell',
             theme: appThemeData,
