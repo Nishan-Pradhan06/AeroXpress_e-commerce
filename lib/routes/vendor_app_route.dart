@@ -1,7 +1,10 @@
 import 'package:deal_sell/common/extension/path_extension.dart';
-import 'package:deal_sell/features/vendor/dashboard/dashboard_page.dart';
-import 'package:deal_sell/features/vendor/vendor_bottom_nav_bar/vendor_btn_nav.dart';
 import 'package:go_router/go_router.dart';
+import '../features/vendor/dashboard/dashboard_page.dart';
+import '../features/vendor/orders/screen/orders_page.dart';
+import '../features/vendor/products/screens/product_page.dart';
+import '../features/vendor/settings/screen/setting_page.dart';
+import '../features/vendor/vendor_bottom_nav_bar/vendor_btn_nav.dart';
 import 'app_route_names.dart';
 
 List<GoRoute> vendorAppRoutes = [
@@ -18,26 +21,16 @@ List<GoRoute> vendorAppRoutes = [
   GoRoute(
     path: AppRoutesName.vendorProducts.path,
     name: AppRoutesName.vendorProducts,
-    builder: (context, state) => const ProductsScreen(),
+    builder: (context, state) => const ProductPage(),
   ),
   GoRoute(
     path: AppRoutesName.vendorOrders.path,
     name: AppRoutesName.vendorOrders,
-    builder: (context, state) => const OrdersScreen(),
-  ),
-  GoRoute(
-    path: AppRoutesName.vendorAnalytics.path,
-    name: AppRoutesName.vendorAnalytics,
-    builder: (context, state) => const AnalyticsScreen(),
-  ),
-  GoRoute(
-    path: AppRoutesName.vendorCustomers.path,
-    name: AppRoutesName.vendorCustomers,
-    builder: (context, state) => const CustomersScreen(),
+    builder: (context, state) => const OrdersPage(),
   ),
   GoRoute(
     path: AppRoutesName.vendorSettings.path,
     name: AppRoutesName.vendorSettings,
-    builder: (context, state) => const SettingsScreen(),
+    builder: (context, state) => const SettingPage(),
   ),
 ];
