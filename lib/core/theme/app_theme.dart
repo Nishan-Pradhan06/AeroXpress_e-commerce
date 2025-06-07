@@ -21,25 +21,24 @@ final ThemeData appThemeData = ThemeData(
     onError: neutralWhiteColor,
   ),
 
-  appBarTheme: AppBarTheme(
-    elevation: 0,
-    centerTitle: true,
-    backgroundColor: brandPrimaryColor,
-    iconTheme: const IconThemeData(color: Colors.white),
-    titleTextStyle: const TextStyle(
-      fontFamily: 'Poppins',
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
-    ),
-    systemOverlayStyle: const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ),
-  ),
-
+  // appBarTheme: AppBarTheme(
+  //   elevation: 0,
+  //   centerTitle: true,
+  //   backgroundColor: brandPrimaryColor,
+  //   // iconTheme: const IconThemeData(color: Colors.white),
+  //   titleTextStyle: const TextStyle(
+  //     fontFamily: 'Poppins',
+  //     fontSize: 20,
+  //     fontWeight: FontWeight.w600,
+  //     // color: Colors.white,
+  //   ),
+  //   systemOverlayStyle: const SystemUiOverlayStyle(
+  //     statusBarColor: Colors.transparent,
+  //     statusBarIconBrightness: Brightness.dark,
+  //     systemNavigationBarColor: Colors.transparent,
+  //     systemNavigationBarIconBrightness: Brightness.dark,
+  //   ),
+  // ),
   textTheme: TextTheme(
     displayLarge: const TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
     titleLarge: TextStyle(
