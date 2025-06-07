@@ -76,3 +76,22 @@ const Color neutralWhiteColor = Color(
   0xFFFFFFFF,
 ); // White text (for buttons, etc.)
 const Color darkColor = Color(0xFF121212);
+
+const Color primaryPurple = Color(0xFF6366F1);
+const Color primaryPurpleDark = Color(0xFF4F46E5);
+const Color primaryPurpleLight = Color(0xFF8B5CF6);
+
+const Color accentBlue = Color(0xFF0EA5E9);
+const Color accentGreen = Color(0xFF10B981);
+const Color accentOrange = Color(0xFFF59E0B);
+const Color accentRed = Color(0xFFEF4444);
+
+const Color surfaceLight = Color(0xFFFAFAFA);
+const Color surfaceDark = Color(0xFF0F0F23);
+const Color cardLight = Color(0xFFFFFFFF);
+const Color cardDark = Color(0xFF1A1B3E);
+
+const Color textPrimaryLight = Color(0xFF1F2937);
+const Color textSecondaryLight = Color(0xFF6B7280);
+const Color textPrimaryDark = Color(0xFFF9FAFB);
+const Color textSecondaryDark = Color(0xFF9CA3AF);
