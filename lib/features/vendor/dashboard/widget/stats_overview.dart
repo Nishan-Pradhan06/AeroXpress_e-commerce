@@ -2,6 +2,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import '../models/stat_data_model.dart';
 
 class EvStatsOverview extends StatelessWidget {
   const EvStatsOverview({super.key});
@@ -9,7 +10,7 @@ class EvStatsOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = [
-      _StatData(
+      StatData(
         title: 'Total Revenue',
         value: '\$45,231.89',
         change: '+20.1%',
@@ -17,7 +18,7 @@ class EvStatsOverview extends StatelessWidget {
         icon: PhosphorIconsRegular.trendUp,
         color: Colors.green,
       ),
-      _StatData(
+      StatData(
         title: 'Orders',
         value: '1,234',
         change: '+12.5%',
@@ -25,7 +26,7 @@ class EvStatsOverview extends StatelessWidget {
         icon: PhosphorIconsRegular.shoppingCart,
         color: Colors.blue,
       ),
-      _StatData(
+      StatData(
         title: 'Products',
         value: '567',
         change: '+2',
@@ -33,7 +34,7 @@ class EvStatsOverview extends StatelessWidget {
         icon: PhosphorIconsRegular.package,
         color: Colors.orange,
       ),
-      _StatData(
+      StatData(
         title: 'Customers',
         value: '2,345',
         change: '-1.2%',
@@ -68,7 +69,7 @@ class EvStatsOverview extends StatelessWidget {
   }
 }
 
-Widget _buildStatCard(BuildContext context, _StatData stat) {
+Widget _buildStatCard(BuildContext context, StatData stat) {
   return Card(
     child: Container(
       width: double.infinity,
@@ -141,20 +142,3 @@ Widget _buildStatCard(BuildContext context, _StatData stat) {
   );
 }
 
-class _StatData {
-  final String title;
-  final String value;
-  final String change;
-  final bool isPositive;
-  final IconData icon;
-  final Color color;
-
-  const _StatData({
-    required this.title,
-    required this.value,
-    required this.change,
-    required this.isPositive,
-    required this.icon,
-    required this.color,
-  });
-}
