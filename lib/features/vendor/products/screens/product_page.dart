@@ -131,7 +131,7 @@ class ProductPage extends StatelessWidget {
           }),
         ],
       ),
-      floatingActionButton: const EvAddProductFab(),
+      floatingActionButton: const EvAddProductFab(isExtended: false),
     );
   }
 
