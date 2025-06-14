@@ -10,6 +10,7 @@ import 'core/dl/dependency_injection.dart';
 import 'core/services/once_cache_service.dart';
 import 'core/theme/app_theme.dart';
 import 'features/on_boarding/cubit/on_boarding_cubit.dart';
+import 'features/vendor/products/cubit/fav_cubit.dart';
 import 'routes/app_route.dart';
 
 void main() async {
@@ -43,7 +44,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => sl<OnBoardingCubit>())],
+      providers: [
+        BlocProvider(create: (context) => sl<OnBoardingCubit>()),
+        BlocProvider(create: (context) => sl<FabCubit>()),
+      ],
       child: ShadApp.custom(
         appBuilder: (context) {
           return MaterialApp.router(
