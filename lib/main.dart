@@ -10,7 +10,7 @@ import 'package:upgrader/upgrader.dart';
 import 'core/dl/dependency_injection.dart';
 import 'core/services/once_cache_service.dart';
 import 'core/theme/app_theme.dart';
-import 'features/on_boarding/cubit/on_boarding_cubit.dart';
+import 'features/shared/on_boarding/cubit/on_boarding_cubit.dart';
 import 'features/vendor/products/cubit/fav_cubit.dart';
 import 'routes/app_route.dart';
 

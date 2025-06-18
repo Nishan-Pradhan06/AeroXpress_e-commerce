@@ -1,4 +1,4 @@
-import 'package:deal_sell/features/on_boarding/cubit/on_boarding_cubit.dart';
+import 'package:deal_sell/features/shared/on_boarding/cubit/on_boarding_cubit.dart';
 import 'package:get_it/get_it.dart';
 import '../../features/vendor/products/cubit/fav_cubit.dart';
 import '../services/once_cache_service.dart';
