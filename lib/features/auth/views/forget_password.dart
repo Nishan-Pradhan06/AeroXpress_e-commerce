@@ -1,22 +1,21 @@
 import 'package:deal_sell/core/helpers/input_validator_helper.dart';
 import 'package:deal_sell/core/theme/app_colors.dart';
-import 'package:deal_sell/core/theme/app_theme.dart';
-import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constant/app_images.dart';
-import '../widget/custom_text_field.dart';
+import '../../../core/constant/app_images.dart';
+import '../widgets/custom_text_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ForgetPasswordScreen extends StatefulWidget {
+  const ForgetPasswordScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Image.asset(AppImages.logo, height: 100),
                   SizedBox(height: constraints.maxHeight * 0.1),
                   Text(
-                    "Sign In",
+                    "Forgot Password",
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -41,31 +40,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   Form(
                     key: _formKey,
                     child: Column(
-                      spacing: AppTheme.space4,
                       children: [
                         CustomTextFormField(
-                          hintText: 'Phone',
+                          hintText: 'Phone Number',
                           keyboardType: TextInputType.phone,
                           validator: InputValidator.validatePhone,
-                          onSaved: (phone) {
-                            // Save phone
-                          },
+                          onSaved: (phone) {},
                         ),
-
-                        CustomTextFormField(
-                          hintText: 'Password',
-                          obscureText: true,
-                          validator: InputValidator.validatePassword,
-                          onSaved: (password) {
-                            // Save password
-                          },
-                        ),
-
+                        const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              context.goNamed(AppRoutesName.bottomNavBar);
+                              // Trigger password reset process
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -75,26 +62,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             minimumSize: const Size(double.infinity, 48),
                             shape: const StadiumBorder(),
                           ),
-                          child: const Text("Sign in"),
+                          child: const Text("Send OTP"),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            context.pushNamed(AppRoutesName.forgetPassword);
-                          },
-                          child: Text(
-                            'Forgot Password?',
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).textTheme.bodyLarge!.color!.withOpacity(0.64),
-                            ),
-                          ),
-                        ),
+                        const SizedBox(height: 8),
                         Text.rich(
                           TextSpan(
-                            text: "Don’t have an account? ",
+                            text: "Back to ",
                             style: Theme.of(
                               context,
                             ).textTheme.bodyMedium!.copyWith(
@@ -104,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             children: [
                               TextSpan(
-                                text: "Sign Up",
+                                text: "Sign In",
                                 style: TextStyle(
                                   color: brandPrimaryColor,
                                   fontWeight: FontWeight.bold,
@@ -113,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 recognizer:
                                     TapGestureRecognizer()
                                       ..onTap = () {
-                                        context.pushNamed(AppRoutesName.registerScreen);
+                                        context.pop();
                                       },
                               ),
                             ],
