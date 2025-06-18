@@ -13,8 +13,17 @@ import 'core/theme/app_theme.dart';
 import 'features/shared/on_boarding/cubit/on_boarding_cubit.dart';
 import 'features/vendor/products/cubit/fav_cubit.dart';
 import 'routes/app_route.dart';
+import 'package:clarity_flutter/clarity_flutter.dart';
 
 void main() async {
+  //microsoft clarity
+  final config = ClarityConfig(
+    projectId: "s17mi51e6s",
+    logLevel:
+        LogLevel
+            .Verbose, // Note: Use "LogLevel.Verbose" value while testing to debug initialization issues.
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
 
   //firebase initialized
@@ -38,7 +47,12 @@ void main() async {
   //Once SharedPreferences
   await sl<OnceCacheService>().init();
 
-  runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
+  runApp(
+    DevicePreview(
+      enabled: false,
+      builder: (context) => ClarityWidget(app: MyApp(), clarityConfig: config),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
