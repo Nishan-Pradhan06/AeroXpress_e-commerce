@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../core/dl/dependency_injection.dart';
 import '../core/services/once_cache_service.dart';
 import '../features/auth/views/forget_password.dart';
-import '../features/cutomers/notification/screen/notifcation_screen.dart';
+import '../features/cutomers/notification/views/notifcation_screen.dart';
 import '../features/cutomers/profile/views/help_center_screen.dart';
 import '../features/cutomers/profile/views/theme_screen.dart';
 import '../features/shared/on_boarding/on_boarding_screen.dart';
