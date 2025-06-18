@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:upgrader/upgrader.dart';
 import 'core/dl/dependency_injection.dart';
 import 'core/services/once_cache_service.dart';
 import 'core/theme/app_theme.dart';
@@ -18,6 +19,9 @@ void main() async {
 
   //firebase initialized
   await Firebase.initializeApp();
+
+  // Only call clearSavedSettings() during testing to reset internal values.
+  await Upgrader.clearSavedSettings();
 
   //dependency Injection service locator
   await setupServiceLocator();
