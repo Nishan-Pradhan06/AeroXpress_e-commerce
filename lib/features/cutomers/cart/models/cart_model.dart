@@ -1,4 +1,4 @@
-import '../../../home/models/product_card_model.dart';
+import '../../home/models/product_card_model.dart';
 
 class Cart {
   final Product product;

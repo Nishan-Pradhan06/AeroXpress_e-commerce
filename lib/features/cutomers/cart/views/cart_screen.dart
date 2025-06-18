@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../data/model/cart_item_list.dart';
-import '../../data/model/cart_model.dart';
+import '../models/cart_item_list.dart';
+import '../models/cart_model.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});

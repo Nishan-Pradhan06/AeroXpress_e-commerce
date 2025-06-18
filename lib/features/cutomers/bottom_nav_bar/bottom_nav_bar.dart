@@ -6,7 +6,7 @@ import 'package:upgrader/upgrader.dart';
 import 'package:deal_sell/core/constant/bottom_nav_icon_constant.dart';
 import '../../../core/helpers/url_launcher_helper.dart';
 import '../../../core/widget/badge.dart';
-import '../cart/presentation/screens/cart_screen.dart';
+import '../cart/views/cart_screen.dart';
 import '../category/presentation/screens/category_screen.dart';
 import '../home/views/home_screen.dart';
 import '../profile/presentation/screens/profile_screen.dart';

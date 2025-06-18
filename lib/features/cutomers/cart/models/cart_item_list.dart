@@ -1,6 +1,6 @@
 // Demo data for our cart
 
-import '../../../home/models/product_list.dart';
+import '../../home/models/product_list.dart';
 import 'cart_model.dart';
 
 List<Cart> demoCarts = [
