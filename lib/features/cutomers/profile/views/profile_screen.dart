@@ -3,11 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../providers/theme_provider.dart';
-import '../widget/profile_option_list.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../widgets/profile_option_list.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
