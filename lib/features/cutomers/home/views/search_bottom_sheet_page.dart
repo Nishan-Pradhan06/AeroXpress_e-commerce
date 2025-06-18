@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/widget/padding.dart';
-import '../../data/model/product_list.dart';
+import '../../../../core/widget/padding.dart';
+import '../models/product_list.dart';
 import '../widgets/product_card.dart';
 import '../widgets/search_field.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/widget/padding.dart';
+import '../../../../core/widget/padding.dart';
 
 
 class DiscountBanner extends StatelessWidget {

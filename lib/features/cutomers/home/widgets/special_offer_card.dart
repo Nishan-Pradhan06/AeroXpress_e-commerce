@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/widget/padding.dart';
+import '../../../../core/widget/padding.dart';
 
 class SpecialOfferCard extends StatelessWidget {
   const SpecialOfferCard({

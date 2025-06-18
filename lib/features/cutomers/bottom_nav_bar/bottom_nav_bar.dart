@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/widget/badge.dart';
 import '../cart/presentation/screens/cart_screen.dart';
 import '../category/presentation/screens/category_screen.dart';
-import '../home/presentation/screen/home_screen.dart';
+import '../home/views/home_screen.dart';
 import '../profile/presentation/screens/profile_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {

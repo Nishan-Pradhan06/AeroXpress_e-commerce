@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../data/model/product_card_model.dart';
-import '../../data/model/product_list.dart';
+import '../models/product_card_model.dart';
+import '../models/product_list.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key});

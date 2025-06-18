@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/widget/padding.dart';
+import '../../../../core/widget/padding.dart';
 
 class SectionTitle extends StatelessWidget {
   const SectionTitle({super.key, required this.title, required this.onTap});
