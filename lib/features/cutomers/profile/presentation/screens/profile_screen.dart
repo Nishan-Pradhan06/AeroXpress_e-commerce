@@ -85,24 +85,12 @@ class ProfileScreen extends StatelessWidget {
             buildProfileOption('Payment', Icons.payment),
             buildProfileOption('Security', Icons.security),
             buildProfileOption('Language', Icons.language),
-            Consumer<ThemeProvider>(
-              builder: (context, provider, _) {
-                final mode = provider.themeMode;
+            buildProfileOption(
+              'Theme',
+              Icons.light,
 
-                final icon =
-                    mode == ThemeMode.dark
-                        ? Icons.dark_mode
-                        : mode == ThemeMode.light
-                        ? Icons.light_mode
-                        : Icons.settings_brightness;
-
-                return buildProfileOption(
-                  'Theme',
-                  icon,
-                  onTap: () {
-                    context.pushNamed(AppRoutesName.themeSelectionScreen);
-                  },
-                );
+              onTap: () {
+                context.pushNamed(AppRoutesName.themeSelectionScreen);
               },
             ),
 

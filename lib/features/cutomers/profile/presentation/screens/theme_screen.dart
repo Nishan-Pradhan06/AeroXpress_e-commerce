@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
 
 class ThemeSelectorScreen extends StatelessWidget {
   const ThemeSelectorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ThemeProvider>(context);
-    final selected = provider.themeMode;
+    const ThemeMode selectedThemeMode = ThemeMode.system; 
 
     return Scaffold(
       appBar: PreferredSize(
@@ -19,13 +16,8 @@ class ThemeSelectorScreen extends StatelessWidget {
           child: AppBar(
             iconTheme: const IconThemeData(color: Colors.black),
             backgroundColor: Colors.white,
-            elevation: 0, // Set to 0 since Material provides elevation
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Theme", style: TextStyle(color: Colors.black)),
-              ],
-            ),
+            elevation: 0,
+            title: const Text("Theme", style: TextStyle(color: Colors.black)),
           ),
         ),
       ),
@@ -34,26 +26,20 @@ class ThemeSelectorScreen extends StatelessWidget {
           RadioListTile<ThemeMode>(
             title: const Text('System Default'),
             value: ThemeMode.system,
-            groupValue: selected,
-            onChanged: (value) {
-              provider.setThemeMode(value!);
-            },
+            groupValue: selectedThemeMode,
+            onChanged: null, // disabled
           ),
           RadioListTile<ThemeMode>(
             title: const Text('Light'),
             value: ThemeMode.light,
-            groupValue: selected,
-            onChanged: (value) {
-              provider.setThemeMode(value!);
-            },
+            groupValue: selectedThemeMode,
+            onChanged: null,
           ),
           RadioListTile<ThemeMode>(
             title: const Text('Dark'),
             value: ThemeMode.dark,
-            groupValue: selected,
-            onChanged: (value) {
-              provider.setThemeMode(value!);
-            },
+            groupValue: selectedThemeMode,
+            onChanged: null,
           ),
         ],
       ),

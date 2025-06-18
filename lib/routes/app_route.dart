@@ -5,6 +5,6 @@ import 'user_app_route.dart';
 import 'vendor_app_route.dart';
 
 final router = GoRouter(
-  initialLocation: AppRoutesName.vendorBottomNavBar.path,
+  initialLocation: AppRoutesName.splashScreen.path,
   routes: [...userAppRoutes, ...vendorAppRoutes],
 );
