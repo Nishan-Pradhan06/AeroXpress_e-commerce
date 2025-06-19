@@ -64,6 +64,7 @@ dependencies:
   flutter_animate: ^4.5.2
   upgrader: ^11.4.0
   clarity_flutter: ^1.0.0
+  freezed_annotation: ^2.4.4
 
 dev_dependencies:
   flutter_test:
