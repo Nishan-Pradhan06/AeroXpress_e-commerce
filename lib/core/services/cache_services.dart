@@ -20,7 +20,7 @@ class CacheServices {
   }
   // ===== Secure Storage methods =====
 
-  Future<void> setAuthToken(String token) async {
+  Future<void> setAuthToken(String token, DateTime parse, {required refreshToken}) async {
     try {
       await _secureStorage.write(key: 'auth_token', value: token);
     } catch (e) {
