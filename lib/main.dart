@@ -1,5 +1,7 @@
 import 'package:deal_sell/core/config/env_config.dart';
 import 'package:deal_sell/core/services/cache_services.dart';
+import 'package:deal_sell/features/auth/blocs/customer_sign_up/customer_sign_up_bloc.dart';
+import 'package:deal_sell/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -65,6 +67,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => sl<OnBoardingCubit>()),
         BlocProvider(create: (context) => sl<FabCubit>()),
+        BlocProvider(create: (context) => sl<CustomerSignUpBloc>()),
+        BlocProvider(create: (context) => sl<UserSignInBloc>()),
       ],
       child: ShadApp.custom(
         appBuilder: (context) {
