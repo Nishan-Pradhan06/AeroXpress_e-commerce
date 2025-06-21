@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:deal_sell/core/state/bloc_base_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recently_added_products_event.dart';
