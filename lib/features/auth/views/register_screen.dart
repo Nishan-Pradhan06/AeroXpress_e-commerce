@@ -1,10 +1,18 @@
+import 'dart:developer';
+
 import 'package:deal_sell/core/helpers/input_validator_helper.dart';
 import 'package:deal_sell/core/theme/app_colors.dart';
 import 'package:deal_sell/core/theme/app_theme.dart';
+import 'package:deal_sell/features/auth/blocs/customer_sign_up/customer_sign_up_bloc.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constant/app_images.dart';
+import '../../../core/dl/dependency_injection.dart';
+import '../../../core/widget/custom_toast.dart';
+import '../../../routes/app_route_names.dart';
+import '../model/customer_register_model.dart';
 import '../widgets/custom_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,7 +24,11 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? _password;
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +57,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       spacing: AppTheme.space4,
                       children: [
                         CustomTextFormField(
-                          hintText: 'Full Name',
+                          hintText: 'First Name',
+                          controller: _firstNameController,
                           validator:
                               (value) =>
                                   value == null || value.trim().isEmpty
-                                      ? 'Name is required'
+                                      ? 'First name is required'
+                                      : null,
+                          onSaved: (name) {
+                            // Save name
+                          },
+                        ),
+                        CustomTextFormField(
+                          hintText: 'Last Name',
+                          controller: _lastNameController,
+                          validator:
+                              (value) =>
+                                  value == null || value.trim().isEmpty
+                                      ? 'Last name is required'
                                       : null,
                           onSaved: (name) {
                             // Save name
@@ -57,6 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         CustomTextFormField(
                           hintText: 'Phone',
+                          controller: _phoneController,
                           keyboardType: TextInputType.phone,
                           validator: InputValidator.validatePhone,
                           onSaved: (phone) {
@@ -64,44 +90,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                         ),
                         CustomTextFormField(
-                          hintText: 'Password',
-                          obscureText: true,
-                          validator: (password) {
-                            _password = password;
-                            return InputValidator.validatePassword(password);
-                          },
-                          onSaved: (password) {
-                            // Save password
-                          },
+                          hintText: 'Email Address',
+                          controller: _emailController,
+                          // obscureText: true,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: InputValidator.validateEmail,
                         ),
                         CustomTextFormField(
-                          hintText: 'Confirm Password',
+                          hintText: 'Password',
+                          controller: _passwordController,
                           obscureText: true,
-                          validator: (confirmPassword) {
-                            if (confirmPassword != _password) {
-                              return 'Passwords do not match';
-                            }
-                            return null;
-                          },
-                          onSaved: (confirmPassword) {
-                            // Save confirmPassword
+                          validator: (password) {
+                            return InputValidator.validatePassword(password);
                           },
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              // Handle registration logic
-                            }
+                        BlocConsumer<CustomerSignUpBloc, CustomerSignUpState>(
+                          listener: (context, state) {
+                            state.whenOrNull(
+                              loaded: (data) {
+                                context.pushNamed(AppRoutesName.bottomNavBar);
+                              },
+                              failure: (failure) {
+                                CustomToast.showError(failure.message);
+                                log(failure.toString());
+                                log('you are dumbbb');
+                              },
+                            );
                           },
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: brandPrimaryColor,
-                            foregroundColor: Colors.white,
-                            minimumSize: const Size(double.infinity, 48),
-                            shape: const StadiumBorder(),
-                          ),
-                          child: const Text("Sign up"),
+                          builder: (context, state) {
+                            final bool isLoading = state.maybeWhen(
+                              loading: () => true,
+                              orElse: () => false,
+                            );
+
+                            return ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  log(_passwordController.text);
+                                  sl<CustomerSignUpBloc>().add(
+                                    CustomerSignUpEvent.customerSignUp(
+                                      CustomerRegisterModel(
+                                        email: _emailController.text,
+                                        phone: _phoneController.text,
+                                        firstName: _firstNameController.text,
+                                        lastName: _lastNameController.text,
+                                        password: _passwordController.text,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: brandPrimaryColor,
+                                foregroundColor: Colors.white,
+                                minimumSize: const Size(double.infinity, 48),
+                                shape: const StadiumBorder(),
+                              ),
+                              child: const Text("Sign up"),
+                            );
+                          },
                         ),
                         Text.rich(
                           TextSpan(

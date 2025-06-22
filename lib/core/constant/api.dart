@@ -1,2 +1,2 @@
-const BASE_URL = 'http://localhost:3000/api/v1';
+const BASE_URL = 'http://192.168.1.56:5000/api/';
 const IMAGE_URL = '';

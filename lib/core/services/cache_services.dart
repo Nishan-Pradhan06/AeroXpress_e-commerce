@@ -20,9 +20,9 @@ class CacheServices {
   }
   // ===== Secure Storage methods =====
 
-  Future<void> setAuthToken(String token, DateTime parse, ) async {
+  Future<void> setAuthToken(String token ) async {
     try {
-      await _secureStorage.write(key: 'auth_token', value: token);
+      await _secureStorage.write(key: 'token', value: token);
     } catch (e) {
       dLog.d('Error saving auth token: $e');
     }
@@ -30,29 +30,29 @@ class CacheServices {
 
   Future<String?> getAuthToken() async {
     try {
-      return await _secureStorage.read(key: 'auth_token');
+      return await _secureStorage.read(key: 'token');
     } catch (e) {
       dLog.d('Error reading auth token: $e');
       return null;
     }
   }
 
-  Future<void> setUserPhoneNumber(String phone) async {
-    try {
-      await _secureStorage.write(key: 'user_phone', value: phone);
-    } catch (e) {
-      dLog.d('Error saving phone number: $e');
-    }
-  }
+  // Future<void> setUserPhoneNumber(String phone) async {
+  //   try {
+  //     await _secureStorage.write(key: 'user_phone', value: phone);
+  //   } catch (e) {
+  //     dLog.d('Error saving phone number: $e');
+  //   }
+  // }
 
-  Future<String?> getUserPhoneNumber() async {
-    try {
-      return await _secureStorage.read(key: 'user_phone');
-    } catch (e) {
-      dLog.d('Error reading phone number: $e');
-      return null;
-    }
-  }
+  // Future<String?> getUserPhoneNumber() async {
+  //   try {
+  //     return await _secureStorage.read(key: 'user_phone');
+  //   } catch (e) {
+  //     dLog.d('Error reading phone number: $e');
+  //     return null;
+  //   }
+  // }
 
   // ===== SharedPreferences methods =====
 

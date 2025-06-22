@@ -19,12 +19,12 @@ import 'package:clarity_flutter/clarity_flutter.dart';
 
 void main() async {
   //microsoft clarity
-  final config = ClarityConfig(
-    projectId: "s17mi51e6s",
-    logLevel:
-        LogLevel
-            .Verbose, // Note: Use "LogLevel.Verbose" value while testing to debug initialization issues.
-  );
+  // final config = ClarityConfig(
+  //   projectId: "s17mi51e6s",
+  //   logLevel:
+  //       LogLevel
+  //           .Verbose, // Note: Use "LogLevel.Verbose" value while testing to debug initialization issues.
+  // );
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -49,13 +49,15 @@ void main() async {
   //Once SharedPreferences
   await sl<OnceCacheService>().init();
 
-  runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => ClarityWidget(app: MyApp(), clarityConfig: config),
-    ),
-  );
+  runApp(DevicePreview(enabled: false, builder: (context) => MyApp()));
 }
+//   runApp(
+//     DevicePreview(
+//       enabled: false,
+//       builder: (context) => ClarityWidget(app: MyApp(), clarityConfig: config),
+//     ),
+//   );
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

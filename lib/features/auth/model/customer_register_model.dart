@@ -1,15 +1,15 @@
 class CustomerRegisterModel {
   final String email;
   final String password;
-  final String firstname;
-  final String lastname;
+  final String firstName;
+  final String lastName;
   final String phone;
 
   CustomerRegisterModel({
     required this.email,
     required this.password,
-    required this.firstname,
-    required this.lastname,
+    required this.firstName,
+    required this.lastName,
     required this.phone,
   });
 
@@ -17,8 +17,8 @@ class CustomerRegisterModel {
     return <String, dynamic>{
       'email': email,
       'password': password,
-      'firstname': firstname,
-      'lastname': lastname,
+      'firstName': firstName,
+      'lastName': lastName,
       'phone': phone,
     };
   }

@@ -29,7 +29,7 @@ class CustomerSignUpBloc
     // Emit loading state before API call
     emit(CustomerSignUpState.loading());
 
-    // Call signUp method from repository
+    // // Call signUp method from repository
     final result = await _authRepository.signUp(
       customerRegisterModel: event.customerRegisterModel,
     );

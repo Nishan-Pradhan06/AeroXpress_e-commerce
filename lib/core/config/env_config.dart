@@ -1,3 +1,5 @@
+import 'package:deal_sell/core/constant/api.dart';
+
 enum Environment { development, production }
 
 class EnvConfig {
@@ -15,7 +17,7 @@ class EnvConfig {
   factory EnvConfig.development() {
     return EnvConfig(
       environment: Environment.development,
-      apiBaseUrl: 'https://safari.lunarit.com.np/api/',
+      apiBaseUrl: BASE_URL,
       enableLogging: true,
     );
   }
@@ -24,10 +26,7 @@ class EnvConfig {
   factory EnvConfig.production() {
     return EnvConfig(
       environment: Environment.production,
-
-      ///TODO:: need to replace
-      apiBaseUrl: '<replace with production url>',
-
+      apiBaseUrl: BASE_URL,
       enableLogging: false,
     );
   }

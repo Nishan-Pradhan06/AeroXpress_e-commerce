@@ -62,6 +62,12 @@ class ErrorHandler {
             statusCode: statusCode,
             exception: exception,
           );
+        } else if (statusCode == 409) {
+          return ServerFailure(
+            message: _extractErrorMessage(responseData) ?? 'Conflict.',
+            statusCode: statusCode,
+            exception: exception,
+          );
         } else if (statusCode == 405) {
           return MethodNotAllowedFailure(
             message: 'Method not allowed',
@@ -117,7 +123,7 @@ class ErrorHandler {
   }
 
   /// Extracts error message from response data
-  static String? _extractErrorMessage(dynamic responseData) {
+  static String?_extractErrorMessage(dynamic responseData) {
     if (responseData == null) return null;
 
     try {

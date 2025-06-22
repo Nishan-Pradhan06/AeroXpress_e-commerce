@@ -35,12 +35,7 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     return response.fold((failure) => Left(failure), (data) async {
-      // Save user login ID and token to local cache
-      await CacheServices.instance.setUserPhoneNumber(userLoginModel.loginId);
-      await CacheServices.instance.setAuthToken(
-        data['Token'],
-        DateTime.parse(data['Expiration']),
-      );
+      await CacheServices.instance.setAuthToken(data['token']);
       return Right('Login Successful');
     });
   }
@@ -51,18 +46,13 @@ class AuthRepositoryImpl implements AuthRepository {
     required CustomerRegisterModel customerRegisterModel,
   }) async {
     final response = await _apiService.post(
-      'SignUp',
+      'auth/register',
       data: {...customerRegisterModel.toMap()},
     );
-
-    if (response.isRight()) {
-      // Save user phone number to local cache
-      await CacheServices.instance.setUserPhoneNumber(
-        customerRegisterModel.phone,
-      );
-    }
-
-    return response.fold((failure) => Left(failure), (data) => Right(data));
+    return await response.fold((failure) => Left(failure), (data) async {
+      await CacheServices.instance.setAuthToken(data['token']);
+      return Right("Register Successful !!!");
+    });
   }
 
   //##-------------------SIGN OUT------------------------##
