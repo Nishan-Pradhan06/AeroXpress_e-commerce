@@ -20,7 +20,7 @@ class CacheServices {
   }
   // ===== Secure Storage methods =====
 
-  Future<void> setAuthToken(String token ) async {
+  Future<void> setAuthToken(String token) async {
     try {
       await _secureStorage.write(key: 'token', value: token);
     } catch (e) {
@@ -34,6 +34,26 @@ class CacheServices {
     } catch (e) {
       dLog.d('Error reading auth token: $e');
       return null;
+    }
+  }
+
+  /// Clears the stored auth token from secure storage
+  Future<void> clearAuthToken() async {
+    try {
+      await _secureStorage.delete(key: 'token');
+      dLog.d('Auth token cleared');
+    } catch (e) {
+      dLog.d('Error deleting auth token: $e');
+    }
+  }
+
+  /// Clears the stored user role from shared preferences
+  Future<void> clearUserRole() async {
+    try {
+      await _prefs.remove('user_role');
+      dLog.d('User role cleared');
+    } catch (e) {
+      dLog.d('Error deleting user role: $e');
     }
   }
 
@@ -66,10 +86,17 @@ class CacheServices {
 
   String getUserRole() {
     try {
-      return _prefs.getString('user_role') ?? 'rider';
+      return _prefs.getString('user_role') ?? 'VENDOR';
     } catch (e) {
       dLog.d('Error getting user role: $e');
-      return 'rider';
+      return 'VENDOR';
     }
+  }
+
+  /// Clears all session-related cache (used during logout)
+  Future<void> clearAll() async {
+    await clearAuthToken();
+    await clearUserRole();
+    dLog.d('All cache cleared');
   }
 }

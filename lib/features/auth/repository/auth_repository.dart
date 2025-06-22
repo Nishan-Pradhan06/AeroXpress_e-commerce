@@ -57,8 +57,15 @@ class AuthRepositoryImpl implements AuthRepository {
 
   //##-------------------SIGN OUT------------------------##
   @override
-  FutureEither<String> signOut() {
-    // Sign-out not implemented yet
-    throw UnimplementedError();
+  FutureEither<String> signOut() async {
+    final response = await _apiService.post<Map>('auth/logout');
+
+    return await response.fold((failure) => Left(failure), (data) async {
+      // On successful logout, clear the stored auth token
+      await CacheServices.instance.clearAuthToken();
+
+      // Return a success message
+      return Right(data['message'] ?? 'Logged out successfully');
+    });
   }
 }
