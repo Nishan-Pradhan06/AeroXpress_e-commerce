@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constant/app_images.dart';
 import '../../../core/dl/dependency_injection.dart';
+import '../../../core/widget/custom_button.dart';
 import '../../../core/widget/custom_toast.dart';
 import '../../../routes/app_route_names.dart';
 import '../model/customer_register_model.dart';
@@ -123,31 +124,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               orElse: () => false,
                             );
 
-                            return ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  log(_passwordController.text);
-                                  sl<CustomerSignUpBloc>().add(
-                                    CustomerSignUpEvent.customerSignUp(
-                                      CustomerRegisterModel(
-                                        email: _emailController.text,
-                                        phone: _phoneController.text,
-                                        firstName: _firstNameController.text,
-                                        lastName: _lastNameController.text,
-                                        password: _passwordController.text,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                backgroundColor: brandPrimaryColor,
-                                foregroundColor: Colors.white,
-                                minimumSize: const Size(double.infinity, 48),
-                                shape: const StadiumBorder(),
-                              ),
-                              child: const Text("Sign up"),
+                            return CustomButtonPrimary(
+                              title: "Sign Up",
+                              isLoading: isLoading,
+
+                              onPressed:
+                                  isLoading
+                                      ? null
+                                      : () {
+                                        if (_formKey.currentState!.validate()) {
+                                          log(_passwordController.text);
+                                          sl<CustomerSignUpBloc>().add(
+                                            CustomerSignUpEvent.customerSignUp(
+                                              CustomerRegisterModel(
+                                                email: _emailController.text,
+                                                phone: _phoneController.text,
+                                                firstName:
+                                                    _firstNameController.text,
+                                                lastName:
+                                                    _lastNameController.text,
+                                                password:
+                                                    _passwordController.text,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
                             );
                           },
                         ),
