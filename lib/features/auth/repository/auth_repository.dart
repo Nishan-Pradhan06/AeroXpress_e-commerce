@@ -30,7 +30,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<String> signIn({required UserLoginModel userLoginModel}) async {
     final response = await _apiService.post<Map>(
-      ' /auth/register',
+      'auth/login',
       data: {...userLoginModel.toMap()},
     );
 
