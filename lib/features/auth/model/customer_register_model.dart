@@ -1,28 +1,25 @@
-
 class CustomerRegisterModel {
-  final String userName;
-  final String phoneNumber;
   final String email;
-  final String userType;
-  final String gender;
-  final String userAddress;
+  final String password;
+  final String firstname;
+  final String lastname;
+  final String phone;
+
   CustomerRegisterModel({
-    required this.userName,
-    required this.phoneNumber,
     required this.email,
-    this.userType = "Customer",
-    required this.gender,
-    required this.userAddress,
+    required this.password,
+    required this.firstname,
+    required this.lastname,
+    required this.phone,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'userName': userName,
-      'phoneNo': phoneNumber,
-      'emailAddress': email,
-      'userType': userType,
-      'gender': gender,
-      'UserAddress': userAddress,
+      'email': email,
+      'password': password,
+      'firstname': firstname,
+      'lastname': lastname,
+      'phone': phone,
     };
   }
 }

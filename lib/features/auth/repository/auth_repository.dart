@@ -30,7 +30,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<String> signIn({required UserLoginModel userLoginModel}) async {
     final response = await _apiService.post<Map>(
-      'Login',
+      ' /auth/register',
       data: {...userLoginModel.toMap()},
     );
 
@@ -40,7 +40,6 @@ class AuthRepositoryImpl implements AuthRepository {
       await CacheServices.instance.setAuthToken(
         data['Token'],
         DateTime.parse(data['Expiration']),
-        refreshToken: data['RefreshToken'],
       );
       return Right('Login Successful');
     });
@@ -59,7 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (response.isRight()) {
       // Save user phone number to local cache
       await CacheServices.instance.setUserPhoneNumber(
-        customerRegisterModel.phoneNumber,
+        customerRegisterModel.phone,
       );
     }
 
