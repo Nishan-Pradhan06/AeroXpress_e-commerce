@@ -7,8 +7,8 @@ part 'logout_state.dart';
 class LogoutCubit extends Cubit<LogoutState> {
   final AuthRepository _authRepository;
 
-  LogoutCubit({required AuthRepository authRepository})
-    : _authRepository = authRepository,
+  LogoutCubit({required AuthRepository repo})
+    : _authRepository = repo,
       super(const LogoutState());
 
   Future<void> logout() async {

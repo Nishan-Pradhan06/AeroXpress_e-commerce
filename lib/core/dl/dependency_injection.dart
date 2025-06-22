@@ -1,5 +1,6 @@
 import 'package:deal_sell/core/network/api_services.dart';
 import 'package:deal_sell/core/network/dio_client.dart';
+import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import '../../features/auth/blocs/customer_sign_up/customer_sign_up_bloc.dart';
@@ -20,6 +21,9 @@ Future<void> setupServiceLocator() async {
   //###---------------BLOC--------------###
   sl.registerLazySingleton(() => UserSignInBloc(repo: sl()));
   sl.registerLazySingleton(() => CustomerSignUpBloc(repo: sl()));
+
+  //###---------------CUBIT--------------###
+  sl.registerLazySingleton(() => LogoutCubit(repo: sl()));
 
   //###------------REPOSITORY-----------###
   sl.registerLazySingleton<AuthRepository>(
