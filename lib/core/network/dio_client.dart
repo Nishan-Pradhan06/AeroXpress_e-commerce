@@ -41,14 +41,14 @@ class DioClient {
           }
           return handler.next(options);
         },
-        onError: (DioException error, handler) async {
-          // if (error.response?.statusCode == 401) {
-          //   if (await _refreshToken()) {
-          //     return handler.resolve(await _retry(error.requestOptions));
-          //   }
-          // }
-          // return handler.next(error);
-        },
+        // onError: (DioException error, handler) async {
+        //   // if (error.response?.statusCode == 401) {
+        //   //   if (await _refreshToken()) {
+        //   //     return handler.resolve(await _retry(error.requestOptions));
+        //   //   }
+        //   // }
+        //   return handler.next(error);
+        // },
       ),
     );
   }

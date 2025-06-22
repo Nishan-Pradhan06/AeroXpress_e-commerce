@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import '../../common/error/error_handler.dart';
@@ -59,6 +61,8 @@ class ApiService {
         return Right(response.data as T);
       }
     } catch (e) {
+      log("hello world");
+      print("helllosfssssssssssssssssssssssssssssss");
       return Left(ErrorHandler.handleException(e));
     }
   }
