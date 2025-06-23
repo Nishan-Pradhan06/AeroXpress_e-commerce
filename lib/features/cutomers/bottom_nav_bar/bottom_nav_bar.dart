@@ -9,7 +9,7 @@ import '../../../core/widget/badge.dart';
 import '../cart/views/cart_screen.dart';
 import '../category/views/category_screen.dart';
 import '../home/views/home_screen.dart';
-import '../../shared/profile/views/customer_profile/profile_screen.dart';
+import '../../shared/user_profile/views/customer_profile/profile_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});
