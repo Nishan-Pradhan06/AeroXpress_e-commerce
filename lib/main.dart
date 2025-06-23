@@ -14,6 +14,7 @@ import 'core/services/once_cache_service.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/cubit/logout_cubit.dart';
 import 'features/shared/on_boarding/cubit/on_boarding_cubit.dart';
+import 'features/shared/user_profile/bloc/get_user_profile_bloc.dart';
 import 'features/vendor/products/cubit/fav_cubit.dart';
 import 'routes/app_route.dart';
 import 'package:clarity_flutter/clarity_flutter.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
         //###---------------BLOC--------------###
         BlocProvider(create: (context) => sl<CustomerSignUpBloc>()),
         BlocProvider(create: (context) => sl<UserSignInBloc>()),
+        BlocProvider(create: (context) => sl<GetUserProfileBloc>()),
 
         //###---------------CUBIT-------------###
         BlocProvider(create: (context) => sl<OnBoardingCubit>()),

@@ -1,12 +1,14 @@
 import 'package:deal_sell/core/network/api_services.dart';
 import 'package:deal_sell/core/network/dio_client.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
+import 'package:deal_sell/features/shared/user_profile/repository/my_profile_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import '../../features/auth/blocs/customer_sign_up/customer_sign_up_bloc.dart';
 import '../../features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import '../../features/auth/repository/auth_repository.dart';
 import '../../features/shared/on_boarding/cubit/on_boarding_cubit.dart';
+import '../../features/shared/user_profile/bloc/get_user_profile_bloc.dart';
 import '../../features/vendor/products/cubit/fav_cubit.dart';
 import '../services/once_cache_service.dart';
 
@@ -21,6 +23,7 @@ Future<void> setupServiceLocator() async {
   //###---------------BLOC--------------###
   sl.registerLazySingleton(() => UserSignInBloc(repo: sl()));
   sl.registerLazySingleton(() => CustomerSignUpBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetUserProfileBloc(repo: sl()));
 
   //###---------------CUBIT--------------###
   sl.registerLazySingleton(() => LogoutCubit(repo: sl()));
@@ -28,6 +31,9 @@ Future<void> setupServiceLocator() async {
   //###------------REPOSITORY-----------###
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(apiService: sl()),
+  );
+  sl.registerLazySingleton<MyProfileRepository>(
+    () => MyProfileRepositoryImpl(apiService: sl()),
   );
 
   sl.registerLazySingleton<ApiService>(() => ApiService(sl<Dio>()));

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:deal_sell/core/network/api_services.dart';
 import '../../../../common/typedef/either_type.dart';
@@ -31,6 +33,7 @@ class MyProfileRepositoryImpl implements MyProfileRepository {
       (data) {
         //##-------------------EXTRACT USER OBJECT FROM NESTED JSON-------------------------##
         final userJson = data['data']['user'];
+        log(userJson.toString());
 
         //##-------------------PARSE JSON TO USER PROFILE MODEL-------------------------##
         final user = UserProfileModel.fromJson(userJson);

@@ -1,10 +1,13 @@
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../bloc/get_user_profile_bloc.dart';
 import '../../widgets/profile_option_list.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -19,6 +22,7 @@ class ProfileScreen extends StatelessWidget {
           elevation: 0.1,
           color: Colors.white,
           child: AppBar(
+            automaticallyImplyLeading: false,
             scrolledUnderElevation: 0,
             backgroundColor: Colors.white,
             elevation: 0, // Set to 0 since Material provides elevation
@@ -38,12 +42,24 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Profile header
-            ProfileCard(
-              email: '+977 9817326306',
-              imageSrc:
-                  'https://avatars.githubusercontent.com/u/105001135?s=400&u=deb717807fc5fcc62502f74287539628ad6a3289&v=4',
-              name: 'Nishan Pradhan',
-              isShowHi: false,
+            BlocBuilder<GetUserProfileBloc, GetUserProfileState>(
+              builder: (context, state) {
+                return state.when(
+                  initial: () => SizedBox(),
+                  loading:
+                      () => const Center(child: CircularProgressIndicator()),
+                  failure:
+                      (failure) =>
+                          Center(child: Text('Error: ${failure.message}')),
+                  loaded:
+                      (profile) => ProfileCard(
+                        email: profile.email,
+                        name: '${profile.firstName} ${profile.lastName}',
+                        imageSrc: profile.avatar ?? '',
+                        isShowHi: false,
+                      ),
+                );
+              },
             ),
 
             // Center(
@@ -102,16 +118,32 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
             buildProfileOption('Invite Friends', Icons.people_alt),
-            ListTile(
-              leading: Icon(
-                LucideIcons.logOut,
-                color: statusErrorColor,
-                size: 18,
-              ),
-              title: Text('Logout', style: TextStyle(color: statusErrorColor)),
-              onTap: () {
-                context.goNamed(AppRoutesName.loginScreen);
+            BlocListener<LogoutCubit, LogoutState>(
+              listener: (context, state) {
+                if (state.status == 'success') {
+                  context.goNamed(AppRoutesName.loginScreen);
+                } else if (state.status != null &&
+                    state.status != 'loading' &&
+                    state.status != 'success') {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Logout failed: ${state.status}')),
+                  );
+                }
               },
+              child: ListTile(
+                leading: Icon(
+                  LucideIcons.logOut,
+                  color: statusErrorColor,
+                  size: 18,
+                ),
+                title: Text(
+                  'Logout',
+                  style: TextStyle(color: statusErrorColor),
+                ),
+                onTap: () {
+                  context.goNamed(AppRoutesName.loginScreen);
+                },
+              ),
             ),
           ],
         ),
