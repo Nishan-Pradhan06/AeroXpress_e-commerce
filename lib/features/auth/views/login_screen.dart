@@ -102,7 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           sl<UserSignInBloc>().add(
                                             UserSignInEvent.userSiginIn(
                                               UserLoginModel(
-                                                email: _emailController.text,
+                                                identifier:
+                                                    _emailController.text,
                                                 password:
                                                     _passwordController.text,
                                               ),

@@ -1,6 +1,7 @@
 import 'package:deal_sell/common/extension/path_extension.dart';
 import 'package:go_router/go_router.dart';
 import '../core/dl/dependency_injection.dart';
+import '../core/services/cache_services.dart';
 import '../core/services/once_cache_service.dart';
 import '../features/auth/views/forget_password.dart';
 import '../features/cutomers/notification/views/notifcation_screen.dart';
@@ -37,11 +38,29 @@ List<GoRoute> userAppRoutes = [
     name: AppRoutesName.bottomNavBar,
     builder: (context, state) => BottomNavBarScreen(),
   ),
+  // GoRoute(
+  //   path: AppRoutesName.loginScreen.path,
+  //   name: AppRoutesName.loginScreen,
+  //   builder: (context, state) => LoginScreen(),
+  // ),
   GoRoute(
     path: AppRoutesName.loginScreen.path,
     name: AppRoutesName.loginScreen,
     builder: (context, state) => LoginScreen(),
+    redirect: (context, state) async {
+      final token = await CacheServices.instance.getAuthToken();
+      if (token != null) {
+        final role = CacheServices.instance.getUserRole();
+        if (role == 'CUSTOMER') {
+          return AppRoutesName.bottomNavBar.path;
+        } else if (role == 'VENDOR') {
+          return AppRoutesName.vendorBottomNavBar.path;
+        }
+      }
+      return AppRoutesName.loginScreen.path;
+    },
   ),
+
   GoRoute(
     path: AppRoutesName.registerScreen.path,
     name: AppRoutesName.registerScreen,
