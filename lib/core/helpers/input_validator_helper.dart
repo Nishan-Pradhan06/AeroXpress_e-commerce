@@ -48,4 +48,20 @@ class InputValidator {
     return null;
   }
 
+  static String? validateEmailOrPhone(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Enter your email or phone number';
+    }
+
+    final isEmail = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    final isPhone = RegExp(r'^\d{10}$');
+
+    if (!isEmail.hasMatch(value.trim()) && !isPhone.hasMatch(value.trim())) {
+      return 'Enter a valid email or 10-digit phone number';
+    }
+
+    return null;
+  }
+
+
 }

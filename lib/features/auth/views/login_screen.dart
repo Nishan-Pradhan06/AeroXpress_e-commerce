@@ -60,10 +60,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       spacing: AppTheme.space4,
                       children: [
                         CustomTextFormField(
-                          hintText: 'Email',
+                          hintText: 'Email Address or Phone Number',
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
-                          validator: InputValidator.validateEmail,
+                          validator: InputValidator.validateEmailOrPhone,
                         ),
 
                         CustomTextFormField(
