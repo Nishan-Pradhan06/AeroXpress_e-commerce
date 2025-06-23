@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import '../../../../core/theme/app_theme.dart';
+import '../../../../../core/theme/app_theme.dart';
 
 class FaqsScreen extends StatelessWidget {
   const FaqsScreen({super.key});
