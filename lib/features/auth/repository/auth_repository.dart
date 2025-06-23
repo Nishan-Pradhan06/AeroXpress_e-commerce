@@ -36,6 +36,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return response.fold((failure) => Left(failure), (data) async {
       await CacheServices.instance.setAuthToken(data['token']);
+      await CacheServices.instance.setUserRole(data['user']?['role']);
       return Right('Login Successful');
     });
   }

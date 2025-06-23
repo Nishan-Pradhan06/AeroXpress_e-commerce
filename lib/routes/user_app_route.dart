@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:deal_sell/common/extension/path_extension.dart';
 import 'package:go_router/go_router.dart';
 import '../core/dl/dependency_injection.dart';
@@ -38,25 +40,24 @@ List<GoRoute> userAppRoutes = [
     name: AppRoutesName.bottomNavBar,
     builder: (context, state) => BottomNavBarScreen(),
   ),
-  // GoRoute(
-  //   path: AppRoutesName.loginScreen.path,
-  //   name: AppRoutesName.loginScreen,
-  //   builder: (context, state) => LoginScreen(),
-  // ),
   GoRoute(
     path: AppRoutesName.loginScreen.path,
     name: AppRoutesName.loginScreen,
     builder: (context, state) => LoginScreen(),
     redirect: (context, state) async {
       final token = await CacheServices.instance.getAuthToken();
+
       if (token != null) {
-        final role = CacheServices.instance.getUserRole();
+        final role = await CacheServices.instance.getUserRole();
+        log("Redirect Role: $role");
+
         if (role == 'CUSTOMER') {
           return AppRoutesName.bottomNavBar.path;
         } else if (role == 'VENDOR') {
           return AppRoutesName.vendorBottomNavBar.path;
         }
       }
+
       return AppRoutesName.loginScreen.path;
     },
   ),

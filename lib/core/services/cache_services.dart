@@ -84,12 +84,12 @@ class CacheServices {
     }
   }
 
-  String getUserRole() {
+  Future<String?> getUserRole() async {
     try {
-      return _prefs.getString('user_role') ?? 'VENDOR';
+      return _prefs.getString('user_role') ?? 'CUSTOMER';
     } catch (e) {
       dLog.d('Error getting user role: $e');
-      return 'VENDOR';
+      return 'CUSTOMER';
     }
   }
 
