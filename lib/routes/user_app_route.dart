@@ -58,7 +58,7 @@ List<GoRoute> userAppRoutes = [
         }
       }
 
-      return AppRoutesName.loginScreen.path;
+      return null;
     },
   ),
 

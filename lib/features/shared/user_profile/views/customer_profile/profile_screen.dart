@@ -118,6 +118,7 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
             buildProfileOption('Invite Friends', Icons.people_alt),
+
             BlocListener<LogoutCubit, LogoutState>(
               listener: (context, state) {
                 if (state.status == 'success') {
@@ -141,7 +142,7 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(color: statusErrorColor),
                 ),
                 onTap: () {
-                  context.goNamed(AppRoutesName.loginScreen);
+                  context.read<LogoutCubit>().logout();
                 },
               ),
             ),

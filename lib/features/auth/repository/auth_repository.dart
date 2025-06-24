@@ -64,6 +64,7 @@ class AuthRepositoryImpl implements AuthRepository {
     return await response.fold((failure) => Left(failure), (data) async {
       // On successful logout, clear the stored auth token
       await CacheServices.instance.clearAuthToken();
+      await CacheServices.instance.clearUserRole();
 
       // Return a success message
       return Right(data['message'] ?? 'Logged out successfully');
