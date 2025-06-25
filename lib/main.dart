@@ -2,6 +2,7 @@ import 'package:deal_sell/core/config/env_config.dart';
 import 'package:deal_sell/core/services/cache_services.dart';
 import 'package:deal_sell/features/auth/blocs/customer_sign_up/customer_sign_up_bloc.dart';
 import 'package:deal_sell/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
+import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -71,11 +72,18 @@ class MyApp extends StatelessWidget {
         //###---------------BLOC--------------###
         BlocProvider(create: (context) => sl<CustomerSignUpBloc>()),
         BlocProvider(create: (context) => sl<UserSignInBloc>()),
+        // BlocProvider(create: (context) => sl<ProductsBloc>()),
         BlocProvider(
           create:
               (context) =>
                   sl<GetUserProfileBloc>()
                     ..add(GetUserProfileEvent.getUserProfile()),
+        ),
+        BlocProvider(
+          create:
+              (context) =>
+                  sl<ProductsBloc>()
+                    ..add(ProductsEvent.products()),
         ),
 
         //###---------------CUBIT-------------###

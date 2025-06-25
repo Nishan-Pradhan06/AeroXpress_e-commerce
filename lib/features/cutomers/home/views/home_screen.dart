@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/widget/padding.dart';
-import '../models/product_list.dart';
+import '../../products/widgets/all_products.dart';
 import '../widgets/icon_with_btn_counter.dart';
-import '../widgets/product_card.dart';
 import '../widgets/search_field.dart';
 import '../widgets/section_title.dart';
 import '../widgets/special_offer_card.dart';
-import 'product_details_screen.dart';
-import 'search_bottom_sheet_page.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,8 +24,8 @@ class HomeScreen extends StatelessWidget {
             DiscountBanner(),
             Categories(),
             SpecialOffers(),
-            PopularProducts(),
-            RecentlyAddedProducts(),
+            // PopularProducts(),
+            GetAllProducts(),
           ],
         ),
       ),
@@ -49,12 +46,12 @@ class HomeHeader extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.white,
-                  builder: (context) => SearchBottomSheet(),
-                );
+                // showModalBottomSheet(
+                //   context: context,
+                //   isScrollControlled: true,
+                //   backgroundColor: Colors.white,
+                //   builder: (context) => SearchBottomSheet(),
+                // );
               },
               child: const AbsorbPointer(child: SearchField()),
             ),
@@ -199,80 +196,43 @@ class SpecialOffers extends StatelessWidget {
   }
 }
 
-class PopularProducts extends StatelessWidget {
-  const PopularProducts({super.key});
+// class PopularProducts extends StatelessWidget {
+//   const PopularProducts({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SectionTitle(title: "Popular Products", onTap: () {}),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ...List.generate(demoProducts.length, (index) {
-                if (demoProducts[index].isPopular) {
-                  return CustomPadding(
-                    child: ProductCard(
-                      product: demoProducts[index],
-                      onPress: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProductDetailsScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }
-                return const SizedBox.shrink();
-              }),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         SectionTitle(title: "Popular Products", onTap: () {}),
+//         SingleChildScrollView(
+//           scrollDirection: Axis.horizontal,
+//           child: Row(
+//             children: [
+//               ...List.generate(demoProducts.length, (index) {
+//                 if (demoProducts[index].isPopular) {
+//                   return CustomPadding(
+//                     child: ProductCard(
+//                       product: demoProducts[index],
+//                       onPress: () {
+//                         Navigator.of(context).push(
+//                           MaterialPageRoute(
+//                             builder: (context) => ProductDetailsScreen(),
+//                           ),
+//                         );
+//                       },
+//                     ),
+//                   );
+//                 }
+//                 return const SizedBox.shrink();
+//               }),
+//             ],
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
-class RecentlyAddedProducts extends StatelessWidget {
-  const RecentlyAddedProducts({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SectionTitle(title: "Recently Added Products", onTap: () {}),
-        CustomPadding(
-          child: GridView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: demoProducts.length,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 0.75,
-              // mainAxisSpacing: 2,
-              crossAxisSpacing: 16,
-            ),
-            itemBuilder:
-                (context, index) => ProductCard(
-                  product: demoProducts[index],
-                  onPress: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailsScreen(),
-                      ),
-                    );
-                  },
-                ),
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 const heartIcon =
     '''<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">

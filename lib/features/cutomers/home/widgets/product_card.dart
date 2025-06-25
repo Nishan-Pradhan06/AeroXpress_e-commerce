@@ -1,7 +1,8 @@
+import 'package:deal_sell/features/cutomers/products/models/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../models/product_card_model.dart';
-import '../views/home_screen.dart';
+
+import '../views/product_details_screen.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -10,11 +11,13 @@ class ProductCard extends StatelessWidget {
     this.aspectRetio = 1.02,
     required this.product,
     required this.onPress,
+    this.isFavourite = false,
   });
 
   final double width, aspectRetio;
-  final Product product;
+  final ProductModel product;
   final VoidCallback onPress;
+  final bool isFavourite;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +36,12 @@ class ProductCard extends StatelessWidget {
                   color: const Color(0xFF979797).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.network(product.images[0]),
+                // child: Image.network(product.),
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              product.title,
+              product.name,
               style: Theme.of(context).textTheme.bodyMedium,
               maxLines: 2,
             ),
@@ -62,7 +65,7 @@ class ProductCard extends StatelessWidget {
                     width: 24,
                     decoration: BoxDecoration(
                       color:
-                          product.isFavourite
+                          isFavourite
                               ? const Color(0xFFFF7643).withOpacity(0.15)
                               : const Color(0xFF979797).withOpacity(0.1),
                       shape: BoxShape.circle,
@@ -70,7 +73,7 @@ class ProductCard extends StatelessWidget {
                     child: SvgPicture.string(
                       heartIcon,
                       colorFilter: ColorFilter.mode(
-                        product.isFavourite
+                        isFavourite
                             ? const Color(0xFFFF4848)
                             : const Color(0xFFDBDEE4),
                         BlendMode.srcIn,
