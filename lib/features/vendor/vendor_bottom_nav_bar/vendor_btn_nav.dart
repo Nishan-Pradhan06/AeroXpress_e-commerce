@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import '../../shared/user_profile/views/customer_profile/profile_screen.dart';
 import '../dashboard/dashboard_page.dart';
 import '../orders/screen/orders_page.dart';
 import '../products/screens/product_page.dart';
-import '../settings/screen/setting_page.dart';
 
 class VendorBtnNavBar extends StatefulWidget {
   const VendorBtnNavBar({super.key});
@@ -19,7 +19,7 @@ class _VendorBtnNavBarState extends State<VendorBtnNavBar> {
     DashboardPage(),
     ProductPage(),
     OrdersPage(),
-    SettingPage(),
+    ProfileScreen(),
   ];
 
   @override
