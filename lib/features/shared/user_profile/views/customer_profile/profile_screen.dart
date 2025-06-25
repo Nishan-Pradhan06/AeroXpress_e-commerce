@@ -55,7 +55,8 @@ class ProfileScreen extends StatelessWidget {
                       (profile) => ProfileCard(
                         email: profile.email,
                         name: '${profile.firstName} ${profile.lastName}',
-                        imageSrc: profile.avatar ?? '',
+                        imageSrc:
+                            "https://avatars.githubusercontent.com/u/105001135?v=4",
                         isShowHi: false,
                       ),
                 );

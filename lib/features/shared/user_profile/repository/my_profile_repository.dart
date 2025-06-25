@@ -32,7 +32,7 @@ class MyProfileRepositoryImpl implements MyProfileRepository {
       //##-------------------SUCCESS CASE-------------------------##
       (data) {
         //##-------------------EXTRACT USER OBJECT FROM NESTED JSON-------------------------##
-        final userJson = data['data']['user'];
+        final userJson = data['user'];
         log(userJson.toString());
 
         //##-------------------PARSE JSON TO USER PROFILE MODEL-------------------------##

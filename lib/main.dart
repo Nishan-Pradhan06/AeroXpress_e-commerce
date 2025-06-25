@@ -72,7 +72,12 @@ class MyApp extends StatelessWidget {
         //###---------------BLOC--------------###
         BlocProvider(create: (context) => sl<CustomerSignUpBloc>()),
         BlocProvider(create: (context) => sl<UserSignInBloc>()),
-        BlocProvider(create: (context) => sl<GetUserProfileBloc>()),
+        BlocProvider(
+          create:
+              (context) =>
+                  sl<GetUserProfileBloc>()
+                    ..add(GetUserProfileEvent.getUserProfile()),
+        ),
 
         //###---------------CUBIT-------------###
         BlocProvider(create: (context) => sl<OnBoardingCubit>()),
