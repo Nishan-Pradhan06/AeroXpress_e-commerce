@@ -257,8 +257,16 @@ class RecentlyAddedProducts extends StatelessWidget {
               crossAxisSpacing: 16,
             ),
             itemBuilder:
-                (context, index) =>
-                    ProductCard(product: demoProducts[index], onPress: () {}),
+                (context, index) => ProductCard(
+                  product: demoProducts[index],
+                  onPress: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ProductDetailsScreen(),
+                      ),
+                    );
+                  },
+                ),
           ),
         ),
       ],
