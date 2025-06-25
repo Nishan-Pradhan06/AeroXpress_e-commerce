@@ -17,7 +17,6 @@ import 'features/shared/on_boarding/cubit/on_boarding_cubit.dart';
 import 'features/shared/user_profile/bloc/get_user_profile_bloc.dart';
 import 'features/vendor/products/cubit/fav_cubit.dart';
 import 'routes/app_route.dart';
-import 'package:clarity_flutter/clarity_flutter.dart';
 
 void main() async {
   //microsoft clarity
