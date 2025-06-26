@@ -50,14 +50,14 @@ class GetAllProducts extends StatelessWidget {
                           // add other required fields if any
                         ),
                         onPress: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => ProductDetailsScreen(
-                                    // pass product details if needed
-                                  ),
-                            ),
-                          );
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder:
+                          //         (context) => ProductDetailsScreen(
+                          //           // pass product details if needed
+                          //         ),
+                          //   ),
+                          // );
                         },
                       );
                     },

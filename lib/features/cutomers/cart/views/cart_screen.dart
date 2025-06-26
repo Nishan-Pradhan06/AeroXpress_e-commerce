@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../models/cart_item_list.dart';
 import '../models/cart_model.dart';
 
 class CartScreen extends StatefulWidget {
