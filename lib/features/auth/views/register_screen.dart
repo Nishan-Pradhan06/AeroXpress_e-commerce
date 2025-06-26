@@ -119,6 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           listener: (context, state) {
                             state.whenOrNull(
                               loaded: (data) {
+                                CustomToast.showSuccess("Register Successful");
                                 context.pushNamed(AppRoutesName.bottomNavBar);
                               },
                               failure: (failure) {

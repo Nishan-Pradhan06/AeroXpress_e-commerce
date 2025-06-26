@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           listener: (context, state) {
                             state.whenOrNull(
                               loaded: (data) {
+                                CustomToast.showSuccess("Login Successful");
                                 context.pushNamed(AppRoutesName.bottomNavBar);
                               },
                               failure: (failure) {
