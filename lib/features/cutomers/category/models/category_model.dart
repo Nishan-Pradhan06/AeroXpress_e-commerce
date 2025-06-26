@@ -4,11 +4,7 @@ class CategoryModel {
   final String slug;
   final String description;
   final String image;
-  final int? parentId;
   final bool isFeatured;
-  final int? featuredOrder;
-  final DateTime createdAt;
-  final DateTime updatedAt;
   final int productCount;
   final int subcategoryCount;
 
@@ -18,29 +14,21 @@ class CategoryModel {
     required this.slug,
     required this.description,
     required this.image,
-    required this.parentId,
     required this.isFeatured,
-    required this.featuredOrder,
-    required this.createdAt,
-    required this.updatedAt,
     required this.productCount,
     required this.subcategoryCount,
   });
 
-  factory CategoryModel.fromMap(Map<String, dynamic> map) {
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
-      id: map['id'],
-      name: map['name'],
-      slug: map['slug'],
-      description: map['description'],
-      image: map['image'],
-      parentId: map['parentId'],
-      isFeatured: map['isFeatured'],
-      featuredOrder: map['featuredOrder'],
-      createdAt: DateTime.parse(map['createdAt']),
-      updatedAt: DateTime.parse(map['updatedAt']),
-      productCount: map['productCount'],
-      subcategoryCount: map['subcategoryCount'],
+      id: json['id'],
+      name: json['name'],
+      slug: json['slug'],
+      description: json['description'],
+      image: json['image'],
+      isFeatured: json['isFeatured'],
+      productCount: json['productCount'],
+      subcategoryCount: json['subcategoryCount'],
     );
   }
 }
