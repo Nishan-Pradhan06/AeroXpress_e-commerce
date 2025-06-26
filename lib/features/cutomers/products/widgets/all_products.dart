@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widget/padding.dart';
-import '../../home/views/product_details_screen.dart';
+import '../pages/product_details_screen.dart';
 import '../../home/widgets/product_card.dart';
 import '../../home/widgets/section_title.dart';
 import '../blocs/all_products/products_bloc.dart';

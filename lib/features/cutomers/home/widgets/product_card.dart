@@ -2,7 +2,7 @@ import 'package:deal_sell/features/cutomers/products/models/products_model.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../views/product_details_screen.dart';
+import '../../products/pages/product_details_screen.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
