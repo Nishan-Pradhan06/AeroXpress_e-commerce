@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../bloc/get_user_profile_bloc.dart';
+import '../../widgets/profile_header_options.dart';
 import '../../widgets/profile_option_list.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -62,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
                 );
               },
             ),
-
+            ProfileHeaderOptions(),
             // Center(
             //   child: Column(
             //     children: [
@@ -95,11 +96,11 @@ class ProfileScreen extends StatelessWidget {
             //   LucideIcons.userRound,
             //   onTap: () {},
             // ),
-            buildProfileOption('Address', Icons.location_on),
+            // buildProfileOption('Address', Icons.location_on),
             buildProfileOption('Notification', Icons.notifications),
             buildProfileOption('Payment', Icons.payment),
             buildProfileOption('Security', Icons.security),
-            buildProfileOption('Language', Icons.language),
+            // buildProfileOption('Language', Icons.language),
             buildProfileOption(
               'Theme',
               Icons.light,
@@ -118,8 +119,8 @@ class ProfileScreen extends StatelessWidget {
                 log('help center');
               },
             ),
-            buildProfileOption('Invite Friends', Icons.people_alt),
 
+            // buildProfileOption('Invite Friends', Icons.people_alt),
             BlocListener<LogoutCubit, LogoutState>(
               listener: (context, state) {
                 if (state.status == 'success') {

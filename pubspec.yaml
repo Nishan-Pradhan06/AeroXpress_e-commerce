@@ -104,6 +104,7 @@ flutter:
     - assets/logo/logo.png
     - assets/svg/
     - assets/image/
+    - assets/icons/
 
   fonts:
     - family: Roboto
