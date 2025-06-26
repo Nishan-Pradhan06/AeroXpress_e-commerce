@@ -25,14 +25,14 @@ class CategoryTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: backgroundColor ?? Colors.grey.shade200,
                 shape: BoxShape.circle,
               ),
               child: SizedBox(
-                width: 48,
-                height: 48,
+                width: 60,
+                height: 60,
                 child: ClipOval(
                   child: NetworkImageWithLoader(imageLink, fit: BoxFit.cover),
                 ),

@@ -1,4 +1,5 @@
 // const BASE_URL = 'http://192.168.1.8:5000/api/';
 // const BASE_URL = 'http://192.168.1.13:5000/api/';
-const BASE_URL = 'http://192.168.1.69:5000/api/';
-const IMAGE_URL = '';
+const String LOCAL_IP = '192.168.1.69';
+
+const BASE_URL = 'http://$LOCAL_IP:5000/api/';

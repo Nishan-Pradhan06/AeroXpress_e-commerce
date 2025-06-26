@@ -1,4 +1,3 @@
-import 'cart_model.dart';
 
 // Example demo products
 List<Product> demoProducts = [
@@ -6,19 +5,19 @@ List<Product> demoProducts = [
     id: '1',
     title: 'Wireless Controller',
     price: 59.99,
-    images: ['assets/images/controller.png'],
+    // images: ['assets/images/controller.png'],
   ),
   Product(
     id: '2',
     title: 'Headphones',
     price: 29.99,
-    images: ['assets/images/headphones.png'],
+    // images: ['assets/images/headphones.png'],
   ),
   Product(
     id: '3',
     title: 'Gaming Mouse',
     price: 19.99,
-    images: ['assets/images/mouse.png'],
+    // images: ['assets/images/mouse.png'],
   ),
 ];
 
@@ -54,12 +53,12 @@ class Product {
   final String id;
   final String title;
   final double price;
-  final List<String> images;
+  // final List<String> images;
 
   Product({
     required this.id,
     required this.title,
     required this.price,
-    required this.images,
+    // required this.images,
   });
 }

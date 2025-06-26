@@ -1,6 +1,7 @@
 import 'package:deal_sell/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/constant/api.dart';
 import '../bloc/category_bloc.dart';
 import '../widgets/category_skeleton.dart';
 import '../widgets/category_tile.dart';
@@ -43,8 +44,13 @@ class CategoryScreen extends StatelessWidget {
                         ),
                     itemCount: data.length,
                     itemBuilder: (context, index) {
+                      final String rawImage = data[index].image ?? '';
+                      final String imageUrl = rawImage.replaceFirst(
+                        'localhost',
+                        LOCAL_IP,
+                      );
                       return CategoryTile(
-                        imageLink: '',
+                        imageLink: imageUrl,
                         label: data[index].name,
                         onTap: () {},
                       );
