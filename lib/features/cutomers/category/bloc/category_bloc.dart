@@ -1,8 +1,9 @@
 import 'package:deal_sell/core/state/bloc_base_state.dart';
 import 'package:deal_sell/features/cutomers/category/repository/category_repository.dart';
-import 'package:deal_sell/features/cutomers/products/models/category_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../models/category_model.dart';
 
 part 'category_event.dart';
 part 'category_state.dart';

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import '../../../../common/typedef/either_type.dart';
 import '../../../../core/network/api_services.dart';
-import '../../products/models/category_model.dart';
+import '../models/category_model.dart';
 
 abstract interface class CategoryRepository {
   FutureEither<List<CategoryModel>> getAllCategories({

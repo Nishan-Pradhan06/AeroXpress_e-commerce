@@ -1,5 +1,5 @@
+import '../../category/models/category_model.dart';
 import 'brand_model.dart';
-import 'category_model.dart';
 import 'vendor_model.dart';
 
 class ProductModel {

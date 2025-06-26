@@ -1,6 +1,8 @@
 import 'package:deal_sell/core/network/api_services.dart';
 import 'package:deal_sell/core/network/dio_client.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
+import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
+import 'package:deal_sell/features/cutomers/category/repository/category_repository.dart';
 import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
 import 'package:deal_sell/features/cutomers/products/repository/products_repository.dart';
 import 'package:deal_sell/features/shared/user_profile/repository/my_profile_repository.dart';
@@ -27,6 +29,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => CustomerSignUpBloc(repo: sl()));
   sl.registerLazySingleton(() => GetUserProfileBloc(repo: sl()));
   sl.registerLazySingleton(() => ProductsBloc(repo: sl()));
+  sl.registerLazySingleton(() => CategoryBloc(repo: sl()));
 
   //###---------------CUBIT--------------###
   sl.registerLazySingleton(() => LogoutCubit(repo: sl()));
@@ -40,6 +43,9 @@ Future<void> setupServiceLocator() async {
   );
   sl.registerLazySingleton<ProductsRepository>(
     () => ProductRepositoryImpl(apiService: sl()),
+  );
+  sl.registerLazySingleton<CategoryRepository>(
+    () => CategoryRepositoryImpl(apiService: sl()),
   );
 
   sl.registerLazySingleton<ApiService>(() => ApiService(sl<Dio>()));
