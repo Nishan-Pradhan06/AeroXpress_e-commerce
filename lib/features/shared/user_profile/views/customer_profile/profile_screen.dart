@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import '../../../../../core/constant/api.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../bloc/get_user_profile_bloc.dart';
 import '../../widgets/profile_header_options.dart';
@@ -52,14 +53,19 @@ class ProfileScreen extends StatelessWidget {
                   failure:
                       (failure) =>
                           Center(child: Text('Error: ${failure.message}')),
-                  loaded:
-                      (profile) => ProfileCard(
-                        email: profile.email,
-                        name: '${profile.firstName} ${profile.lastName}',
-                        imageSrc:
-                            "https://avatars.githubusercontent.com/u/105001135?v=4",
-                        isShowHi: false,
-                      ),
+                  loaded: (profile) {
+                    final String rawImage = profile.avatar ?? '';
+                    final String avatarURL = rawImage.replaceFirst(
+                      'localhost',
+                      LOCAL_IP,
+                    );
+                    return ProfileCard(
+                      email: profile.email,
+                      name: '${profile.firstName} ${profile.lastName}',
+                      imageSrc: avatarURL,
+                      isShowHi: false,
+                    );
+                  },
                 );
               },
             ),
