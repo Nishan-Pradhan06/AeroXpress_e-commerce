@@ -11,6 +11,7 @@ import '../../../core/constant/app_images.dart';
 import '../../../core/dl/dependency_injection.dart';
 import '../../../core/widget/custom_button.dart';
 import '../../../core/widget/custom_toast.dart';
+import '../../shared/user_profile/bloc/get_user_profile_bloc.dart';
 import '../model/user_login_model.dart';
 import '../widgets/custom_text_field.dart';
 
@@ -77,7 +78,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             state.whenOrNull(
                               loaded: (data) {
                                 CustomToast.showSuccess("Login Successful");
-                                context.pushNamed(AppRoutesName.bottomNavBar);
+                                context.read<GetUserProfileBloc>().add(
+                                  const GetUserProfileEvent.getUserProfile(),
+                                );
+                                if (data == 'CUSTOMER') {
+                                  // sl<UserSignInBloc>().add(
+                                  //   UserSignInEvent.getUserProfile(),
+                                  // );
+                                  context.goNamed(AppRoutesName.bottomNavBar);
+                                } else if (data == 'VENDOR') {
+                                  context.goNamed(
+                                    AppRoutesName.vendorBottomNavBar,
+                                  );
+                                }
                               },
                               failure: (failure) {
                                 CustomToast.showError(failure.message);

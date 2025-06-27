@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       // If you're using GoRouter
       if (!mounted) return;
-      context.pushNamed(AppRoutesName.onBoarding);
+      context.goNamed(AppRoutesName.onBoarding);
     });
   }
 

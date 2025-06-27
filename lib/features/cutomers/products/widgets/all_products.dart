@@ -20,8 +20,7 @@ class GetAllProducts extends StatelessWidget {
             return state.when(
               initial: () => const SizedBox.shrink(),
               loading: () => const ProductCardSkeleton(),
-              failure:
-                  (failure) => Center(child: Text('Error: ${failure.message}')),
+              failure: (failure) => const ProductCardSkeleton(),
               loaded: (products) {
                 // Optionally limit to max 5 items
                 final displayedProducts =
