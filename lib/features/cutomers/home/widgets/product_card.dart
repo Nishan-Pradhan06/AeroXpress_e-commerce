@@ -2,6 +2,7 @@ import 'package:deal_sell/features/cutomers/products/models/products_model.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../core/constant/api.dart';
 import '../../products/pages/product_details_screen.dart';
 
 class ProductCard extends StatelessWidget {
@@ -36,7 +37,13 @@ class ProductCard extends StatelessWidget {
                   color: const Color(0xFF979797).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                // child: Image.network(product.),
+                child: Image.network(
+                  product.image?.url.replaceFirst('localhost', LOCAL_IP) ?? '',
+                  fit: BoxFit.cover,
+                  errorBuilder:
+                      (context, error, stackTrace) =>
+                          const Icon(Icons.broken_image),
+                ),
               ),
             ),
             const SizedBox(height: 8),

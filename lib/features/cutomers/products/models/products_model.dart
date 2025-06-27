@@ -1,5 +1,6 @@
 import '../../category/models/category_model.dart';
 import 'brand_model.dart';
+import 'image_model.dart';
 import 'vendor_model.dart';
 
 class ProductModel {
@@ -21,6 +22,7 @@ class ProductModel {
   final VendorModel? vendor;
   final CategoryModel? category;
   final BrandModel? brand;
+  final ImageModel? image;
 
   ProductModel({
     this.id,
@@ -41,6 +43,7 @@ class ProductModel {
     this.vendor,
     this.category,
     this.brand,
+    this.image,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -77,6 +80,10 @@ class ProductModel {
       brand:
           json['brand'] != null
               ? BrandModel.fromJson(json['brand'] as Map<String, dynamic>)
+              : null,
+      image:
+          json['image'] != null
+              ? ImageModel.fromJson(json['image'] as Map<String, dynamic>)
               : null,
     );
   }
