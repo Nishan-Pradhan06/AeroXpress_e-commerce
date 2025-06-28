@@ -11,6 +11,9 @@ abstract interface class ProductsRepository {
   //##-------------------GET PRODUCT BY ID-------------------------##
   // FutureEither<ProductModel> getProductById({required String productId});
 
+  //##-------------------GET PRODUCT BY SLUG-------------------------##
+  FutureEither<ProductModel> getProductBySlug({required String slug});
+
   //##-------------------ADD PRODUCT TO CART-------------------------##
   // FutureEither<String> addProductToCart({required String productId});
 
@@ -25,6 +28,7 @@ class ProductRepositoryImpl implements ProductsRepository {
   ProductRepositoryImpl({required ApiService apiService})
     : _apiService = apiService;
 
+  //##-------------------GET ALL PRODUCTS-------------------------##
   @override
   FutureEither<List<ProductModel>> getAllProducts() async {
     final response = await _apiService.get<Map>('products');
@@ -34,6 +38,18 @@ class ProductRepositoryImpl implements ProductsRepository {
       final List<ProductModel> products =
           productsJson.map((json) => ProductModel.fromJson(json)).toList();
       return Right(products);
+    });
+  }
+
+  //##-------------------GET PRODUCT BY SLUG-------------------------##
+  @override
+  FutureEither<ProductModel> getProductBySlug({required String slug}) async {
+    final response = await _apiService.get<Map>('products/$slug');
+
+    return response.fold((failure) => Left(failure), (data) {
+      final productJson = data['data']['product'];
+      final product = ProductModel.fromJson(productJson);
+      return Right(product);
     });
   }
 }
