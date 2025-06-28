@@ -5,7 +5,7 @@ import '../../home/widgets/product_card.dart';
 import '../../home/widgets/section_title.dart';
 import '../blocs/all_products/products_bloc.dart';
 import '../models/products_model.dart';
-import 'product_loading_skeleton.dart';
+import '../widgets/product_loading_skeleton.dart';
 
 class GetAllProducts extends StatelessWidget {
   const GetAllProducts({super.key});

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/widget/padding.dart';
-import '../../products/widgets/all_products.dart';
+import '../../products/pages/all_products.dart';
 import '../widgets/icon_with_btn_counter.dart';
 import '../widgets/search_field.dart';
 import '../widgets/section_title.dart';
