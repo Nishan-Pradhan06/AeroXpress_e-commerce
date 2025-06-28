@@ -7,6 +7,7 @@ import '../core/services/cache_services.dart';
 import '../core/services/once_cache_service.dart';
 import '../features/auth/views/forget_password.dart';
 import '../features/cutomers/notification/views/notifcation_screen.dart';
+import '../features/cutomers/products/pages/product_details_screen.dart';
 import '../features/shared/user_profile/views/customer_profile/help_center_screen.dart';
 import '../features/shared/user_profile/views/customer_profile/theme_screen.dart';
 import '../features/shared/on_boarding/on_boarding_screen.dart';
@@ -86,5 +87,10 @@ List<GoRoute> userAppRoutes = [
     path: AppRoutesName.notificationScreen.path,
     name: AppRoutesName.notificationScreen,
     builder: (context, state) => NotificationScreen(),
+  ),
+  GoRoute(
+    path: AppRoutesName.productDetailsScreen.path,
+    name: AppRoutesName.productDetailsScreen,
+    builder: (context, state) => ProductDetailsScreen(),
   ),
 ];

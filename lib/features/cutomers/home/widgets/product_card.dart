@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/constant/api.dart';
-import '../../products/pages/product_details_screen.dart';
+import '../views/home_screen.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({

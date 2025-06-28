@@ -1,5 +1,7 @@
+import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/widget/padding.dart';
 import '../../home/widgets/product_card.dart';
 import '../../home/widgets/section_title.dart';
@@ -49,14 +51,7 @@ class GetAllProducts extends StatelessWidget {
                           // add other required fields if any
                         ),
                         onPress: () {
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder:
-                          //         (context) => ProductDetailsScreen(
-                          //           // pass product details if needed
-                          //         ),
-                          //   ),
-                          // );
+                          context.pushNamed(AppRoutesName.productDetailsScreen);
                         },
                       );
                     },

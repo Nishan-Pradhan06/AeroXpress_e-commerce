@@ -11,6 +11,7 @@ class AppRoutesName {
   static const String themeSelectionScreen = 'themeSelectionScreen';
   static const String helpScreen = 'helpScreen';
   static const String notificationScreen = 'notificationScreen';
+  static const String productDetailsScreen = 'productDetailsScreen';
 
   //#--------------VENDOR ROUTES NAME-------------##
   static const String vendorBottomNavBar = 'vendorBottomNavBar';
