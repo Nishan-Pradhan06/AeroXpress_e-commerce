@@ -1,15 +1,14 @@
-import 'package:deal_sell/features/cutomers/products/models/image_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../../core/widget/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widget/top_round_container.dart';
-import '../models/products_model.dart';
+import '../blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
 import '../widgets/product_description.dart';
 import '../widgets/product_images.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+  final String slug;
+
+  const ProductDetailsScreen({super.key, required this.slug});
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +22,7 @@ class ProductDetailsScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.pop(context),
             style: ElevatedButton.styleFrom(
               shape: const CircleBorder(),
               padding: EdgeInsets.zero,
@@ -39,70 +36,36 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
           ),
         ),
-        actions: [
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(right: 20),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Row(
+      ),
+      body: BlocBuilder<GetProductBySlugBloc, GetProductBySlugState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () => const Center(child: Text('Initializing...')),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            failure: (error) => Center(child: Text('Error: $error')),
+            loaded:
+                (product) => ListView(
                   children: [
-                    const Text(
-                      "4.7",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
+                    ProductImages(product: product),
+                    TopRoundedContainer(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          ProductDescription(
+                            product: product,
+                            pressOnSeeMore: () {},
+                          ),
+                          TopRoundedContainer(
+                            color: const Color(0xFFF6F7F9),
+                            child: Column(children: const []),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 4),
-                    SvgPicture.string(starIcon),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: ListView(
-        children: [
-          ProductImages(
-            product: ProductModel(
-              name: 'Sample Product',
-              price: 29.99,
-              image: ImageModel(url: 'https://example.com/image.jpg'),
-
-              // Add other required fields if any
-            ),
-          ),
-          TopRoundedContainer(
-            color: Colors.white,
-            child: Column(
-              children: [
-                ProductDescription(
-                  product: ProductModel(
-                    name: 'ds',
-                    price: 213,
-                    image: ImageModel(url: 'https://example.com/image.jpg'),
-                    description: 'dfdsfdsdsfdsfds',
-                  ),
-                  pressOnSeeMore: () {},
-                ),
-                TopRoundedContainer(
-                  color: const Color(0xFFF6F7F9),
-                  child: Column(children: []),
-                ),
-              ],
-            ),
-          ),
-        ],
+          );
+        },
       ),
       bottomNavigationBar: TopRoundedContainer(
         color: Colors.white,

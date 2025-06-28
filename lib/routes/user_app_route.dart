@@ -1,12 +1,14 @@
 import 'dart:developer';
 
 import 'package:deal_sell/common/extension/path_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../core/dl/dependency_injection.dart';
 import '../core/services/cache_services.dart';
 import '../core/services/once_cache_service.dart';
 import '../features/auth/views/forget_password.dart';
 import '../features/cutomers/notification/views/notifcation_screen.dart';
+import '../features/cutomers/products/blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
 import '../features/cutomers/products/pages/product_details_screen.dart';
 import '../features/shared/user_profile/views/customer_profile/help_center_screen.dart';
 import '../features/shared/user_profile/views/customer_profile/theme_screen.dart';
@@ -89,8 +91,18 @@ List<GoRoute> userAppRoutes = [
     builder: (context, state) => NotificationScreen(),
   ),
   GoRoute(
-    path: AppRoutesName.productDetailsScreen.path,
+    path: '/product/:slug',
     name: AppRoutesName.productDetailsScreen,
-    builder: (context, state) => ProductDetailsScreen(),
+    builder: (context, state) {
+      final slug = state.pathParameters['slug']!;
+      return BlocProvider(
+        create:
+            (context) =>
+                sl<GetProductBySlugBloc>()..add(
+                  GetProductBySlugEvent.getProductBySlug(productSlug: slug),
+                ),
+        child: ProductDetailsScreen(slug: slug),
+      );
+    },
   ),
 ];

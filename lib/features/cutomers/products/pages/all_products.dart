@@ -51,7 +51,10 @@ class GetAllProducts extends StatelessWidget {
                           // add other required fields if any
                         ),
                         onPress: () {
-                          context.pushNamed(AppRoutesName.productDetailsScreen);
+                          context.pushNamed(
+                            AppRoutesName.productDetailsScreen,
+                            pathParameters: {'slug': product.slug!},
+                          );
                         },
                       );
                     },
