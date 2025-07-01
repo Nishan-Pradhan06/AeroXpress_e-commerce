@@ -23,11 +23,16 @@ class _ProductImagesState extends State<ProductImages> {
 
     imageUrls = [];
 
+    // For primary image
     if (widget.product.image != null && widget.product.image!.url.isNotEmpty) {
-      imageUrls.add(
-        widget.product.image!.url.replaceFirst('localhost', LOCAL_IP),
-      );
+      imageUrls.add('$BASE_URL${widget.product.image!.url}');
     }
+
+    // // OR: If your model uses a list of images instead (like in your raw JSON):
+    // if (widget.product. != null && widget.product.image!.isNotEmpty) {
+    //   imageUrls =
+    //       widget.product.images!.map((img) => '$BASE_URL${img.url}').toList();
+    // }
   }
 
   @override
