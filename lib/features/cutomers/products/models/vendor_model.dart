@@ -16,4 +16,8 @@ class VendorModel {
       slug: json['slug'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'businessName': businessName, 'slug': slug};
+  }
 }

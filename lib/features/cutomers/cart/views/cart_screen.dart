@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import '../../products/models/products_model.dart';
 import '../../products/models/vendor_model.dart';
 
-// Your existing ProductModel and VendorModel are used here
-// Assuming you have these imports available
-
-// Updated Cart Models to match API response with your models
 class CartResponse {
   final bool success;
   final CartData data;

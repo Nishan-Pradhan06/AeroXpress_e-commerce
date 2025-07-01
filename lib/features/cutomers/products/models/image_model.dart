@@ -31,4 +31,16 @@ class ImageModel {
               : null,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'productId': productId,
+      'url': url,
+      'altText': altText,
+      'isPrimary': isPrimary,
+      'order': order,
+      'createdAt': createdAt?.toIso8601String(),
+    };
+  }
 }

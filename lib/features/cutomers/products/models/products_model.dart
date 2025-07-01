@@ -10,6 +10,8 @@ class ProductModel {
   final String? description;
   final String? shortDescription;
   final double price;
+  final double? salePrice;
+  final double? costPrice;
   final String? sku;
   final int? stockQuantity;
   final String? status;
@@ -17,6 +19,10 @@ class ProductModel {
   final bool? hasVariants;
   final int? rating;
   final int? reviewCount;
+  final double? weight;
+  final double? length;
+  final double? width;
+  final double? height;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final VendorModel? vendor;
@@ -31,6 +37,8 @@ class ProductModel {
     this.description,
     this.shortDescription,
     required this.price,
+    this.salePrice,
+    this.costPrice,
     this.sku,
     this.stockQuantity,
     this.status,
@@ -38,6 +46,10 @@ class ProductModel {
     this.hasVariants,
     this.rating,
     this.reviewCount,
+    this.weight,
+    this.length,
+    this.width,
+    this.height,
     this.createdAt,
     this.updatedAt,
     this.vendor,
@@ -54,6 +66,8 @@ class ProductModel {
       description: json['description'] as String?,
       shortDescription: json['shortDescription'] as String?,
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      salePrice: (json['salePrice'] as num?)?.toDouble(),
+      costPrice: (json['costPrice'] as num?)?.toDouble(),
       sku: json['sku'] as String?,
       stockQuantity: json['stockQuantity'] as int?,
       status: json['status'] as String?,
@@ -61,6 +75,10 @@ class ProductModel {
       hasVariants: json['hasVariants'] as bool?,
       rating: json['rating'] as int?,
       reviewCount: json['reviewCount'] as int?,
+      weight: (json['weight'] as num?)?.toDouble(),
+      length: (json['length'] as num?)?.toDouble(),
+      width: (json['width'] as num?)?.toDouble(),
+      height: (json['height'] as num?)?.toDouble(),
       createdAt:
           json['createdAt'] != null
               ? DateTime.tryParse(json['createdAt'] as String)
@@ -87,4 +105,37 @@ class ProductModel {
               : null,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'slug': slug,
+      'description': description,
+      'shortDescription': shortDescription,
+      'price': price,
+      'salePrice': salePrice,
+      'costPrice': costPrice,
+      'sku': sku,
+      'stockQuantity': stockQuantity,
+      'status': status,
+      'isFeatured': isFeatured,
+      'hasVariants': hasVariants,
+      'rating': rating,
+      'reviewCount': reviewCount,
+      'weight': weight,
+      'length': length,
+      'width': width,
+      'height': height,
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+      'vendor': vendor?.toJson(),
+      'category': category?.toJson(),
+      'brand': brand?.toJson(),
+      'image': image?.toJson(),
+    };
+  }
+
+  /// Alias for toJson to support toMap calls
+  Map<String, dynamic> toMap() => toJson();
 }

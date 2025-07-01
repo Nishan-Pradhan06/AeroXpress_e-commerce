@@ -31,4 +31,17 @@ class CategoryModel {
       subcategoryCount: json['subcategoryCount'] ?? 0,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'slug': slug,
+      'description': description,
+      'image': image,
+      'isFeatured': isFeatured,
+      'productCount': productCount,
+      'subcategoryCount': subcategoryCount,
+    };
+  }
 }
