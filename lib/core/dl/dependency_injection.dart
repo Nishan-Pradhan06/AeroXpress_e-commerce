@@ -31,7 +31,8 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetUserProfileBloc(repo: sl()));
   sl.registerLazySingleton(() => ProductsBloc(repo: sl()));
   sl.registerLazySingleton(() => CategoryBloc(repo: sl()));
-  sl.registerLazySingleton(() => GetProductBySlugBloc(repo: sl()));
+  // sl.registerLazySingleton(() => GetProductBySlugBloc(repo: sl()));
+  sl.registerFactory(() => GetProductBySlugBloc(repo: sl()));
 
   //###---------------CUBIT--------------###
   sl.registerLazySingleton(() => LogoutCubit(repo: sl()));

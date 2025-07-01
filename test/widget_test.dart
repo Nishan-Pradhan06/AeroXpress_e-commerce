@@ -28,3 +28,37 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 }
+
+
+                // Vouchers Section
+                // Container(
+                //   color: Colors.white,
+                //   padding: const EdgeInsets.all(16),
+                //   child: Row(
+                //     children: [
+                //       Container(
+                //         padding: const EdgeInsets.all(8),
+                //         decoration: BoxDecoration(
+                //           color: Colors.red,
+                //           borderRadius: BorderRadius.circular(4),
+                //         ),
+                //         child: const Text("🎫", style: TextStyle(fontSize: 16)),
+                //       ),
+                //       const SizedBox(width: 12),
+                //       const Text(
+                //         "Vouchers",
+                //         style: TextStyle(
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.w500,
+                //         ),
+                //       ),
+                //       const Spacer(),
+                //       const Text(
+                //         "Applied",
+                //         style: TextStyle(color: Colors.grey),
+                //       ),
+                //       const SizedBox(width: 4),
+                //       const Icon(Icons.chevron_right, color: Colors.grey),
+                //     ],
+                //   ),
+                // ),
