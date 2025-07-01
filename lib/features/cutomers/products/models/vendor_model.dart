@@ -43,32 +43,32 @@ class VendorModel {
     required this.updatedAt,
   });
 
-  factory VendorModel.fromMap(Map<String, dynamic> map) {
+  factory VendorModel.fromJson(Map<String, dynamic> json) {
     return VendorModel(
-      id: map['id'],
-      userId: map['userId'],
-      businessName: map['businessName'],
-      businessEmail: map['businessEmail'],
-      businessPhone: map['businessPhone'],
-      slug: map['slug'],
-      taxId: map['taxId'],
-      description: map['description'],
-      logo: map['logo'],
-      banner: map['banner'],
-      website: map['website'],
-      facebook: map['facebook'],
-      instagram: map['instagram'],
-      twitter: map['twitter'],
-      isApproved: map['isApproved'],
-      approvedAt: map['approvedAt'],
-      rating: map['rating'].toDouble(),
-      totalReviews: map['totalReviews'],
-      createdAt: DateTime.parse(map['createdAt']),
-      updatedAt: DateTime.parse(map['updatedAt']),
+      id: json['id'],
+      userId: json['userId'],
+      businessName: json['businessName'],
+      businessEmail: json['businessEmail'],
+      businessPhone: json['businessPhone'],
+      slug: json['slug'],
+      taxId: json['taxId'],
+      description: json['description'],
+      logo: json['logo'],
+      banner: json['banner'],
+      website: json['website'],
+      facebook: json['facebook'],
+      instagram: json['instagram'],
+      twitter: json['twitter'],
+      isApproved: json['isApproved'],
+      approvedAt: json['approvedAt'],
+      rating: (json['rating'] as num).toDouble(),
+      totalReviews: json['totalReviews'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
     'id': id,
     'userId': userId,
     'businessName': businessName,

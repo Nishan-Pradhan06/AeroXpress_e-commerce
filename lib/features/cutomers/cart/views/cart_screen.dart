@@ -85,25 +85,6 @@ class CartItem {
 }
 
 // Extended VendorModel to include selection state
-class ExtendedVendorModel extends VendorModel {
-  bool isSelected;
-
-  ExtendedVendorModel({
-    required super.id,
-    required super.businessName,
-    required super.slug,
-    this.isSelected = true,
-  });
-
-  factory ExtendedVendorModel.fromVendorModel(VendorModel vendor) {
-    return ExtendedVendorModel(
-      id: vendor.id,
-      businessName: vendor.businessName,
-      slug: vendor.slug,
-      isSelected: true,
-    );
-  }
-}
 
 class CartSummary {
   final double subtotal;
@@ -296,7 +277,7 @@ class _CartScreenState extends State<CartScreen> {
   late List<CartItem> cartItems;
   late CartSummary cartSummary;
   late Map<int, List<CartItem>> groupedItems;
-  late Map<int, ExtendedVendorModel> vendorSelectionMap;
+  // late Map<int, ExtendedVendorModel> vendorSelectionMap;
   bool selectAll = false;
 
   @override

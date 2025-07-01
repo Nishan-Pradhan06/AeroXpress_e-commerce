@@ -18,7 +18,7 @@ class CartRepositoryImpl implements CartRepository {
 
   @override
   FutureEither<CartModel> getCart() async {
-    final response = await _apiService.get<Map<String, dynamic>>('cart');
+    final response = await _apiService.get<Map>('cart');
 
     return response.fold((failure) => Left(failure), (data) {
       final cartData = data['data']['cart'];
