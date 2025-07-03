@@ -1,14 +1,32 @@
-import 'package:bloc/bloc.dart';
+import 'package:deal_sell/core/state/bloc_base_state.dart';
+import 'package:deal_sell/features/cutomers/cart/models/cart_model.dart';
+import 'package:deal_sell/features/cutomers/cart/repository/cart_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'add_to_cart_event.dart';
 part 'add_to_cart_state.dart';
-part '../bloc/add_to_cart_bloc.freezed.dart';
+part 'add_to_cart_bloc.freezed.dart';
 
 class AddToCartBloc extends Bloc<AddToCartEvent, AddToCartState> {
-  AddToCartBloc() : super(_Initial()) {
-    on<AddToCartEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  final CartRepository _cartRepository;
+  AddToCartBloc({required CartRepository repo})
+    : _cartRepository = repo,
+      super(AddToCartState.initial()) {
+    on<_AddToCart>(_onAddToCart);
+  }
+
+  Future<void> _onAddToCart(
+    _AddToCart event,
+    Emitter<AddToCartState> emit,
+  ) async {
+    emit(AddToCartState.loading());
+
+    final result = await _cartRepository.addToCart(5, 3);
+
+    result.fold(
+      (failure) => emit(AddToCartState.failure(failure)),
+      (data) => emit(AddToCartState.loaded(data)),
+    );
   }
 }

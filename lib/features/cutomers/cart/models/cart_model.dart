@@ -9,10 +9,12 @@ class CartModel {
 
   factory CartModel.fromMap(Map<String, dynamic> map) {
     return CartModel(
-      items: List<CartItemModel>.from(
-        (map['items'] as List).map((x) => CartItemModel.fromMap(x)),
-      ),
-      summary: CartSummaryModel.fromMap(map['summary']),
+      items:
+          (map['items'] as List<dynamic>?)
+              ?.map((x) => CartItemModel.fromMap(x))
+              .toList() ??
+          [],
+      summary: CartSummaryModel.fromMap(map['summary'] ?? {}),
     );
   }
 
