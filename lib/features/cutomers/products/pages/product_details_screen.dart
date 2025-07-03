@@ -80,22 +80,26 @@ class ProductDetailsScreen extends StatelessWidget {
               listener: (context, state) {
                 state.whenOrNull(
                   loaded: (data) {
-                    CustomToast.showSuccess('Add to Cart!');
+                    CustomToast.showSuccess('Added to Cart!');
                   },
                   failure: (error) {
-                    CustomToast.showSuccess(error.message);
+                    CustomToast.showError(error.message);
                   },
                 );
               },
               builder: (context, state) {
                 final isLoading = state == const AddToCartState.loading();
+
                 return CustomButtonPrimary(
                   isLoading: isLoading,
                   leadingIcon: Icon(LucideIcons.shoppingCart),
                   title: 'Add to Cart',
                   onPressed: () {
                     context.read<AddToCartBloc>().add(
-                      const AddToCartEvent.addToCart(),
+                      AddToCartEvent.addToCart(
+                        productId: 2,
+                        quantity: 1,
+                      ),
                     );
                   },
                 );

@@ -22,7 +22,10 @@ class AddToCartBloc extends Bloc<AddToCartEvent, AddToCartState> {
   ) async {
     emit(AddToCartState.loading());
 
-    final result = await _cartRepository.addToCart(5, 3);
+    final result = await _cartRepository.addToCart(
+      event.productId,
+      event.quantity,
+    );
 
     result.fold(
       (failure) => emit(AddToCartState.failure(failure)),
