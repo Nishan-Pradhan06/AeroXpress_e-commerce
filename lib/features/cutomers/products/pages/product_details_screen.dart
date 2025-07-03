@@ -1,5 +1,8 @@
+import 'package:deal_sell/core/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import '../../../../core/widget/custom_toast.dart';
 import '../../../../core/widget/top_round_container.dart';
 import '../../cart/bloc/add_to_cart/add_to_cart_bloc.dart';
 import '../blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
@@ -77,34 +80,24 @@ class ProductDetailsScreen extends StatelessWidget {
               listener: (context, state) {
                 state.whenOrNull(
                   loaded: (data) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Added to cart!')),
-                    );
+                    CustomToast.showSuccess('Add to Cart!');
                   },
                   failure: (error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Failed: ${error.message}')),
-                    );
+                    CustomToast.showSuccess(error.message);
                   },
                 );
               },
               builder: (context, state) {
-                return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: const Color(0xFFFF7643),
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(double.infinity, 48),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                    ),
-                  ),
+                final isLoading = state == const AddToCartState.loading();
+                return CustomButtonPrimary(
+                  isLoading: isLoading,
+                  leadingIcon: Icon(LucideIcons.shoppingCart),
+                  title: 'Add to Cart',
                   onPressed: () {
                     context.read<AddToCartBloc>().add(
                       const AddToCartEvent.addToCart(),
                     );
                   },
-                  child: const Text("Add To Cart"),
                 );
               },
             ),
