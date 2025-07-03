@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:deal_sell/core/state/bloc_base_state.dart';
 import 'package:deal_sell/features/cutomers/cart/repository/cart_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,8 +22,9 @@ class GetCartBloc extends Bloc<GetCartEvent, GetCartState> {
 
     final result = await _cartRepository.getCart();
 
-    result.fold((failure) => Left(GetCartState.failure(failure)), (data) {
-      emit(GetCartState.loaded(data));
-    });
+    result.fold(
+      (failure) => emit(GetCartState.failure(failure)),
+      (data) => emit(GetCartState.loaded(data)),
+    );
   }
 }

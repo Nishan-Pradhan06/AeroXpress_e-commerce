@@ -1,6 +1,6 @@
 class VendorModel {
-  final int id;
-  final int userId;
+  final int? id;
+  final int? userId;
   final String businessName;
   final String businessEmail;
   final String businessPhone;
@@ -17,12 +17,12 @@ class VendorModel {
   final String? approvedAt;
   final double rating;
   final int totalReviews;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   VendorModel({
-    required this.id,
-    required this.userId,
+    this.id,
+    this.userId,
     required this.businessName,
     required this.businessEmail,
     required this.businessPhone,
@@ -39,32 +39,38 @@ class VendorModel {
     this.approvedAt,
     required this.rating,
     required this.totalReviews,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory VendorModel.fromJson(Map<String, dynamic> json) {
     return VendorModel(
-      id: json['id'],
-      userId: json['userId'],
-      businessName: json['businessName'],
-      businessEmail: json['businessEmail'],
-      businessPhone: json['businessPhone'],
-      slug: json['slug'],
-      taxId: json['taxId'],
-      description: json['description'],
-      logo: json['logo'],
-      banner: json['banner'],
-      website: json['website'],
-      facebook: json['facebook'],
-      instagram: json['instagram'],
-      twitter: json['twitter'],
-      isApproved: json['isApproved'],
-      approvedAt: json['approvedAt'],
-      rating: (json['rating'] as num).toDouble(),
-      totalReviews: json['totalReviews'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+      id: json['id'] as int?,
+      userId: json['userId'] as int?,
+      businessName: json['businessName'] ?? '',
+      businessEmail: json['businessEmail'] ?? '',
+      businessPhone: json['businessPhone'] ?? '',
+      slug: json['slug'] ?? '',
+      taxId: json['taxId'] as String?,
+      description: json['description'] ?? '',
+      logo: json['logo'] ?? '',
+      banner: json['banner'] as String?,
+      website: json['website'] ?? '',
+      facebook: json['facebook'] as String?,
+      instagram: json['instagram'] as String?,
+      twitter: json['twitter'] as String?,
+      isApproved: json['isApproved'] ?? false,
+      approvedAt: json['approvedAt'] as String?,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      totalReviews: json['totalReviews'] as int? ?? 0,
+      createdAt:
+          json['createdAt'] != null
+              ? DateTime.tryParse(json['createdAt'])
+              : null,
+      updatedAt:
+          json['updatedAt'] != null
+              ? DateTime.tryParse(json['updatedAt'])
+              : null,
     );
   }
 
@@ -87,7 +93,7 @@ class VendorModel {
     'approvedAt': approvedAt,
     'rating': rating,
     'totalReviews': totalReviews,
-    'createdAt': createdAt.toIso8601String(),
-    'updatedAt': updatedAt.toIso8601String(),
+    'createdAt': createdAt?.toIso8601String(),
+    'updatedAt': updatedAt?.toIso8601String(),
   };
 }

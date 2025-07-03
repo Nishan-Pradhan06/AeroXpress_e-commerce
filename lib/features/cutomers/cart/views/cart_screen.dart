@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import '../../products/models/products_model.dart';
 import '../../products/models/vendor_model.dart';
 
+// ---------------------- Data Models --------------------------
 class CartResponse {
   final bool success;
   final CartData data;
-
   CartResponse({required this.success, required this.data});
-
   factory CartResponse.fromJson(Map<String, dynamic> json) {
     return CartResponse(
       success: json['success'],
@@ -18,9 +17,7 @@ class CartResponse {
 
 class CartData {
   final Cart cart;
-
   CartData({required this.cart});
-
   factory CartData.fromJson(Map<String, dynamic> json) {
     return CartData(cart: Cart.fromJson(json['cart']));
   }
@@ -29,9 +26,7 @@ class CartData {
 class Cart {
   final List<CartItem> items;
   final CartSummary summary;
-
   Cart({required this.items, required this.summary});
-
   factory Cart.fromJson(Map<String, dynamic> json) {
     return Cart(
       items:
@@ -79,12 +74,9 @@ class CartItem {
       updatedAt: json['updatedAt'],
       product: ProductModel.fromJson(json['product']),
       variant: json['variant'],
-      isSelected: true,
     );
   }
 }
-
-// Extended VendorModel to include selection state
 
 class CartSummary {
   final double subtotal;
@@ -115,156 +107,93 @@ class CartSummary {
   }
 }
 
-// Dummy Data Generator using your models
+// ---------------------- Dummy Cart Data --------------------------
 class DummyCartData {
   static CartResponse generateDummyCart() {
-    // Create dummy vendors using your VendorModel
     final vendor1 = VendorModel(
       id: 1,
+      userId: 101,
       businessName: "Liubakunhui",
+      businessEmail: "support@liubakunhui.com",
+      businessPhone: "+9779812345678",
       slug: "liubakunhui",
+      taxId: "TAX123456",
+      description: "High-quality camera accessories and gadgets.",
+      logo: "",
+      banner: "",
+      website: "",
+      facebook: "",
+      instagram: "",
+      twitter: "",
+      isApproved: true,
+      approvedAt: "",
+      rating: 4.7,
+      totalReviews: 100,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
 
-    final vendor2 = VendorModel(
-      id: 2,
-      businessName: "Beauty Shop Mall",
-      slug: "beauty-shop-mall",
-    );
-
-    final vendor3 = VendorModel(
-      id: 3,
-      businessName: "Himalayan Solutions",
-      slug: "himalayan-solutions",
-    );
-
-    // Create dummy products using your ProductModel
-    final products = [
-      ProductModel(
-        id: 1,
-        name:
-            "8X 12X 20X Lens For Cellphone with Clips Phone Camera Zoom Tel...",
-        slug: "cellphone-lens",
-        description: "No Brand, Color Family:20X",
-        shortDescription: "Phone camera lens with clips",
-        price: 3972.0,
-        sku: "LENS-001",
-        stockQuantity: 1,
+    final products = List.generate(
+      4,
+      (index) => ProductModel(
+        id: index + 1,
+        name: "Product ${index + 1}",
+        slug: "product-${index + 1}",
+        description: "Description of product ${index + 1}",
+        shortDescription: "Short description",
+        price: 1000 + index * 200,
+        sku: "SKU${index + 1}",
+        stockQuantity: 5,
         status: "ACTIVE",
         isFeatured: true,
         hasVariants: false,
         vendor: vendor1,
       ),
-      ProductModel(
-        id: 2,
-        name:
-            "4X Metal Central Drive Shaft Upgrade Accessories for 124019 124...",
-        slug: "drive-shaft",
-        description: "No Brand, color_family:Red",
-        shortDescription: "Metal drive shaft upgrade",
-        price: 1477.0,
-        sku: "SHAFT-001",
-        stockQuantity: 3,
-        status: "ACTIVE",
-        isFeatured: true,
-        hasVariants: false,
-        vendor: vendor2,
-      ),
-      ProductModel(
-        id: 3,
-        name: "Joystick Module",
-        slug: "joystick-module",
-        description: "No Brand, Color family:Multicolor",
-        shortDescription: "Arduino joystick module",
-        price: 325.0,
-        sku: "JOY-001",
-        stockQuantity: 12,
-        status: "ACTIVE",
-        isFeatured: false,
-        hasVariants: true,
-        vendor: vendor3,
-      ),
-      ProductModel(
-        id: 4,
-        name: "Male and Female Header (5Pcs)",
-        slug: "header-pins",
-        description: "No Brand, Color family:Female Hea...",
-        shortDescription: "Arduino header pins",
-        price: 250.0,
-        sku: "HEADER-001",
-        stockQuantity: 4,
-        status: "ACTIVE",
-        isFeatured: true,
-        hasVariants: false,
-        vendor: vendor3,
-      ),
-    ];
-
-    final cartItems = [
-      CartItem(
-        id: 1,
-        cartId: 1,
-        productId: 1,
-        variantId: null,
-        quantity: 1,
-        createdAt: "2025-06-28T05:37:02.317Z",
-        updatedAt: "2025-06-28T05:37:02.317Z",
-        product: products[0],
-        variant: null,
-        isSelected: true,
-      ),
-      CartItem(
-        id: 2,
-        cartId: 1,
-        productId: 2,
-        variantId: null,
-        quantity: 1,
-        createdAt: "2025-06-28T05:37:02.317Z",
-        updatedAt: "2025-06-28T05:37:02.317Z",
-        product: products[1],
-        variant: null,
-        isSelected: true,
-      ),
-      CartItem(
-        id: 3,
-        cartId: 1,
-        productId: 3,
-        variantId: null,
-        quantity: 1,
-        createdAt: "2025-06-28T05:37:02.317Z",
-        updatedAt: "2025-06-28T05:37:02.317Z",
-        product: products[2],
-        variant: null,
-        isSelected: false,
-      ),
-      CartItem(
-        id: 4,
-        cartId: 1,
-        productId: 4,
-        variantId: null,
-        quantity: 1,
-        createdAt: "2025-06-28T05:37:02.317Z",
-        updatedAt: "2025-06-28T05:37:02.317Z",
-        product: products[3],
-        variant: null,
-        isSelected: false,
-      ),
-    ];
-
-    final summary = CartSummary(
-      subtotal: 5177.0,
-      shippingFee: 140.0,
-      taxAmount: 0.0,
-      discountAmount: 412.0,
-      total: 4905.0,
-      itemCount: 2, // Selected items count
     );
 
-    final cart = Cart(items: cartItems, summary: summary);
-    final cartData = CartData(cart: cart);
+    final cartItems = List.generate(
+      products.length,
+      (index) => CartItem(
+        id: index + 1,
+        cartId: 1,
+        productId: products[index].id ?? 0,
+        variantId: null,
+        quantity: 1,
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString(),
+        product: products[index],
+        variant: null,
+        isSelected: index < 2,
+      ),
+    );
 
-    return CartResponse(success: true, data: cartData);
+    double subtotal = cartItems
+        .where((e) => e.isSelected)
+        .fold(0, (sum, item) => sum + item.product.price * item.quantity);
+    double shipping = subtotal > 0 ? 140 : 0;
+    double discount = subtotal * 0.08;
+    double total = subtotal + shipping - discount;
+
+    return CartResponse(
+      success: true,
+      data: CartData(
+        cart: Cart(
+          items: cartItems,
+          summary: CartSummary(
+            subtotal: subtotal,
+            shippingFee: shipping,
+            taxAmount: 0,
+            discountAmount: discount,
+            total: total,
+            itemCount: cartItems.where((e) => e.isSelected).length,
+          ),
+        ),
+      ),
+    );
   }
 }
+
+// ---------------------- Cart Screen --------------------------
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -277,7 +206,6 @@ class _CartScreenState extends State<CartScreen> {
   late List<CartItem> cartItems;
   late CartSummary cartSummary;
   late Map<int, List<CartItem>> groupedItems;
-  // late Map<int, ExtendedVendorModel> vendorSelectionMap;
   bool selectAll = false;
 
   @override
@@ -287,30 +215,17 @@ class _CartScreenState extends State<CartScreen> {
     cartItems = List.from(dummyCart.data.cart.items);
     cartSummary = dummyCart.data.cart.summary;
     _groupItemsByVendor();
-    _initializeVendorSelection();
   }
 
   void _groupItemsByVendor() {
     groupedItems = {};
     for (var item in cartItems) {
-      if (item.product.vendor != null) {
-        int vendorId = item.product.vendor!.id;
+      if (item.product.vendor != null && item.product.vendor!.id != null) {
+        int vendorId = item.product.vendor!.id!;
         if (!groupedItems.containsKey(vendorId)) {
           groupedItems[vendorId] = [];
         }
         groupedItems[vendorId]!.add(item);
-      }
-    }
-  }
-
-  void _initializeVendorSelection() {
-    vendorSelectionMap = {};
-    for (var vendorId in groupedItems.keys) {
-      var vendor = groupedItems[vendorId]!.first.product.vendor;
-      if (vendor != null) {
-        vendorSelectionMap[vendorId] = ExtendedVendorModel.fromVendorModel(
-          vendor,
-        );
       }
     }
   }
@@ -321,9 +236,7 @@ class _CartScreenState extends State<CartScreen> {
       for (var item in cartItems) {
         item.isSelected = selectAll;
       }
-      for (var vendorId in vendorSelectionMap.keys) {
-        vendorSelectionMap[vendorId]!.isSelected = selectAll;
-      }
+      _updateSelectAllState();
       _recalculateSummary();
     });
   }
@@ -331,12 +244,9 @@ class _CartScreenState extends State<CartScreen> {
   void _toggleVendorSelection(int vendorId, bool? value) {
     setState(() {
       bool isSelected = value ?? false;
-      vendorSelectionMap[vendorId]!.isSelected = isSelected;
-
-      for (var item in groupedItems[vendorId] ?? []) {
+      for (var item in groupedItems[vendorId]!) {
         item.isSelected = isSelected;
       }
-
       _updateSelectAllState();
       _recalculateSummary();
     });
@@ -347,12 +257,14 @@ class _CartScreenState extends State<CartScreen> {
       item.isSelected = value ?? false;
 
       if (item.product.vendor != null) {
-        int vendorId = item.product.vendor!.id;
+        int? vendorId = item.product.vendor!.id;
         var vendorItems = groupedItems[vendorId] ?? [];
+
         bool allVendorItemsSelected = vendorItems.every(
           (item) => item.isSelected,
         );
-        vendorSelectionMap[vendorId]!.isSelected = allVendorItemsSelected;
+
+        // No ExtendedVendorModel needed anymore
       }
 
       _updateSelectAllState();
@@ -366,7 +278,6 @@ class _CartScreenState extends State<CartScreen> {
 
   void _updateQuantity(CartItem item, int newQuantity) {
     if (newQuantity <= 0) return;
-
     setState(() {
       item.quantity = newQuantity;
       _recalculateSummary();
@@ -376,7 +287,6 @@ class _CartScreenState extends State<CartScreen> {
   void _recalculateSummary() {
     double subtotal = 0;
     int selectedCount = 0;
-
     for (var item in cartItems) {
       if (item.isSelected) {
         subtotal += item.product.price * item.quantity;
@@ -446,16 +356,15 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Expanded(
             child: ListView(
               children: [
                 ...groupedItems.entries.map((entry) {
                   int vendorId = entry.key;
                   List<CartItem> items = entry.value;
-                  ExtendedVendorModel? vendor = vendorSelectionMap[vendorId];
 
-                  if (vendor == null) return const SizedBox.shrink();
+                  VendorModel vendor = items.first.product.vendor!;
 
                   return Container(
                     margin: const EdgeInsets.only(bottom: 8),
@@ -468,7 +377,7 @@ class _CartScreenState extends State<CartScreen> {
                           child: Row(
                             children: [
                               Checkbox(
-                                value: vendor.isSelected,
+                                value: items.every((item) => item.isSelected),
                                 onChanged:
                                     (value) =>
                                         _toggleVendorSelection(vendorId, value),
@@ -495,7 +404,6 @@ class _CartScreenState extends State<CartScreen> {
                             ],
                           ),
                         ),
-
                         // Vendor Items
                         ...items.map(
                           (item) => CartItemWidget(
@@ -513,7 +421,6 @@ class _CartScreenState extends State<CartScreen> {
               ],
             ),
           ),
-
           // Bottom Summary
           Container(
             color: Colors.white,
@@ -528,7 +435,6 @@ class _CartScreenState extends State<CartScreen> {
                         onChanged: _toggleSelectAll,
                         activeColor: const Color(0xFF2196F3),
                       ),
-
                       const Spacer(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -586,6 +492,8 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
+// ---------------------- Cart Item Widget --------------------------
+
 class CartItemWidget extends StatelessWidget {
   final CartItem item;
   final Function(bool?) onSelectionChanged;
@@ -614,7 +522,6 @@ class CartItemWidget extends StatelessWidget {
             onChanged: onSelectionChanged,
             activeColor: const Color(0xFF2196F3),
           ),
-
           // Product Image
           Container(
             width: 60,
@@ -644,9 +551,7 @@ class CartItemWidget extends StatelessWidget {
                       color: Colors.grey,
                     ),
           ),
-
           const SizedBox(width: 12),
-
           // Product Details
           Expanded(
             child: Column(
@@ -676,7 +581,6 @@ class CartItemWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                 ],
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

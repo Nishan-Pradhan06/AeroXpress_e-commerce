@@ -7,6 +7,12 @@ import '../models/cart_model.dart';
 abstract interface class CartRepository {
   /// Get current user's cart
   FutureEither<CartModel> getCart();
+
+  FutureEither<CartModel> addToCart(
+    int productId,
+    int quantity, [
+    int? variantId,
+  ]);
 }
 
 //##-------------------CART REPOSITORY IMPLEMENTATION-------------------------##
@@ -22,6 +28,29 @@ class CartRepositoryImpl implements CartRepository {
 
     return response.fold((failure) => Left(failure), (data) {
       final cartData = data['data']['cart'];
+      final cart = CartModel.fromMap(cartData);
+      return Right(cart);
+    });
+  }
+
+  //##---------------------ADD TO CART REPOSITORY IMPLEMENTATION----------####
+  @override
+  FutureEither<CartModel> addToCart(
+    int productId,
+    int quantity, [
+    int? variantId,
+  ]) async {
+    final response = await _apiService.post<Map>(
+      'cart/add',
+      data: {
+        'productId': productId,
+        'quantity': quantity,
+        if (variantId != null) 'variantId': variantId,
+      },
+    );
+
+    return response.fold((failure) => Left(failure), (data) {
+      final cartData = data['data'];
       final cart = CartModel.fromMap(cartData);
       return Right(cart);
     });
