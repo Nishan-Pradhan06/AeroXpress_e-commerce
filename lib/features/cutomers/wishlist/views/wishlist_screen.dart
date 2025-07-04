@@ -1,4 +1,7 @@
+import 'package:deal_sell/core/widget/custom_button.dart';
+import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
@@ -111,14 +114,12 @@ class _WishlistScreenState extends State<WishlistScreen> {
             style: TextStyle(fontSize: 14, color: Colors.grey[500]),
           ),
           const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-            ),
-            child: const Text('Start Shopping'),
+          CustomButtonPrimary(
+            width: 200,
+            title: 'Start Shopping',
+            onPressed: () {
+              // context.pushNamed(AppRoutesName.)
+            },
           ),
         ],
       ),
@@ -285,7 +286,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.pushNamed(
+                              AppRoutesName.productDetailsScreen,
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             side: const BorderSide(color: Colors.blue),
                             padding: const EdgeInsets.symmetric(vertical: 8),
