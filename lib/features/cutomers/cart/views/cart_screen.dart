@@ -2,17 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constant/api.dart';
+import '../../../../core/dl/dependency_injection.dart';
 import '../../products/models/vendor_model.dart';
 import '../bloc/get_cart/get_cart_bloc.dart';
 import '../models/cart_item_model.dart';
 import '../models/cart_summary_model.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   Future<void> _refreshCart(BuildContext context) async {
     // context.read<GetCartBloc>().add(LoadCart());
+    sl<GetCartBloc>().add(GetCartEvent.getCart());
+
     await Future.delayed(const Duration(seconds: 1));
+  }
+
+  @override
+  void didChangeDependencies() {
+    sl<GetCartBloc>().add(GetCartEvent.getCart());
+    super.didChangeDependencies();
   }
 
   @override
@@ -218,7 +232,7 @@ class CartItemWidget extends StatelessWidget {
                     ? ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        'http://$LOCAL_IP:5000${item.product.vendor!.logo!}',
+                        'http://$LOCAL_IP:5000${item.product.vendor!.logo}',
                         fit: BoxFit.cover,
                         errorBuilder:
                             (context, error, stackTrace) => const Icon(
@@ -299,6 +313,7 @@ class CartItemWidget extends StatelessWidget {
                           ),
                           onPressed: () {
                             onQuantityChanged(item.quantity + 1);
+                            sl<GetCartBloc>().add(GetCartEvent.getCart());
                           },
                         ),
                       ],
