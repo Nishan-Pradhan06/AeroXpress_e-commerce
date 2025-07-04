@@ -3,6 +3,7 @@ import 'package:deal_sell/core/services/cache_services.dart';
 import 'package:deal_sell/features/auth/blocs/customer_sign_up/customer_sign_up_bloc.dart';
 import 'package:deal_sell/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:deal_sell/features/cutomers/cart/bloc/add_to_cart/add_to_cart_bloc.dart';
+import 'package:deal_sell/features/cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
 import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
 import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
 import 'package:device_preview/device_preview.dart';
@@ -89,6 +90,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create:
               (context) => sl<CategoryBloc>()..add(CategoryEvent.getCategory()),
+        ),
+        BlocProvider(
+          create:
+              (context) => sl<GetCartBloc>()..add(GetCartEvent.getCart()),
         ),
 
         //###---------------CUBIT-------------###
