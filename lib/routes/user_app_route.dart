@@ -10,6 +10,7 @@ import '../features/auth/views/forget_password.dart';
 import '../features/cutomers/notification/views/notifcation_screen.dart';
 import '../features/cutomers/products/blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
 import '../features/cutomers/products/pages/product_details_screen.dart';
+import '../features/cutomers/wishlist/views/wishlist_screen.dart';
 import '../features/shared/user_profile/views/customer_profile/help_center_screen.dart';
 import '../features/shared/user_profile/views/customer_profile/theme_screen.dart';
 import '../features/shared/on_boarding/on_boarding_screen.dart';
@@ -104,5 +105,10 @@ List<GoRoute> userAppRoutes = [
         child: ProductDetailsScreen(slug: slug),
       );
     },
+  ),
+  GoRoute(
+    path: AppRoutesName.wishListScreen.path,
+    name: AppRoutesName.wishListScreen,
+    builder: (context, state) => WishlistScreen(),
   ),
 ];

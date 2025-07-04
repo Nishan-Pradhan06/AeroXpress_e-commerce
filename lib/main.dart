@@ -92,8 +92,7 @@ class MyApp extends StatelessWidget {
               (context) => sl<CategoryBloc>()..add(CategoryEvent.getCategory()),
         ),
         BlocProvider(
-          create:
-              (context) => sl<GetCartBloc>()..add(GetCartEvent.getCart()),
+          create: (context) => sl<GetCartBloc>()..add(GetCartEvent.getCart()),
         ),
 
         //###---------------CUBIT-------------###
