@@ -13,6 +13,12 @@ abstract interface class CartRepository {
     int quantity, [
     int? variantId,
   ]);
+
+  FutureEither<CartModel> removeCartItem(int productId);
+
+  FutureEither<CartModel> addCartItem(int productId);
+
+  FutureEither<CartModel> deleteCart();
 }
 
 //##-------------------CART REPOSITORY IMPLEMENTATION-------------------------##
@@ -53,6 +59,36 @@ class CartRepositoryImpl implements CartRepository {
       final cartData = data['data'];
       final cart = CartModel.fromMap(cartData);
       return Right(cart);
+    });
+  }
+
+  //##---------------------REMOVE CART ITEM REPOSITORY IMPLEMENTATION----------####
+  @override
+  FutureEither<CartModel> removeCartItem(int productId) {
+    // TODO: implement removeCartItem
+    throw UnimplementedError();
+  }
+
+  //##---------------------ADD CART ITEM REPOSITORY IMPLEMENTATION----------####
+
+  @override
+  FutureEither<CartModel> addCartItem(int productId) {
+    // TODO: implement addCartItem
+    throw UnimplementedError();
+  }
+
+  //##---------------------REMOVE CART REPOSITORY IMPLEMENTATION----------####
+  @override
+  FutureEither<CartModel> deleteCart() async {
+    final response = await _apiService.delete<Map>('cart');
+
+    return response.fold((failure) => Left(failure), (data) async {
+      // After clearing the cart, get the updated (empty) cart
+      final cartResponse = await _apiService.get<Map>('cart');
+      return cartResponse.fold((failure) => Left(failure), (cartData) {
+        final updatedCart = CartModel.fromMap(cartData['data']['cart']);
+        return Right(updatedCart);
+      });
     });
   }
 }
