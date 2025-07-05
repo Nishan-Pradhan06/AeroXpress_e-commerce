@@ -68,6 +68,8 @@ dependencies:
   fluttertoast: ^8.2.12
   shimmer: ^3.0.0
   khalti_checkout_flutter: ^1.0.0-dev.8
+  video_player: ^2.10.0
+  video_player_android: ^2.8.7
 
 dev_dependencies:
   flutter_test:

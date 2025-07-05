@@ -14,6 +14,7 @@ import '../../../core/widget/custom_toast.dart';
 import '../../shared/user_profile/bloc/get_user_profile_bloc.dart';
 import '../model/user_login_model.dart';
 import '../widgets/custom_text_field.dart';
+import 'package:video_player/video_player.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -38,150 +39,254 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  SizedBox(height: constraints.maxHeight * 0.1),
-                  Image.asset(AppImages.logo, height: 100),
-                  SizedBox(height: constraints.maxHeight * 0.1),
-                  Text(
-                    "Sign In",
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
+      body: BackGround(
+        bgImagePath: "assets/image/bbg.mp4",
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: constraints.maxHeight * 0.1),
+                    Image.asset(AppImages.logo, height: 100),
+                    SizedBox(height: constraints.maxHeight * 0.1),
+                    Text(
+                      "Sign In",
+                      style: Theme.of(context).textTheme.headlineSmall!
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  SizedBox(height: constraints.maxHeight * 0.05),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      spacing: AppTheme.space4,
-                      children: [
-                        CustomTextFormField(
-                          hintText: 'Email Address or Phone Number',
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: InputValidator.validateEmailOrPhone,
-                        ),
+                    SizedBox(height: constraints.maxHeight * 0.05),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        spacing: AppTheme.space4,
+                        children: [
+                          CustomTextFormField(
+                            hintText: 'Email Address or Phone Number',
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: InputValidator.validateEmailOrPhone,
+                          ),
 
-                        CustomTextFormField(
-                          hintText: 'Password',
-                          controller: _passwordController,
-                          obscureText: true,
-                          validator: InputValidator.validatePassword,
-                        ),
-                        BlocConsumer<UserSignInBloc, UserSignInState>(
-                          listener: (context, state) {
-                            state.whenOrNull(
-                              loaded: (data) {
-                                CustomToast.showSuccess("Login Successful");
-                                context.read<GetUserProfileBloc>().add(
-                                  const GetUserProfileEvent.getUserProfile(),
-                                );
-                                if (data == 'CUSTOMER') {
-                                  // sl<UserSignInBloc>().add(
-                                  //   UserSignInEvent.getUserProfile(),
-                                  // );
-                                  context.goNamed(AppRoutesName.bottomNavBar);
-                                } else if (data == 'VENDOR') {
-                                  context.goNamed(
-                                    AppRoutesName.vendorBottomNavBar,
+                          CustomTextFormField(
+                            hintText: 'Password',
+                            controller: _passwordController,
+                            obscureText: true,
+                            validator: InputValidator.validatePassword,
+                          ),
+                          BlocConsumer<UserSignInBloc, UserSignInState>(
+                            listener: (context, state) {
+                              state.whenOrNull(
+                                loaded: (data) {
+                                  CustomToast.showSuccess("Login Successful");
+                                  context.read<GetUserProfileBloc>().add(
+                                    const GetUserProfileEvent.getUserProfile(),
                                   );
-                                }
-                              },
-                              failure: (failure) {
-                                CustomToast.showError(failure.message);
-                              },
-                            );
-                          },
-                          builder: (context, state) {
-                            final bool isLoading = state.maybeWhen(
-                              loading: () => true,
-                              orElse: () => false,
-                            );
+                                  if (data == 'CUSTOMER') {
+                                    // sl<UserSignInBloc>().add(
+                                    //   UserSignInEvent.getUserProfile(),
+                                    // );
+                                    context.goNamed(AppRoutesName.bottomNavBar);
+                                  } else if (data == 'VENDOR') {
+                                    context.goNamed(
+                                      AppRoutesName.vendorBottomNavBar,
+                                    );
+                                  }
+                                },
+                                failure: (failure) {
+                                  CustomToast.showError(failure.message);
+                                },
+                              );
+                            },
+                            builder: (context, state) {
+                              final bool isLoading = state.maybeWhen(
+                                loading: () => true,
+                                orElse: () => false,
+                              );
 
-                            return CustomButtonPrimary(
-                              title: "Sign In",
-                              isLoading: isLoading,
+                              return CustomButtonPrimary(
+                                title: "Sign In",
+                                isLoading: isLoading,
 
-                              onPressed:
-                                  isLoading
-                                      ? null
-                                      : () {
-                                        if (_formKey.currentState!.validate()) {
-                                          // log(_passwordController.text);
-                                          sl<UserSignInBloc>().add(
-                                            UserSignInEvent.userSiginIn(
-                                              UserLoginModel(
-                                                identifier:
-                                                    _emailController.text,
-                                                password:
-                                                    _passwordController.text,
+                                onPressed:
+                                    isLoading
+                                        ? null
+                                        : () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            // log(_passwordController.text);
+                                            sl<UserSignInBloc>().add(
+                                              UserSignInEvent.userSiginIn(
+                                                UserLoginModel(
+                                                  identifier:
+                                                      _emailController.text,
+                                                  password:
+                                                      _passwordController.text,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        }
-                                      },
-                            );
-                          },
-                        ),
+                                            );
+                                          }
+                                        },
+                              );
+                            },
+                          ),
 
-                        TextButton(
-                          onPressed: () {
-                            context.pushNamed(AppRoutesName.forgetPassword);
-                          },
-                          child: Text(
-                            'Forgot Password?',
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(
+                          TextButton(
+                            onPressed: () {
+                              context.pushNamed(AppRoutesName.forgetPassword);
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: Theme.of(
                                 context,
-                              ).textTheme.bodyLarge!.color!.withOpacity(0.64),
-                            ),
-                          ),
-                        ),
-                        Text.rich(
-                          TextSpan(
-                            text: "Don’t have an account? ",
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).textTheme.bodyLarge!.color!.withOpacity(0.64),
-                            ),
-                            children: [
-                              TextSpan(
-                                text: "Sign Up",
-                                style: TextStyle(
-                                  color: brandPrimaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  decorationStyle: TextDecorationStyle.dashed,
-                                ),
-                                recognizer:
-                                    TapGestureRecognizer()
-                                      ..onTap = () {
-                                        context.pushNamed(
-                                          AppRoutesName.registerScreen,
-                                        );
-                                      },
+                              ).textTheme.bodyMedium!.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge!.color!.withOpacity(0.64),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Text.rich(
+                            TextSpan(
+                              text: "Don’t have an account? ",
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium!.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge!.color!.withOpacity(0.64),
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: "Sign Up",
+                                  style: TextStyle(
+                                    color: brandPrimaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    decorationStyle: TextDecorationStyle.dashed,
+                                  ),
+                                  recognizer:
+                                      TapGestureRecognizer()
+                                        ..onTap = () {
+                                          context.pushNamed(
+                                            AppRoutesName.registerScreen,
+                                          );
+                                        },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
+    );
+  }
+}
+
+class BackGround extends StatefulWidget {
+  final Widget child;
+  final String? bgImagePath; // Can be .png or .jpg or .mp4
+  final Color? bgColor;
+
+  const BackGround({
+    super.key,
+    required this.child,
+    this.bgImagePath,
+    this.bgColor,
+  });
+
+  @override
+  State<BackGround> createState() => _BackGroundState();
+}
+
+class _BackGroundState extends State<BackGround> {
+  VideoPlayerController? _videoController;
+  bool get _isVideo =>
+      widget.bgImagePath?.toLowerCase().endsWith('.mp4') == true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_isVideo) {
+      _videoController =
+          VideoPlayerController.asset(widget.bgImagePath!)
+            ..setLooping(true)
+            ..setVolume(1.0)
+            ..initialize().then((_) {
+              if (mounted) {
+                _videoController!.play();
+                setState(() {}); // Rebuild after initialization
+              }
+            });
+    }
+  }
+
+  @override
+  void dispose() {
+    _videoController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // Background Color
+        Positioned.fill(
+          child: Container(
+            color: widget.bgColor ?? Theme.of(context).colorScheme.surface,
+          ),
+        ),
+
+        // Background Image or Video
+        if (widget.bgImagePath != null)
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.44,
+              child:
+                  _isVideo
+                      ? (_videoController?.value.isInitialized ?? false
+                          ? FittedBox(
+                            fit: BoxFit.cover,
+                            child: SizedBox(
+                              width: _videoController!.value.size.width,
+                              height: _videoController!.value.size.height,
+                              child: VideoPlayer(_videoController!),
+                            ),
+                          )
+                          : const SizedBox())
+                      : Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(widget.bgImagePath!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+            ),
+          ),
+
+        // Foreground Child
+        Positioned.fill(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SizedBox(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                child: widget.child,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
