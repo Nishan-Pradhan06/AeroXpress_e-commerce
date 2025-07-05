@@ -1,13 +1,15 @@
+import 'package:deal_sell/core/widget/custom_toast.dart';
+import 'package:deal_sell/features/cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
+import 'package:deal_sell/features/cutomers/cart/models/cart_item_model.dart';
+import 'package:deal_sell/features/cutomers/cart/models/cart_summary_model.dart';
+import 'package:deal_sell/features/cutomers/cart/widgets/cart_item.dart';
+import 'package:deal_sell/features/cutomers/products/models/vendor_model.dart';
+import 'package:deal_sell/core/dl/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-
-import '../../../../core/dl/dependency_injection.dart';
-import '../../products/models/vendor_model.dart';
-import '../bloc/get_cart/get_cart_bloc.dart';
-import '../models/cart_item_model.dart';
-import '../models/cart_summary_model.dart';
-import '../widgets/cart_item.dart';
+import '../../../../core/utils/app_loading_dialogs.dart';
+import '../bloc/bloc/delete_cart_bloc.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -18,9 +20,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   Future<void> _refreshCart(BuildContext context) async {
-    // context.read<GetCartBloc>().add(LoadCart());
     sl<GetCartBloc>().add(GetCartEvent.getCart());
-
     await Future.delayed(const Duration(seconds: 1));
   }
 
@@ -30,72 +30,122 @@ class _CartScreenState extends State<CartScreen> {
     super.didChangeDependencies();
   }
 
+  void _onDeleteCart() {
+    context.read<DeleteCartBloc>().add(const DeleteCartEvent.deleteCart());
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: Material(
-          elevation: 0.1,
-          color: Colors.white,
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            scrolledUnderElevation: 0,
-            backgroundColor: Colors.white,
-            elevation: 0, // Set to 0 since Material provides elevation
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Cart", style: TextStyle(color: Colors.black)),
+    return BlocListener<DeleteCartBloc, DeleteCartState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loading: () => AppLoadingDialog.show(context),
+          failure: (failure) {
+            AppLoadingDialog.hide(context);
+            CustomToast.showError(failure.message);
+          },
+          loaded: (cart) {
+            AppLoadingDialog.hide(context);
+            CustomToast.showSuccess("Cart cleared successfully");
+            sl<GetCartBloc>().add(GetCartEvent.getCart());
+          },
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF5F5F5),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Material(
+            elevation: 0.1,
+            color: Colors.white,
+            child: AppBar(
+              automaticallyImplyLeading: false,
+              scrolledUnderElevation: 0,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              title: const Text("Cart", style: TextStyle(color: Colors.black)),
+              actions: [
+                BlocBuilder<DeleteCartBloc, DeleteCartState>(
+                  builder: (context, state) {
+                    final isLoading = state == const DeleteCartState.loading();
+                    return IconButton(
+                      onPressed: isLoading ? null : _onDeleteCart,
+                      icon: const Icon(LucideIcons.trash2),
+                    );
+                  },
+                ),
               ],
             ),
-            actions: [
-              IconButton(
-                onPressed: _onDeleteCart,
-                icon: Icon(LucideIcons.trash2),
-              ),
-            ],
           ),
         ),
-      ),
-      body: BlocBuilder<GetCartBloc, GetCartState>(
-        builder: (context, state) {
-          return state.when(
-            initial: () => const Center(child: CircularProgressIndicator()),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            failure: (failure) => Center(child: Text('Failed: $failure')),
-            loaded: (cart) {
-              final groupedItems = _groupItemsByVendor(cart.items);
-              final summary = cart.summary;
+        body: BlocBuilder<GetCartBloc, GetCartState>(
+          builder: (context, state) {
+            return state.when(
+              initial: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              failure: (failure) => Center(child: Text('Failed: $failure')),
+              loaded: (cart) {
+                if (cart.items.isEmpty) {
+                  return _buildEmptyCartWidget();
+                }
 
-              return Column(
-                children: [
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: () => _refreshCart(context),
-                      child: ListView(
-                        children:
-                            groupedItems.entries.map((entry) {
-                              final vendorId = entry.key;
-                              final items = entry.value;
-                              final vendor = items.first.product.vendor!;
-                              return _buildVendorSection(
-                                context,
-                                vendorId,
-                                vendor,
-                                items,
-                              );
-                            }).toList(),
+                final groupedItems = _groupItemsByVendor(cart.items);
+                final summary = cart.summary;
+
+                return Column(
+                  children: [
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: () => _refreshCart(context),
+                        child: ListView(
+                          children:
+                              groupedItems.entries.map((entry) {
+                                final vendorId = entry.key;
+                                final items = entry.value;
+                                final vendor = items.first.product.vendor!;
+                                return _buildVendorSection(
+                                  context,
+                                  vendorId,
+                                  vendor,
+                                  items,
+                                );
+                              }).toList(),
+                        ),
                       ),
                     ),
-                  ),
-                  _buildSummarySection(summary),
-                ],
-              );
-            },
-          );
-        },
+                    _buildSummarySection(summary),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyCartWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.shopping_cart_outlined,
+            size: 80,
+            color: Colors.grey,
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            "Your cart is empty",
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+          // CustomButtonPrimary(
+          //   title: 'Start Shoping',
+          //   onPressed: () {
+          //     context.goNamed(AppRoutesName.bottomNavBar);
+          //   },
+          // ),
+        ],
       ),
     );
   }
@@ -159,10 +209,7 @@ class _CartScreenState extends State<CartScreen> {
                 );
               },
               onDismissed: (direction) {
-                // context.read<GetCartBloc>().add(RemoveCartItem(item.id));
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(content: Text('${item.product.name} removed')),
-                // );
+                // Future: implement item-level removal logic
               },
               child: CartItemWidget(
                 item: item,
@@ -202,6 +249,4 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-
-  void _onDeleteCart() {}
 }
