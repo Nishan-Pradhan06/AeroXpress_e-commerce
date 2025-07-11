@@ -22,6 +22,14 @@ class TopRoundedContainer extends StatelessWidget {
           topLeft: Radius.circular(40),
           topRight: Radius.circular(40),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            offset: const Offset(0, -4),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
       ),
       child: child,
     );
