@@ -5,12 +5,14 @@ import 'package:deal_sell/core/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import '../../../../core/constant/api.dart';
 import '../../../../core/dl/dependency_injection.dart';
 import '../../../../core/widget/custom_toast.dart';
 import '../../../../core/widget/top_round_container.dart';
 import '../../cart/bloc/add_to_cart/add_to_cart_bloc.dart';
 import '../../cart/bloc/get_cart/get_cart_bloc.dart';
 import '../blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
+import '../models/image_model.dart';
 import '../models/products_model.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -30,28 +32,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      // appBar: AppBar(
-      //   // backgroundColor: Colors.transparent,
-      //   forceMaterialTransparency: false,
-      //   scrolledUnderElevation: 3,
-      //   leading: Padding(
-      //     padding: const EdgeInsets.all(8.0),
-      //     child: ElevatedButton(
-      //       onPressed: () => Navigator.pop(context),
-      //       style: ElevatedButton.styleFrom(
-      //         shape: const CircleBorder(),
-      //         padding: EdgeInsets.zero,
-      //         elevation: 0,
-      //         backgroundColor: AppColors.darkTheme.brandPrimary,
-      //       ),
-      //       child: const Icon(
-      //         Icons.arrow_back_ios_new,
-      //         color: Colors.black,
-      //         size: 20,
-      //       ),
-      //     ),
-      //   ),
-      // ),
       body: Stack(
         children: [
           // Main content (ListView from BlocBuilder)
@@ -175,26 +155,115 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
+  // Widget _buildProductImages(ProductModel product) {
+  //   // Note: The API response shows 'images' as an array, but the model only has 'image' (single)
+  //   // You may need to update your model to handle multiple images
+  //   return SizedBox(
+  //     height: 250,
+  //     child:
+  //         product.image != null
+  //             ? Container(
+  //               child: Image.network(
+  //                 product.image?.url.replaceFirst('localhost', LOCAL_IP) ?? '',
+  //                 fit: BoxFit.cover,
+  //                 errorBuilder:
+  //                     (context, error, stackTrace) =>
+  //                         const Icon(Icons.broken_image),
+  //               ),
+  //             )
+  //             : Icon(Icons.image, size: 100, color: Colors.grey[400]),
+  //   );
+  // }
   Widget _buildProductImages(ProductModel product) {
-    // Note: The API response shows 'images' as an array, but the model only has 'image' (single)
-    // You may need to update your model to handle multiple images
-    return SizedBox(
-      height: 250,
-      child:
-          product.image != null
-              ? Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                    image: NetworkImage(product.image!.url),
-                    fit: BoxFit.cover,
-                    onError: (error, stackTrace) {
-                      // Handle image loading error
-                    },
+    // Use images array if available, otherwise fall back to single image
+    List<ImageModel> imagesToShow =
+        (product.images?.isNotEmpty == true)
+            ? product.images!
+            : (product.image != null ? [product.image!] : []);
+
+    if (imagesToShow.isEmpty) {
+      return SizedBox(
+        height: 250,
+        child: Center(
+          child: Icon(Icons.image, size: 100, color: Colors.grey[400]),
+        ),
+      );
+    }
+
+    // If only one image, show it simply
+    if (imagesToShow.length == 1) {
+      return SizedBox(
+        height: 250,
+        child: Container(
+          width: double.infinity,
+          child: Image.network(
+            imagesToShow.first.url.replaceFirst('localhost', LOCAL_IP),
+            fit: BoxFit.cover,
+            errorBuilder:
+                (context, error, stackTrace) =>
+                    const Center(child: Icon(Icons.broken_image)),
+          ),
+        ),
+      );
+    }
+
+    // Multiple images - show as horizontal scrollable list
+    return Column(
+      children: [
+        // Main image display
+        SizedBox(
+          height: 200,
+          child: Container(
+            width: double.infinity,
+            child: Image.network(
+              imagesToShow.first.url.replaceFirst('localhost', LOCAL_IP),
+              fit: BoxFit.cover,
+              errorBuilder:
+                  (context, error, stackTrace) =>
+                      const Center(child: Icon(Icons.broken_image)),
+            ),
+          ),
+        ),
+
+        // Thumbnail scrollable row
+        if (imagesToShow.length > 1)
+          Container(
+            height: 50,
+            margin: const EdgeInsets.only(top: 8),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: imagesToShow.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 50,
+                  height: 50,
+                  margin: const EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: index == 0 ? Colors.blue : Colors.grey[300]!,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
-              )
-              : Icon(Icons.image, size: 100, color: Colors.grey[400]),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.network(
+                      imagesToShow[index].url.replaceFirst(
+                        'localhost',
+                        LOCAL_IP,
+                      ),
+                      fit: BoxFit.cover,
+                      errorBuilder:
+                          (context, error, stackTrace) =>
+                              const Icon(Icons.broken_image, size: 20),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+      ],
     );
   }
 

@@ -28,7 +28,8 @@ class ProductModel {
   final VendorModel? vendor;
   final CategoryModel? category;
   final BrandModel? brand;
-  final ImageModel? image;
+  final ImageModel? image; // Keep for backward compatibility
+  final List<ImageModel>? images; // New field for multiple images (nullable)
 
   ProductModel({
     this.id,
@@ -56,9 +57,32 @@ class ProductModel {
     this.category,
     this.brand,
     this.image,
+    this.images, // Can be null
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
+    // Parse images array
+    List<ImageModel>? imagesList;
+    if (json['images'] != null && json['images'] is List) {
+      imagesList =
+          (json['images'] as List)
+              .map(
+                (imageJson) =>
+                    ImageModel.fromJson(imageJson as Map<String, dynamic>),
+              )
+              .toList();
+    }
+
+    // Find primary image for backward compatibility
+    ImageModel? primaryImage;
+    if (imagesList != null && imagesList.isNotEmpty) {
+      // Try to find primary image first
+      primaryImage = imagesList.firstWhere(
+        (img) => img.isPrimary == true,
+        orElse: () => imagesList!.first, // If no primary, use first image
+      );
+    }
+
     return ProductModel(
       id: json['id'] as int?,
       name: json['name'] as String? ?? '',
@@ -99,10 +123,8 @@ class ProductModel {
           json['brand'] != null
               ? BrandModel.fromJson(json['brand'] as Map<String, dynamic>)
               : null,
-      image:
-          json['image'] != null
-              ? ImageModel.fromJson(json['image'] as Map<String, dynamic>)
-              : null,
+      image: primaryImage, // Set primary image for backward compatibility
+      images: imagesList, // Can be null
     );
   }
 
@@ -133,6 +155,7 @@ class ProductModel {
       'category': category?.toJson(),
       'brand': brand?.toJson(),
       'image': image?.toJson(),
+      'images': images?.map((img) => img.toJson()).toList(),
     };
   }
 
