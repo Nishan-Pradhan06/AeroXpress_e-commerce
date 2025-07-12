@@ -9,6 +9,7 @@ class AppRoutesName {
 
   //#---------------USER ROUTES NAME--------------##
   static const String bottomNavBar = 'bottomNavBar';
+  static const String customerHome = 'customerHome';
   static const String themeSelectionScreen = 'themeSelectionScreen';
   static const String helpScreen = 'helpScreen';
   static const String notificationScreen = 'notificationScreen';

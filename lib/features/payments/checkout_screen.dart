@@ -1,4 +1,9 @@
+import 'dart:developer';
+import 'package:deal_sell/core/widget/custom_button.dart';
+import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:khalti_checkout_flutter/khalti_checkout_flutter.dart';
 import '../../core/widget/custom_card.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -21,6 +26,49 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
+
+  late final Future<Khalti?> khalti;
+
+  String pidx = 'https://test-pay.khalti.com/?pidx=zD3CEmCoC7Sm2pmfvuhbCR';
+
+  PaymentResult? paymentResult;
+
+  @override
+  void initState() {
+    super.initState();
+    final payConfig = KhaltiPayConfig(
+      publicKey: '1db0691eb0ce459588eba0c81a2b560e',
+      pidx: pidx,
+      environment: Environment.test,
+    );
+
+    khalti = Khalti.init(
+      enableDebugging: true,
+      payConfig: payConfig,
+      onPaymentResult: (paymentResult, khalti) {
+        log(paymentResult.toString());
+        setState(() {
+          this.paymentResult = paymentResult;
+        });
+        khalti.close(context);
+      },
+      onMessage: (
+        khalti, {
+        description,
+        statusCode,
+        event,
+        needsPaymentConfirmation,
+      }) async {
+        log(
+          'Description: $description, Status Code: $statusCode, Event: $event, NeedsPaymentConfirmation: $needsPaymentConfirmation',
+        );
+        khalti.close(context);
+      },
+      onReturn: () {
+        context.goNamed(AppRoutesName.customerHome);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +117,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ],
         ),
         child: SafeArea(
-          child: ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _placeOrder();
+          child: FutureBuilder(
+            future: khalti,
+            initialData: null,
+            builder: (context, snapshot) {
+              final khaltiSnapshot = snapshot.data;
+              if (khaltiSnapshot == null) {
+                return const CircularProgressIndicator.adaptive();
               }
+              return CustomButtonPrimary(
+                height: 40,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    khaltiSnapshot.open(context);
+                    // _placeOrder();
+                  }
+                },
+                title: 'Place Order',
+              );
             },
-            child: Text('Place Order'),
           ),
         ),
       ),
@@ -416,27 +476,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  void _placeOrder() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Order Placed Successfully!'),
-          content: Text(
-            'Your order has been placed and will be processed soon.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void _placeOrder() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Order Placed Successfully!'),
+  //         content: Text(
+  //           'Your order has been placed and will be processed soon.',
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: Text('OK'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   void dispose() {

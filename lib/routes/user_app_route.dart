@@ -83,6 +83,11 @@ List<GoRoute> userAppRoutes = [
     builder: (context, state) => ThemeSelectorScreen(),
   ),
   GoRoute(
+    path: AppRoutesName.customerHome.path,
+    name: AppRoutesName.customerHome,
+    builder: (context, state) => ThemeSelectorScreen(),
+  ),
+  GoRoute(
     path: AppRoutesName.helpScreen.path,
     name: AppRoutesName.helpScreen,
     builder: (context, state) => HelpCenterScreen(),
