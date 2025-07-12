@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../../core/utils/app_loading_dialogs.dart';
-import '../bloc/bloc/delete_cart_bloc.dart';
+import '../bloc/delete_cart/delete_cart_bloc.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});

@@ -2,7 +2,7 @@ import 'package:deal_sell/core/network/api_services.dart';
 import 'package:deal_sell/core/network/dio_client.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
 import 'package:deal_sell/features/cutomers/cart/bloc/add_to_cart/add_to_cart_bloc.dart';
-import 'package:deal_sell/features/cutomers/cart/bloc/bloc/delete_cart_bloc.dart';
+import 'package:deal_sell/features/cutomers/cart/bloc/delete_cart/delete_cart_bloc.dart';
 import 'package:deal_sell/features/cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
 import 'package:deal_sell/features/cutomers/cart/repository/cart_repository.dart';
 import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
