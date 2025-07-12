@@ -99,7 +99,7 @@ class CartRepositoryImpl implements CartRepository {
 
   @override
   FutureEither<List<ShippingOptionModel>> getShippingOptions() async {
-    final response = await _apiService.get<Map>('shipping-options');
+    final response = await _apiService.get<Map>('cart/shipping-options');
 
     return response.fold((failure) => Left(failure), (data) {
       final List<dynamic> list = data['data']['shippingOptions'] ?? [];

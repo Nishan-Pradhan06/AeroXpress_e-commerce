@@ -2,9 +2,11 @@ import 'dart:developer';
 import 'package:deal_sell/core/widget/custom_button.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:khalti_checkout_flutter/khalti_checkout_flutter.dart';
 import '../../core/widget/custom_card.dart';
+import '../cutomers/cart/bloc/shipping_options/shipping_options_bloc.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -323,20 +325,35 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           children: [
             Text('Shipping Method', style: theme.textTheme.titleMedium),
             const SizedBox(height: 16),
-            _buildShippingOption(
-              theme,
-              'Standard',
-              'Standard Delivery',
-              '3-5 business days • 3-5 days',
-              'Rs.100',
-            ),
-            const SizedBox(height: 12),
-            _buildShippingOption(
-              theme,
-              'Express',
-              'Express Delivery',
-              '1-2 business days • 1-2 days',
-              'Rs.200',
+            BlocBuilder<ShippingOptionsBloc, ShippingOptionsState>(
+              builder: (context, state) {
+                return state.when(
+                  initial:
+                      () => const Center(child: CircularProgressIndicator()),
+                  loading:
+                      () => const Center(child: CircularProgressIndicator()),
+                  failure: (failure) => Text('Error: ${failure.message}'),
+                  loaded: (options) {
+                    return Column(
+                      children:
+                          options
+                              .map(
+                                (option) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: _buildShippingOption(
+                                    theme,
+                                    option.name, // used as value
+                                    option.name,
+                                    '${option.description} • ${option.estimatedDays} days',
+                                    'Rs.${option.fee}',
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),
