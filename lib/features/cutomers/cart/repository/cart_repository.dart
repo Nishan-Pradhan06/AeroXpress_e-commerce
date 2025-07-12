@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:deal_sell/common/typedef/either_type.dart';
 import 'package:deal_sell/core/network/api_services.dart';
 import '../models/cart_model.dart';
+import '../models/shipping_option_model.dart';
 
 //##-------------------CART REPOSITORY-------------------------##
 abstract interface class CartRepository {
@@ -19,6 +20,8 @@ abstract interface class CartRepository {
   FutureEither<CartModel> addCartItem(int productId);
 
   FutureEither<CartModel> deleteCart();
+
+  FutureEither<List<ShippingOptionModel>> getShippingOptions();
 }
 
 //##-------------------CART REPOSITORY IMPLEMENTATION-------------------------##
@@ -89,6 +92,19 @@ class CartRepositoryImpl implements CartRepository {
         final updatedCart = CartModel.fromMap(cartData['data']['cart']);
         return Right(updatedCart);
       });
+    });
+  }
+
+  //##---------------------SHIPPING OPTIONS REPOSITORY IMPLEMENTATION----------####
+
+  @override
+  FutureEither<List<ShippingOptionModel>> getShippingOptions() async {
+    final response = await _apiService.get<Map>('shipping-options');
+
+    return response.fold((failure) => Left(failure), (data) {
+      final List<dynamic> list = data['data']['shippingOptions'] ?? [];
+      final options = list.map((e) => ShippingOptionModel.fromMap(e)).toList();
+      return Right(options);
     });
   }
 }
