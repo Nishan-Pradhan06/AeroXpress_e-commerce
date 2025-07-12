@@ -5,6 +5,7 @@ class AppRoutesName {
   static const String loginScreen = 'loginScreen';
   static const String registerScreen = 'registerScreen';
   static const String forgetPassword = 'forgetPassword';
+  static const String checkoutScreen = 'checkoutScreen';
 
   //#---------------USER ROUTES NAME--------------##
   static const String bottomNavBar = 'bottomNavBar';

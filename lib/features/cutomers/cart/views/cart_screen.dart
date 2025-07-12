@@ -5,8 +5,10 @@ import 'package:deal_sell/features/cutomers/cart/models/cart_summary_model.dart'
 import 'package:deal_sell/features/cutomers/cart/widgets/cart_item.dart';
 import 'package:deal_sell/features/cutomers/products/models/vendor_model.dart';
 import 'package:deal_sell/core/dl/dependency_injection.dart';
+import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../../core/utils/app_loading_dialogs.dart';
 import '../bloc/bloc/delete_cart_bloc.dart';
@@ -242,7 +244,9 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(AppRoutesName.checkoutScreen);
+            },
             child: Text("Checkout (${summary.itemCount})"),
           ),
         ],
