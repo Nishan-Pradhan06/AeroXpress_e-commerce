@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:khalti_checkout_flutter/khalti_checkout_flutter.dart';
+import '../../core/constant/api.dart';
 import '../../core/widget/custom_card.dart';
+import '../cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
 import '../cutomers/cart/bloc/shipping_options/shipping_options_bloc.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -16,8 +18,8 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  String selectedShippingMethod = 'Standard';
   String selectedPaymentMethod = 'Khalti';
+  var selectedShippingMethod = '';
 
   final _formKey = GlobalKey<FormState>();
 
@@ -99,7 +101,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         child: Column(
           spacing: 10,
           children: [
-            _buildOrderSummaryCard(theme),
+            _buildOrderSummaryCard(context, theme),
             _buildShippingAddressCard(theme),
             _buildShippingMethodCard(theme),
             _buildPaymentMethodCard(theme),
@@ -144,71 +146,124 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Widget _buildOrderSummaryCard(ThemeData theme) {
-    return CustomCard(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Order Summary', style: theme.textTheme.titleMedium),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    Icons.shopping_bag,
-                    color: theme.colorScheme.primary,
-                    size: 30,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Nike Air Max',
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
+  Widget _buildOrderSummaryCard(BuildContext context, ThemeData theme) {
+    return BlocBuilder<GetCartBloc, GetCartState>(
+      builder: (context, state) {
+        return state.when(
+          initial: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          failure:
+              (failure) => Center(child: Text('Failed: ${failure.message}')),
+          loaded: (cart) {
+            final summary = cart.summary;
+
+            return CustomCard(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Order Summary', style: theme.textTheme.titleMedium),
+                    const SizedBox(height: 16),
+                    ...cart.items.map((item) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.primary.withOpacity(
+                                  0.1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child:
+                                  item.product.vendor?.logo != null
+                                      ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.network(
+                                          'http://$LOCAL_IP:5000${item.product.vendor!.logo}',
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  const Icon(
+                                                    Icons.image_outlined,
+                                                    size: 30,
+                                                    color: Colors.grey,
+                                                  ),
+                                        ),
+                                      )
+                                      : const Icon(
+                                        Icons.image_outlined,
+                                        size: 30,
+                                        color: Colors.grey,
+                                      ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item.product.name,
+                                    style: theme.textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'x${item.quantity}',
+                                    style: theme.textTheme.bodyMedium,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              'Rs.${item.product.price * item.quantity}',
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text('x2', style: theme.textTheme.bodyMedium),
-                    ],
-                  ),
+                      );
+                    }),
+                    const SizedBox(height: 8),
+                    Divider(color: theme.dividerColor),
+                    const SizedBox(height: 16),
+                    _buildOrderRow('Subtotal', 'Rs.${summary.subtotal}', theme),
+                    const SizedBox(height: 8),
+                    _buildOrderRow(
+                      'Shipping',
+                      'Rs.${summary.shippingFee}',
+                      theme,
+                    ),
+                    const SizedBox(height: 8),
+                    _buildOrderRow('Tax', 'Rs.${summary.taxAmount}', theme),
+                    const SizedBox(height: 8),
+                    _buildOrderRow(
+                      'Discount',
+                      '- Rs.${summary.discountAmount}',
+                      theme,
+                    ),
+                    const SizedBox(height: 12),
+                    Divider(color: theme.dividerColor),
+                    const SizedBox(height: 12),
+                    _buildOrderRow(
+                      'Total',
+                      'Rs.${summary.total}',
+                      theme,
+                      isTotal: true,
+                    ),
+                  ],
                 ),
-                Text(
-                  'Rs.200',
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Divider(color: theme.dividerColor),
-            const SizedBox(height: 16),
-            _buildOrderRow('Subtotal', 'Rs.400', theme),
-            const SizedBox(height: 8),
-            _buildOrderRow('Shipping', 'Rs.119', theme),
-            const SizedBox(height: 8),
-            _buildOrderRow('Tax', 'Rs.52', theme),
-            const SizedBox(height: 8),
-            _buildOrderRow('Discount', '- Rs.0', theme),
-            const SizedBox(height: 12),
-            Divider(color: theme.dividerColor),
-            const SizedBox(height: 12),
-            _buildOrderRow('Total', 'Rs.571', theme, isTotal: true),
-          ],
-        ),
-      ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -334,6 +389,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       () => const Center(child: CircularProgressIndicator()),
                   failure: (failure) => Text('Error: ${failure.message}'),
                   loaded: (options) {
+                    final currentSelection =
+                        selectedShippingMethod.isEmpty && options.isNotEmpty
+                            ? options.first.name
+                            : selectedShippingMethod;
+
                     return Column(
                       children:
                           options
@@ -346,6 +406,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     option.name,
                                     '${option.description} • ${option.estimatedDays} days',
                                     'Rs.${option.fee}',
+                                    currentSelection,
                                   ),
                                 ),
                               )
@@ -367,8 +428,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     String title,
     String description,
     String price,
+    String currentSelection, // Add this parameter
   ) {
-    final isSelected = selectedShippingMethod == value;
+    final isSelected = currentSelection == value;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -379,7 +441,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       child: RadioListTile<String>(
         value: value,
-        groupValue: selectedShippingMethod,
+        groupValue: currentSelection,
         onChanged: (String? newValue) {
           setState(() {
             selectedShippingMethod = newValue!;
