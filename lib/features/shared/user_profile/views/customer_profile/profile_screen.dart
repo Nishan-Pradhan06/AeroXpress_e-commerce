@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
+import 'package:deal_sell/features/shared/user_profile/views/customer_profile/edit_profile.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,6 +65,13 @@ class ProfileScreen extends StatelessWidget {
                       name: '${profile.firstName} ${profile.lastName}',
                       imageSrc: avatarURL,
                       isShowHi: false,
+                      press: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => EditProfileScreen(),
+                          ),
+                        );
+                      },
                     );
                   },
                 );
