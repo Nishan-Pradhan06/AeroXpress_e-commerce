@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../../core/constant/api.dart';
-import '../../../../core/dl/dependency_injection.dart';
 import '../../../../core/widget/custom_toast.dart';
 import '../../../../core/widget/top_round_container.dart';
 import '../../cart/bloc/add_to_cart/add_to_cart_bloc.dart';
@@ -115,6 +114,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   state.whenOrNull(
                     loaded: (data) {
                       CustomToast.showSuccess('Added to Cart!');
+                      context.read<GetCartBloc>().add(GetCartEvent.getCart());
                     },
                     failure: (error) {
                       CustomToast.showError(error.message);
@@ -142,7 +142,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 );
                                 // log(message)
                                 log(productId.toString());
-                                sl<GetCartBloc>().add(GetCartEvent.getCart());
+                                // sl<GetCartBloc>().add(GetCartEvent.getCart());
                               },
                     ),
                   );
