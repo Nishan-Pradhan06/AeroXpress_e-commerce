@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BackGround(
-        bgImagePath: "assets/image/bbg.mp4",
+        // bgImagePath: "assets/image/bbg.mp4",
         child: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
