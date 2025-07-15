@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
+
   @override
-  _EditProfileScreenState createState() => _EditProfileScreenState();
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
@@ -37,10 +39,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           elevation: 0.1,
           color: Colors.white,
           child: AppBar(
-            // automaticallyImplyLeading: false,
+            automaticallyImplyLeading: true,
             scrolledUnderElevation: 0,
             backgroundColor: Colors.white,
-            elevation: 0, // Set to 0 since Material provides elevation
+            elevation: 0,
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -56,10 +58,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Custom Header
-            // _buildHeader(),
-
-            // Scrollable Content
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(24),
@@ -67,15 +65,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      // Profile Picture Section
                       _buildProfilePictureSection(),
-
                       SizedBox(height: 32),
-
-                      // Form Fields
                       _buildNameFields(),
                       SizedBox(height: 20),
-
                       CustomTextField(
                         controller: _emailController,
                         label: 'Email',
@@ -83,70 +76,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         validator: _validateEmail,
                       ),
                       SizedBox(height: 20),
-
                       CustomTextField(
                         controller: _phoneController,
                         label: 'Phone Number',
                         keyboardType: TextInputType.phone,
                         validator: _validatePhone,
                       ),
-
                       SizedBox(height: 40),
                     ],
                   ),
                 ),
               ),
             ),
-
-            // Bottom Action Buttons
             _buildBottomButtons(),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          CustomIconButton(
-            icon: Icons.close,
-            onPressed: () => Navigator.pop(context),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Edit Profile',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(height: 2),
-                Text(
-                  'Update your personal information and profile picture.',
-                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -239,7 +183,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  // Validation methods
   String? _validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'This field is required';
@@ -264,8 +207,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return null;
   }
 
-  // Action methods
-  void _pickImage() async {
+  Future<void> _pickImage() async {
     try {
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
@@ -288,7 +230,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   void _updateProfile() {
     if (_formKey.currentState!.validate()) {
-      // Simulate API call
       _showSnackBar('Profile updated successfully!');
       Navigator.pop(context);
     }
@@ -309,7 +250,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 }
-
 // Custom Widgets
 
 class ProfileAvatar extends StatelessWidget {
