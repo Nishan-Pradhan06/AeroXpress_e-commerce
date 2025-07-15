@@ -110,16 +110,28 @@ class MyApp extends StatelessWidget {
       ],
       child: ShadApp.custom(
         appBuilder: (context) {
-          return MaterialApp.router(
-            title: 'Deal Sell',
-            theme: appThemeData,
-            themeAnimationCurve: Curves.easeInOut,
-            themeAnimationStyle: AnimationStyle(curve: Curves.bounceIn),
-            debugShowCheckedModeBanner: false,
-            routerConfig: router,
+          return ScrollConfiguration(
+            behavior: const MyScrollBehavior(),
+            child: MaterialApp.router(
+              title: 'Deal Sell',
+              theme: appThemeData,
+              themeAnimationCurve: Curves.easeInOut,
+              themeAnimationStyle: AnimationStyle(curve: Curves.bounceIn),
+              debugShowCheckedModeBanner: false,
+              routerConfig: router,
+            ),
           );
         },
       ),
     );
+  }
+}
+
+class MyScrollBehavior extends ScrollBehavior {
+  const MyScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const BouncingScrollPhysics();
   }
 }
