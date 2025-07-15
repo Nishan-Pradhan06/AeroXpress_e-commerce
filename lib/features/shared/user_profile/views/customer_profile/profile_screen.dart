@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../../../core/constant/api.dart';
+import '../../../../../core/dl/dependency_injection.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../bloc/get_user_profile_bloc.dart';
 import '../../widgets/profile_header_options.dart';
@@ -50,33 +51,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: AppTheme.space3),
-        child: Column(
-          spacing: AppTheme.space2,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Profile Header Card
-            _buildProfileHeaderCard(),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          sl<GetUserProfileBloc>().add(GetUserProfileEvent.getUserProfile());
+        },
 
-            // Profile Header Options Card
-            _buildProfileHeaderOptionsCard(),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(vertical: AppTheme.space3),
+          child: Column(
+            spacing: AppTheme.space2,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Profile Header Card
+              _buildProfileHeaderCard(),
 
-            // Become Seller Card
-            _buildBecomeSellerCard(),
+              // Profile Header Options Card
+              _buildProfileHeaderOptionsCard(),
 
-            // Account Settings Card
-            _buildAccountSettingsCard(),
+              // Become Seller Card
+              _buildBecomeSellerCard(),
 
-            // Preferences Card
-            _buildPreferencesCard(),
+              // Account Settings Card
+              _buildAccountSettingsCard(),
 
-            // Support Card
-            _buildSupportCard(),
+              // Preferences Card
+              _buildPreferencesCard(),
 
-            // Logout Card
-            _buildLogoutCard(),
-          ],
+              // Support Card
+              _buildSupportCard(),
+
+              // Logout Card
+              _buildLogoutCard(),
+            ],
+          ),
         ),
       ),
     );

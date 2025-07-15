@@ -117,9 +117,9 @@ class MyApp extends StatelessWidget {
             themeAnimationStyle: AnimationStyle(curve: Curves.bounceIn),
             debugShowCheckedModeBanner: false,
             routerConfig: router,
-            scrollBehavior: const MaterialScrollBehavior().copyWith(
-              physics: const BouncingScrollPhysics(),
-            ),
+            // scrollBehavior: const MaterialScrollBehavior().copyWith(
+            //   physics: const AlwaysScrollableScrollPhysics(),
+            // ),
           );
         },
       ),

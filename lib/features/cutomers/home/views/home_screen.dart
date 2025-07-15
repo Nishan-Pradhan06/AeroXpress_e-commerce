@@ -1,8 +1,10 @@
+import 'package:deal_sell/core/dl/dependency_injection.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/widget/padding.dart';
+import '../../products/blocs/all_products/products_bloc.dart';
 import '../../products/pages/all_products.dart';
 import '../widgets/icon_with_btn_counter.dart';
 import '../widgets/search_field.dart';
@@ -15,18 +17,24 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 30),
-        child: Column(
-          spacing: 10,
-          children: [
-            HomeHeader(),
-            DiscountBanner(),
-            Categories(),
-            SpecialOffers(),
-            // PopularProducts(),
-            GetAllProducts(),
-          ],
+      body: RefreshIndicator.adaptive(
+        onRefresh: () async {
+          sl<ProductsBloc>().add(ProductsEvent.products());
+        },
+        child: SingleChildScrollView(
+          // physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.only(top: 30),
+          child: Column(
+            spacing: 10,
+            children: [
+              HomeHeader(),
+              DiscountBanner(),
+              Categories(),
+              SpecialOffers(),
+              // PopularProducts(),
+              GetAllProducts(),
+            ],
+          ),
         ),
       ),
     );
