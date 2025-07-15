@@ -52,7 +52,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: AppTheme.space3),
-        physics: const BouncingScrollPhysics(),
         child: Column(
           spacing: AppTheme.space2,
           crossAxisAlignment: CrossAxisAlignment.start,
