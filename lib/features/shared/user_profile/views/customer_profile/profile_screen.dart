@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deal_sell/core/theme/app_theme.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
 import 'package:deal_sell/features/shared/user_profile/views/customer_profile/edit_profile.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
@@ -50,46 +51,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(vertical: AppTheme.space3),
         physics: const BouncingScrollPhysics(),
         child: Column(
+          spacing: AppTheme.space2,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 16),
-
             // Profile Header Card
             _buildProfileHeaderCard(),
-
-            const SizedBox(height: 16),
 
             // Profile Header Options Card
             _buildProfileHeaderOptionsCard(),
 
-            const SizedBox(height: 16),
-
             // Become Seller Card
             _buildBecomeSellerCard(),
-
-            const SizedBox(height: 16),
 
             // Account Settings Card
             _buildAccountSettingsCard(),
 
-            const SizedBox(height: 16),
-
             // Preferences Card
             _buildPreferencesCard(),
-
-            const SizedBox(height: 16),
 
             // Support Card
             _buildSupportCard(),
 
-            const SizedBox(height: 16),
-
             // Logout Card
             _buildLogoutCard(),
-
-            const SizedBox(height: 32),
           ],
         ),
       ),
@@ -98,11 +85,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildProfileHeaderCard() {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.all(0),
       elevation: 0,
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(0),
         side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
       ),
       child: Padding(
@@ -155,11 +142,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildProfileHeaderOptionsCard() {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.all(0),
+
       elevation: 0,
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(0),
         side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
       ),
       child: Padding(
@@ -171,11 +159,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildBecomeSellerCard() {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.all(0),
+
       elevation: 0,
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(0),
         side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
       ),
       child: Container(
@@ -186,7 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(0),
         ),
         child: Row(
           children: [
@@ -257,11 +246,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildAccountSettingsCard() {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.all(0),
+
       elevation: 0,
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(0),
         side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
       ),
       child: Column(
@@ -301,11 +291,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildPreferencesCard() {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.all(0),
+
       elevation: 0,
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(0),
         side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
       ),
       child: Column(
@@ -339,11 +330,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildSupportCard() {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.all(0),
+
       elevation: 0,
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(0),
         side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
       ),
       child: Column(
@@ -388,11 +380,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       },
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        margin: const EdgeInsets.all(0),
+
         elevation: 0,
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(0),
           side: BorderSide(color: Colors.red.withOpacity(0.2), width: 1),
         ),
         child: Container(
