@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constant/api.dart';
 import '../../../../core/dl/dependency_injection.dart';
+import '../../../../core/theme/app_color.dart';
 import '../bloc/get_cart/get_cart_bloc.dart';
 import '../models/cart_item_model.dart';
 
@@ -89,10 +90,10 @@ class CartItemWidget extends StatelessWidget {
                   children: [
                     Text(
                       "Rs. ${item.product.price.toStringAsFixed(0)}",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFFFF5722),
+                        color: AppColors.lightTheme.brandPrimary,
                       ),
                     ),
                     Row(
