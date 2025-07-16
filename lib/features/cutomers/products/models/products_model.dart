@@ -61,7 +61,7 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
-    // Parse images array
+    // Parse images array if available
     List<ImageModel>? imagesList;
     if (json['images'] != null && json['images'] is List) {
       imagesList =
@@ -73,14 +73,18 @@ class ProductModel {
               .toList();
     }
 
-    // Find primary image for backward compatibility
+    // Find primary image from images list
     ImageModel? primaryImage;
     if (imagesList != null && imagesList.isNotEmpty) {
-      // Try to find primary image first
       primaryImage = imagesList.firstWhere(
         (img) => img.isPrimary == true,
-        orElse: () => imagesList!.first, // If no primary, use first image
+        orElse: () => imagesList!.first,
       );
+    }
+
+    // If no images list, fallback to single image field
+    if (primaryImage == null && json['image'] != null) {
+      primaryImage = ImageModel.fromJson(json['image'] as Map<String, dynamic>);
     }
 
     return ProductModel(
@@ -105,11 +109,11 @@ class ProductModel {
       height: (json['height'] as num?)?.toDouble(),
       createdAt:
           json['createdAt'] != null
-              ? DateTime.tryParse(json['createdAt'] as String)
+              ? DateTime.tryParse(json['createdAt'])
               : null,
       updatedAt:
           json['updatedAt'] != null
-              ? DateTime.tryParse(json['updatedAt'] as String)
+              ? DateTime.tryParse(json['updatedAt'])
               : null,
       vendor:
           json['vendor'] != null
@@ -123,8 +127,8 @@ class ProductModel {
           json['brand'] != null
               ? BrandModel.fromJson(json['brand'] as Map<String, dynamic>)
               : null,
-      image: primaryImage, // Set primary image for backward compatibility
-      images: imagesList, // Can be null
+      image: primaryImage,
+      images: imagesList,
     );
   }
 
