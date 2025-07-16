@@ -299,11 +299,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           Row(
             children: [
               Text(
-                product.price.toStringAsFixed(2),
-                style: const TextStyle(
+                "Rs.${product.price.toStringAsFixed(2)}",
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.green,
+                  color: AppColors.lightTheme.brandPrimary,
                 ),
               ),
               const SizedBox(width: 12),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/constant/api.dart';
+import '../../../../core/theme/app_color.dart';
 import '../views/home_screen.dart';
 
 class ProductCard extends StatelessWidget {
@@ -56,11 +57,11 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "\$${product.price}",
-                  style: const TextStyle(
+                  "Rs.${product.price}",
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFFFF7643),
+                    color: AppColors.lightTheme.brandPrimary,
                   ),
                 ),
                 InkWell(
