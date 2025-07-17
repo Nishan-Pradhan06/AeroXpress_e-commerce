@@ -3,7 +3,7 @@ import 'package:deal_sell/features/shared/orders/model/order_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../repository/all_orders_repository.dart';
+import '../../repository/orders_repository.dart';
 
 part 'all_order_event.dart';
 part 'all_order_state.dart';

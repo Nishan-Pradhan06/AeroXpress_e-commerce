@@ -8,7 +8,7 @@ import '../core/services/cache_services.dart';
 import '../core/services/once_cache_service.dart';
 import '../features/auth/views/forget_password.dart';
 import '../features/shared/orders/bloc/customer_orders/all_order_bloc.dart';
-import '../features/shared/orders/repository/all_orders_repository.dart';
+import '../features/shared/orders/repository/orders_repository.dart';
 import '../features/shared/orders/views/all_orders_screen.dart';
 import '../features/cutomers/notification/views/notifcation_screen.dart';
 import '../features/cutomers/products/blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
