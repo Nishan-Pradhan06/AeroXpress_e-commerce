@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:khalti_checkout_flutter/khalti_checkout_flutter.dart';
-import '../../core/constant/api.dart';
-import '../../core/widget/custom_card.dart';
-import '../cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
+import '../../../core/constant/api.dart';
+import '../../../core/widget/custom_card.dart';
+import '../../cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});

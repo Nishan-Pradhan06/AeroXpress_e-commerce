@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'vendor_orders_event.dart';
 part 'vendor_orders_state.dart';
-part '../bloc/vendor_orders_bloc.freezed.dart';
+part '../../../../cutomers/orders/bloc/bloc/vendor_orders_bloc.freezed.dart';
 
 class VendorOrdersBloc extends Bloc<VendorOrdersEvent, VendorOrdersState> {
   VendorOrdersBloc() : super(_Initial()) {
