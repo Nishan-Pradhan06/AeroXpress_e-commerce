@@ -20,7 +20,9 @@ class ProfileHeaderOptions extends StatelessWidget {
           ProfileSqureTile(
             label: 'All Order',
             icon: AppIcons.truckIcon,
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(AppRoutesName.allOrders);
+            },
           ),
           ProfileSqureTile(
             label: 'Voucher',

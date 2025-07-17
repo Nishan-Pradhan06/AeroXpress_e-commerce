@@ -7,6 +7,7 @@ import '../core/dl/dependency_injection.dart';
 import '../core/services/cache_services.dart';
 import '../core/services/once_cache_service.dart';
 import '../features/auth/views/forget_password.dart';
+import '../features/cutomers/all_orders/views/all_orders_screen.dart';
 import '../features/cutomers/notification/views/notifcation_screen.dart';
 import '../features/cutomers/products/blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
 import '../features/cutomers/products/pages/product_details_screen.dart';
@@ -121,5 +122,10 @@ List<GoRoute> userAppRoutes = [
     path: AppRoutesName.checkoutScreen.path,
     name: AppRoutesName.checkoutScreen,
     builder: (context, state) => CheckoutScreen(),
+  ),
+  GoRoute(
+    path: AppRoutesName.allOrders.path,
+    name: AppRoutesName.allOrders,
+    builder: (context, state) => OrdersScreen(),
   ),
 ];
