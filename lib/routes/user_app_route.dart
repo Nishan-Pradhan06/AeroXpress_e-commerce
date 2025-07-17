@@ -7,7 +7,7 @@ import '../core/dl/dependency_injection.dart';
 import '../core/services/cache_services.dart';
 import '../core/services/once_cache_service.dart';
 import '../features/auth/views/forget_password.dart';
-import '../features/cutomers/orders/bloc/all_order_bloc.dart';
+import '../features/cutomers/orders/bloc/customer_orders/all_order_bloc.dart';
 import '../features/cutomers/orders/repository/all_orders_repository.dart';
 import '../features/cutomers/orders/views/all_orders_screen.dart';
 import '../features/cutomers/notification/views/notifcation_screen.dart';

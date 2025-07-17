@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../bloc/all_order_bloc.dart';
+import '../bloc/customer_orders/all_order_bloc.dart';
 import '../model/order_model.dart';
 
 class OrdersScreen extends StatefulWidget {
