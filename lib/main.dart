@@ -8,6 +8,7 @@ import 'package:deal_sell/features/cutomers/cart/bloc/get_cart/get_cart_bloc.dar
 import 'package:deal_sell/features/cutomers/cart/bloc/shipping_options/shipping_options_bloc.dart';
 import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
 import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
+import 'package:deal_sell/features/shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -95,6 +96,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<GetCartBloc>()..add(GetCartEvent.getCart()),
+        ),
+        BlocProvider(
+          create:
+              (context) =>
+                  sl<VendorOrdersBloc>()
+                    ..add(VendorOrdersEvent.getVendorOrders()),
         ),
         BlocProvider(
           create:

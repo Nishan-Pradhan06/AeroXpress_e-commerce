@@ -2,6 +2,7 @@ import 'package:deal_sell/core/network/api_services.dart';
 import 'package:deal_sell/core/network/dio_client.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
 import 'package:deal_sell/features/shared/orders/bloc/customer_orders/all_order_bloc.dart';
+import 'package:deal_sell/features/shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
 import 'package:deal_sell/features/shared/orders/repository/orders_repository.dart';
 import 'package:deal_sell/features/cutomers/cart/bloc/add_to_cart/add_to_cart_bloc.dart';
 import 'package:deal_sell/features/cutomers/cart/bloc/delete_cart/delete_cart_bloc.dart';
@@ -43,6 +44,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => DeleteCartBloc(repo: sl()));
   sl.registerLazySingleton(() => ShippingOptionsBloc(repo: sl()));
   sl.registerLazySingleton(() => AllOrderBloc(repo: sl()));
+  sl.registerLazySingleton(() => VendorOrdersBloc(repo: sl()));
   // sl.registerLazySingleton(() => GetProductBySlugBloc(repo: sl()));
   sl.registerFactory(() => GetProductBySlugBloc(repo: sl()));
 
