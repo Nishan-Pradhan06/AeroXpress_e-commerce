@@ -110,27 +110,29 @@ class ProductSnapshotModel {
 }
 
 class ShippingAddressModel {
-  final String label;
-  final String recipientName;
-  final String street;
-  final String city;
-  final String state;
-  final String postalCode;
-  final String country;
-  final String phone;
+  final String? label;
+  final String? recipientName;
+  final String? street;
+  final String? city;
+  final String? state;
+  final String? postalCode;
+  final String? country;
+  final String? phone;
 
   ShippingAddressModel({
-    required this.label,
-    required this.recipientName,
-    required this.street,
-    required this.city,
-    required this.state,
-    required this.postalCode,
-    required this.country,
-    required this.phone,
+    this.label,
+    this.recipientName,
+    this.street,
+    this.city,
+    this.state,
+    this.postalCode,
+    this.country,
+    this.phone,
   });
 
-  factory ShippingAddressModel.fromJson(Map<String, dynamic> json) {
+  factory ShippingAddressModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return ShippingAddressModel();
+
     return ShippingAddressModel(
       label: json['label'],
       recipientName: json['recipientName'],
@@ -143,3 +145,4 @@ class ShippingAddressModel {
     );
   }
 }
+

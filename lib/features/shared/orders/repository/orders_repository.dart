@@ -5,6 +5,7 @@ import '../model/order_model.dart';
 
 abstract interface class OrderRepository {
   FutureEither<List<OrderModel>> getOrders({int page = 1});
+   FutureEither<List<OrderModel>> getVendorOrders({int page = 1});
 }
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -17,6 +18,21 @@ class OrderRepositoryImpl implements OrderRepository {
   @override
   FutureEither<List<OrderModel>> getOrders({int page = 1}) async {
     final response = await _apiService.get<Map>('orders?page=$page');
+
+    return response.fold((failure) => Left(failure), (data) {
+      final ordersJson = data['data']['orders'] as List;
+      final orders =
+          ordersJson
+              .map((orderJson) => OrderModel.fromJson(orderJson))
+              .toList();
+      return Right(orders);
+    });
+  }
+
+  //###-------------VENDORS ORDERS REPO IMPL-----------------###
+  @override
+  FutureEither<List<OrderModel>> getVendorOrders({int page = 1}) async {
+    final response = await _apiService.get<Map>('vendors/orders?page=$page');
 
     return response.fold((failure) => Left(failure), (data) {
       final ordersJson = data['data']['orders'] as List;
