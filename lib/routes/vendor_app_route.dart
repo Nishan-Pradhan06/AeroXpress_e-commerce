@@ -26,7 +26,7 @@ List<GoRoute> vendorAppRoutes = [
   GoRoute(
     path: AppRoutesName.vendorOrders.path,
     name: AppRoutesName.vendorOrders,
-    builder: (context, state) => const OrdersPage(),
+    builder: (context, state) => const VendorOrderPage(),
   ),
   GoRoute(
     path: AppRoutesName.vendorSettings.path,

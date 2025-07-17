@@ -18,7 +18,7 @@ class _VendorBtnNavBarState extends State<VendorBtnNavBar> {
   final List<Widget> _screens = [
     DashboardPage(),
     ProductPage(),
-    OrdersPage(),
+    VendorOrderPage(),
     ProfileScreen(),
   ];
 
