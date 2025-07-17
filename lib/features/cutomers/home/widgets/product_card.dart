@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:deal_sell/features/cutomers/products/models/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/constant/api.dart';
+import '../../../../core/helpers/image_url_helper.dart';
 import '../../../../core/theme/app_color.dart';
 import '../views/home_screen.dart';
 
@@ -38,13 +40,7 @@ class ProductCard extends StatelessWidget {
                   color: const Color(0xFF979797).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image.network(
-                  product.image?.url.replaceFirst('localhost', LOCAL_IP) ?? '',
-                  fit: BoxFit.cover,
-                  errorBuilder:
-                      (context, error, stackTrace) =>
-                          const Icon(Icons.broken_image),
-                ),
+                child: _buildProductImage(),
               ),
             ),
             const SizedBox(height: 8),
@@ -93,6 +89,103 @@ class ProductCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildProductImage() {
+    // Try to get the primary image first
+    String? imageUrl = product.image?.url;
+
+    // If no primary image, try to get the first image from images list
+    if (imageUrl == null &&
+        product.images != null &&
+        product.images!.isNotEmpty) {
+      imageUrl = product.images!.first.url;
+    }
+
+    log("img$imageUrl");
+
+    // If we have an image URL, display it
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          getProductImageUrl(imageUrl),
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value:
+                    loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                strokeWidth: 2,
+                color: AppColors.lightTheme.brandPrimary,
+              ),
+            );
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color(0xFF979797).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.broken_image,
+                    size: 32,
+                    color: const Color(0xFF979797).withOpacity(0.7),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'No Image',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: const Color(0xFF979797).withOpacity(0.7),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    }
+
+    // If no image URL available, show placeholder
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color(0xFF979797).withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.image_not_supported,
+            size: 32,
+            color: const Color(0xFF979797).withOpacity(0.7),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'No Image',
+            style: TextStyle(
+              fontSize: 10,
+              color: const Color(0xFF979797).withOpacity(0.7),
+            ),
+          ),
+        ],
       ),
     );
   }

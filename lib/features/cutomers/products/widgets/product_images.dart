@@ -24,7 +24,7 @@ class _ProductImagesState extends State<ProductImages> {
     imageUrls = [];
 
     // For primary image
-    if (widget.product.image != null && widget.product.image!.url.isNotEmpty) {
+    if (widget.product.image != null && widget.product.image!.url!.isNotEmpty) {
       imageUrls.add('$BASE_URL${widget.product.image!.url}');
     }
 

@@ -42,6 +42,6 @@ class CartItemModel {
     'quantity': quantity,
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
-    'product': product.toMap(),
+    'product': product.toJson(),
   };
 }

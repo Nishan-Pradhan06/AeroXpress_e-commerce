@@ -156,30 +156,106 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   // Widget _buildProductImages(ProductModel product) {
-  //   // Note: The API response shows 'images' as an array, but the model only has 'image' (single)
-  //   // You may need to update your model to handle multiple images
-  //   return SizedBox(
-  //     height: 250,
-  //     child:
-  //         product.image != null
-  //             ? Container(
-  //               child: Image.network(
-  //                 product.image?.url.replaceFirst('localhost', LOCAL_IP) ?? '',
-  //                 fit: BoxFit.cover,
-  //                 errorBuilder:
-  //                     (context, error, stackTrace) =>
-  //                         const Icon(Icons.broken_image),
-  //               ),
-  //             )
-  //             : Icon(Icons.image, size: 100, color: Colors.grey[400]),
+  //   // Use images array if available, otherwise fall back to single image
+  //   List<ImageModel> imagesToShow =
+  //       (product.image == true)
+  //           ? product.image
+  //           : (product.image != null ? [product.image!] : []);
+
+  //   if (imagesToShow.isEmpty) {
+  //     return SizedBox(
+  //       height: 250,
+  //       child: Center(
+  //         child: Icon(Icons.image, size: 100, color: Colors.grey[400]),
+  //       ),
+  //     );
+  //   }
+
+  //   // If only one image, show it simply
+  //   if (imagesToShow.length == 1) {
+  //     return SizedBox(
+  //       height: 250,
+  //       child: Container(
+  //         width: double.infinity,
+  //         child: Image.network(
+  //           imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
+  //           fit: BoxFit.cover,
+  //           errorBuilder:
+  //               (context, error, stackTrace) =>
+  //                   const Center(child: Icon(Icons.broken_image)),
+  //         ),
+  //       ),
+  //     );
+  //   }
+
+  //   // Multiple images - show as horizontal scrollable list
+  //   return Column(
+  //     children: [
+  //       // Main image display
+  //       SizedBox(
+  //         height: 200,
+  //         child: Container(
+  //           width: double.infinity,
+  //           child: Image.network(
+  //             imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
+  //             fit: BoxFit.cover,
+  //             errorBuilder:
+  //                 (context, error, stackTrace) =>
+  //                     const Center(child: Icon(Icons.broken_image)),
+  //           ),
+  //         ),
+  //       ),
+
+  //       // Thumbnail scrollable row
+  //       if (imagesToShow.length > 1)
+  //         Container(
+  //           height: 50,
+  //           margin: const EdgeInsets.only(top: 8),
+  //           child: ListView.builder(
+  //             scrollDirection: Axis.horizontal,
+  //             padding: const EdgeInsets.symmetric(horizontal: 16),
+  //             itemCount: imagesToShow.length,
+  //             itemBuilder: (context, index) {
+  //               return Container(
+  //                 width: 50,
+  //                 height: 50,
+  //                 margin: const EdgeInsets.only(right: 8),
+  //                 decoration: BoxDecoration(
+  //                   border: Border.all(
+  //                     color: index == 0 ? Colors.blue : Colors.grey[300]!,
+  //                     width: 2,
+  //                   ),
+  //                   borderRadius: BorderRadius.circular(8),
+  //                 ),
+  //                 child: ClipRRect(
+  //                   borderRadius: BorderRadius.circular(6),
+  //                   child: Image.network(
+  //                     imagesToShow[index].url!.replaceFirst(
+  //                       'localhost',
+  //                       LOCAL_IP,
+  //                     ),
+  //                     fit: BoxFit.cover,
+  //                     errorBuilder:
+  //                         (context, error, stackTrace) =>
+  //                             const Icon(Icons.broken_image, size: 20),
+  //                   ),
+  //                 ),
+  //               );
+  //             },
+  //           ),
+  //         ),
+  //     ],
   //   );
   // }
   Widget _buildProductImages(ProductModel product) {
-    // Use images array if available, otherwise fall back to single image
-    List<ImageModel> imagesToShow =
-        (product.images?.isNotEmpty == true)
-            ? product.images!
-            : (product.image != null ? [product.image!] : []);
+    // Prioritize the full image list if available
+    List<ImageModel> imagesToShow = [];
+
+    if (product.images != null && product.images!.isNotEmpty) {
+      imagesToShow = product.images!;
+    } else if (product.image != null) {
+      imagesToShow = [product.image!];
+    }
 
     if (imagesToShow.isEmpty) {
       return SizedBox(
@@ -190,79 +266,74 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       );
     }
 
-    // If only one image, show it simply
+    // Only one image
     if (imagesToShow.length == 1) {
       return SizedBox(
         height: 250,
-        child: Container(
+        width: double.infinity,
+        child: Image.network(
+          imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
+          fit: BoxFit.cover,
+          errorBuilder:
+              (context, error, stackTrace) =>
+                  const Center(child: Icon(Icons.broken_image)),
+        ),
+      );
+    }
+
+    // Multiple images - show main image + thumbnails
+    return Column(
+      children: [
+        // Main image
+        SizedBox(
+          height: 200,
           width: double.infinity,
           child: Image.network(
-            imagesToShow.first.url.replaceFirst('localhost', LOCAL_IP),
+            imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
             fit: BoxFit.cover,
             errorBuilder:
                 (context, error, stackTrace) =>
                     const Center(child: Icon(Icons.broken_image)),
           ),
         ),
-      );
-    }
 
-    // Multiple images - show as horizontal scrollable list
-    return Column(
-      children: [
-        // Main image display
-        SizedBox(
-          height: 200,
-          child: Container(
-            width: double.infinity,
-            child: Image.network(
-              imagesToShow.first.url.replaceFirst('localhost', LOCAL_IP),
-              fit: BoxFit.cover,
-              errorBuilder:
-                  (context, error, stackTrace) =>
-                      const Center(child: Icon(Icons.broken_image)),
-            ),
+        // Thumbnails
+        Container(
+          height: 60,
+          margin: const EdgeInsets.only(top: 8),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: imagesToShow.length,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 50,
+                height: 50,
+                margin: const EdgeInsets.only(right: 8),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: index == 0 ? Colors.blue : Colors.grey[300]!,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Image.network(
+                    imagesToShow[index].url!.replaceFirst(
+                      'localhost',
+                      LOCAL_IP,
+                    ),
+                    fit: BoxFit.cover,
+                    errorBuilder:
+                        (context, error, stackTrace) =>
+                            const Icon(Icons.broken_image, size: 20),
+                  ),
+                ),
+              );
+            },
           ),
         ),
-
-        // Thumbnail scrollable row
-        if (imagesToShow.length > 1)
-          Container(
-            height: 50,
-            margin: const EdgeInsets.only(top: 8),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: imagesToShow.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 50,
-                  height: 50,
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: index == 0 ? Colors.blue : Colors.grey[300]!,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: Image.network(
-                      imagesToShow[index].url.replaceFirst(
-                        'localhost',
-                        LOCAL_IP,
-                      ),
-                      fit: BoxFit.cover,
-                      errorBuilder:
-                          (context, error, stackTrace) =>
-                              const Icon(Icons.broken_image, size: 20),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
       ],
     );
   }
@@ -282,16 +353,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               color: Colors.black,
             ),
           ),
-          // Brand
-          if (product.brand != null)
-            Text(
-              'Brand: ${product.brand!.name}',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w500,
-              ),
-            ),
 
           const SizedBox(height: 8),
 
@@ -299,7 +360,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           Row(
             children: [
               Text(
-                "Rs.${product.price.toStringAsFixed(2)}",
+                "Rs.${product.price}",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,

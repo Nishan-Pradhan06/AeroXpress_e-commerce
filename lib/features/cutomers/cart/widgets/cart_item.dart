@@ -89,7 +89,7 @@ class CartItemWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Rs. ${item.product.price.toStringAsFixed(0)}",
+                      "Rs. ${item.product.price}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

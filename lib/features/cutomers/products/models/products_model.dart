@@ -1,168 +1,168 @@
+import 'package:deal_sell/features/cutomers/products/models/image_model.dart';
+
 import '../../category/models/category_model.dart';
-import 'brand_model.dart';
-import 'image_model.dart';
 import 'vendor_model.dart';
 
 class ProductModel {
   final int? id;
+  final int? vendorId;
+  final int? categoryId;
   final String name;
   final String? slug;
   final String? description;
   final String? shortDescription;
-  final double price;
-  final double? salePrice;
-  final double? costPrice;
+  final String? price;
+  final dynamic salePrice;
+  final dynamic costPrice;
   final String? sku;
   final int? stockQuantity;
   final String? status;
   final bool? isFeatured;
-  final bool? hasVariants;
+  final double? weight;
+  final dynamic length;
+  final dynamic width;
+  final dynamic height;
   final int? rating;
   final int? reviewCount;
-  final double? weight;
-  final double? length;
-  final double? width;
-  final double? height;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final dynamic updatedBy;
   final VendorModel? vendor;
   final CategoryModel? category;
-  final BrandModel? brand;
-  final ImageModel? image; // Keep for backward compatibility
-  final List<ImageModel>? images; // New field for multiple images (nullable)
+  final ImageModel? image;
+  final List<ImageModel>? images;
 
   ProductModel({
     this.id,
+    this.vendorId,
+    this.categoryId,
     required this.name,
     this.slug,
     this.description,
     this.shortDescription,
-    required this.price,
+    this.price,
     this.salePrice,
     this.costPrice,
     this.sku,
     this.stockQuantity,
     this.status,
     this.isFeatured,
-    this.hasVariants,
-    this.rating,
-    this.reviewCount,
     this.weight,
     this.length,
     this.width,
     this.height,
+    this.rating,
+    this.reviewCount,
     this.createdAt,
     this.updatedAt,
+    this.updatedBy,
     this.vendor,
     this.category,
-    this.brand,
     this.image,
-    this.images, // Can be null
+    this.images,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
-    // Parse images array if available
-    List<ImageModel>? imagesList;
-    if (json['images'] != null && json['images'] is List) {
-      imagesList =
-          (json['images'] as List)
-              .map(
-                (imageJson) =>
-                    ImageModel.fromJson(imageJson as Map<String, dynamic>),
-              )
-              .toList();
-    }
+    final List<ImageModel>? parsedImages =
+        (json['images'] as List<dynamic>?)
+            ?.map((e) => ImageModel.fromJson(e))
+            .toList();
 
-    // Find primary image from images list
+    // Safely get primary image if available
     ImageModel? primaryImage;
-    if (imagesList != null && imagesList.isNotEmpty) {
-      primaryImage = imagesList.firstWhere(
+    if (parsedImages != null && parsedImages.isNotEmpty) {
+      primaryImage = parsedImages.firstWhere(
         (img) => img.isPrimary == true,
-        orElse: () => imagesList!.first,
+        orElse: () => parsedImages.first,
       );
     }
 
-    // If no images list, fallback to single image field
-    if (primaryImage == null && json['image'] != null) {
-      primaryImage = ImageModel.fromJson(json['image'] as Map<String, dynamic>);
-    }
-
     return ProductModel(
-      id: json['id'] as int?,
-      name: json['name'] as String? ?? '',
-      slug: json['slug'] as String?,
-      description: json['description'] as String?,
-      shortDescription: json['shortDescription'] as String?,
-      price: (json['price'] as num?)?.toDouble() ?? 0.0,
-      salePrice: (json['salePrice'] as num?)?.toDouble(),
-      costPrice: (json['costPrice'] as num?)?.toDouble(),
-      sku: json['sku'] as String?,
-      stockQuantity: json['stockQuantity'] as int?,
-      status: json['status'] as String?,
-      isFeatured: json['isFeatured'] as bool?,
-      hasVariants: json['hasVariants'] as bool?,
-      rating: json['rating'] as int?,
-      reviewCount: json['reviewCount'] as int?,
-      weight: (json['weight'] as num?)?.toDouble(),
-      length: (json['length'] as num?)?.toDouble(),
-      width: (json['width'] as num?)?.toDouble(),
-      height: (json['height'] as num?)?.toDouble(),
+      id: json['id'],
+      vendorId: json['vendor_id'],
+      categoryId: json['category_id'],
+      name: json['name'],
+      slug: json['slug'],
+      description: json['description'],
+      shortDescription: json['short_description'],
+      price: json['price']?.toString(),
+      salePrice: json['sale_price'],
+      costPrice: json['cost_price'],
+      sku: json['sku'],
+      stockQuantity: json['stock_quantity'],
+      status: json['status'],
+      isFeatured: json['is_featured'],
+      weight:
+          json['weight'] != null
+              ? double.tryParse(json['weight'].toString())
+              : null,
+      length: json['length'],
+      width: json['width'],
+      height: json['height'],
+      rating: json['rating'],
+      reviewCount: json['review_count'],
       createdAt:
-          json['createdAt'] != null
-              ? DateTime.tryParse(json['createdAt'])
+          json['created_at'] != null
+              ? DateTime.tryParse(json['created_at'])
               : null,
       updatedAt:
-          json['updatedAt'] != null
-              ? DateTime.tryParse(json['updatedAt'])
+          json['updated_at'] != null
+              ? DateTime.tryParse(json['updated_at'])
               : null,
+      updatedBy: json['updated_by'],
       vendor:
-          json['vendor'] != null
-              ? VendorModel.fromJson(json['vendor'] as Map<String, dynamic>)
-              : null,
+          json['vendor'] != null ? VendorModel.fromJson(json['vendor']) : null,
       category:
           json['category'] != null
-              ? CategoryModel.fromJson(json['category'] as Map<String, dynamic>)
+              ? CategoryModel.fromJson(json['category'])
               : null,
-      brand:
-          json['brand'] != null
-              ? BrandModel.fromJson(json['brand'] as Map<String, dynamic>)
-              : null,
+      images: parsedImages,
       image: primaryImage,
-      images: imagesList,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'vendor_id': vendorId,
+      'category_id': categoryId,
       'name': name,
       'slug': slug,
       'description': description,
-      'shortDescription': shortDescription,
+      'short_description': shortDescription,
       'price': price,
-      'salePrice': salePrice,
-      'costPrice': costPrice,
+      'sale_price': salePrice,
+      'cost_price': costPrice,
       'sku': sku,
-      'stockQuantity': stockQuantity,
+      'stock_quantity': stockQuantity,
       'status': status,
-      'isFeatured': isFeatured,
-      'hasVariants': hasVariants,
-      'rating': rating,
-      'reviewCount': reviewCount,
+      'is_featured': isFeatured,
       'weight': weight,
       'length': length,
       'width': width,
       'height': height,
-      'createdAt': createdAt?.toIso8601String(),
-      'updatedAt': updatedAt?.toIso8601String(),
+      'rating': rating,
+      'review_count': reviewCount,
+      'created_at': createdAt?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
+      'updated_by': updatedBy,
       'vendor': vendor?.toJson(),
       'category': category?.toJson(),
-      'brand': brand?.toJson(),
-      'image': image?.toJson(),
-      'images': images?.map((img) => img.toJson()).toList(),
+      'images': images?.map((e) => e.toJson()).toList(),
     };
   }
-
-  /// Alias for toJson to support toMap calls
-  Map<String, dynamic> toMap() => toJson();
 }
+
+// class Vendor {
+//   final int? id;
+//   final String? businessName;
+//   final String? slug;
+
+//   Vendor({this.id, this.businessName, this.slug});
+
+//   Vendor copyWith({int? id, String? businessName, String? slug}) => Vendor(
+//     id: id ?? this.id,
+//     businessName: businessName ?? this.businessName,
+//     slug: slug ?? this.slug,
+//   );
+// }

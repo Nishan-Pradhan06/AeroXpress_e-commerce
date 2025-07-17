@@ -207,7 +207,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item.product.name,
+                                    item.product.name ?? '',
                                     style: theme.textTheme.bodyLarge?.copyWith(
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -221,7 +221,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                             ),
                             Text(
-                              'Rs.${item.product.price * item.quantity}',
+                              'Rs.${item.product.price} * ${item.quantity}',
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),

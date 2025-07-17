@@ -1,9 +1,9 @@
 class CartSummaryModel {
-  final int subtotal;
-  final int shippingFee;
-  final int taxAmount;
-  final int discountAmount;
-  final int total;
+  final double subtotal;
+  final double shippingFee;
+  final double taxAmount;
+  final double discountAmount;
+  final double total;
   final int itemCount;
 
   CartSummaryModel({
@@ -17,15 +17,14 @@ class CartSummaryModel {
 
   factory CartSummaryModel.fromMap(Map<String, dynamic> map) {
     return CartSummaryModel(
-      subtotal: map['subtotal'] ?? 0,
-      shippingFee: map['shippingFee'] ?? 0,
-      taxAmount: map['taxAmount'] ?? 0,
-      discountAmount: map['discountAmount'] ?? 0,
-      total: map['total'] ?? 0,
+      subtotal: (map['subtotal'] ?? 0).toDouble(),
+      shippingFee: (map['shippingFee'] ?? 0).toDouble(),
+      taxAmount: (map['taxAmount'] ?? 0).toDouble(),
+      discountAmount: (map['discountAmount'] ?? 0).toDouble(),
+      total: (map['total'] ?? 0).toDouble(),
       itemCount: map['itemCount'] ?? 0,
     );
   }
-
 
   Map<String, dynamic> toMap() => {
     'subtotal': subtotal,
