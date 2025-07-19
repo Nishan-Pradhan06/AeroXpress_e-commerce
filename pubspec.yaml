@@ -72,6 +72,7 @@ dependencies:
   video_player_android: ^2.8.7
   shorebird_code_push: ^2.0.4
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
