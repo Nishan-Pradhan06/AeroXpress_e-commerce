@@ -6,6 +6,7 @@ import '../model/order_model.dart';
 abstract interface class OrderRepository {
   FutureEither<List<OrderModel>> getOrders({int page = 1});
   FutureEither<List<OrderModel>> getVendorOrders({int page = 1});
+  FutureEither<OrderModel> createOrder(Map<String, dynamic> payload);
 }
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -43,6 +44,18 @@ class OrderRepositoryImpl implements OrderRepository {
               .map((orderJson) => OrderModel.fromJson(orderJson))
               .toList();
       return Right(orders);
+    });
+  }
+
+  //###-------------POST (CREATE ORDER) IMPLEMENTATION-----------------###
+  @override
+  FutureEither<OrderModel> createOrder(Map<String, dynamic> payload) async {
+    final response = await _apiService.post<Map>('orders', data: payload);
+
+    return response.fold((failure) => Left(failure), (data) {
+      final orderJson = data['data']['order'];
+      final order = OrderModel.fromJson(orderJson);
+      return Right(order);
     });
   }
 }
