@@ -69,13 +69,7 @@ class ProductModel {
             .toList();
 
     // Safely get primary image if available
-    ImageModel? primaryImage;
-    if (parsedImages != null && parsedImages.isNotEmpty) {
-      primaryImage = parsedImages.firstWhere(
-        (img) => img.isPrimary == true,
-        orElse: () => parsedImages.first,
-      );
-    }
+    ImageModel? primaryImage = ImageModel.fromJson(json['image'] ?? {});
 
     return ProductModel(
       id: json['id'],

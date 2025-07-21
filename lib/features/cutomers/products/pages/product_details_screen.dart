@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deal_sell/core/theme/app_color.dart';
 import 'package:deal_sell/core/widget/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -155,100 +156,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  // Widget _buildProductImages(ProductModel product) {
-  //   // Use images array if available, otherwise fall back to single image
-  //   List<ImageModel> imagesToShow =
-  //       (product.image == true)
-  //           ? product.image
-  //           : (product.image != null ? [product.image!] : []);
-
-  //   if (imagesToShow.isEmpty) {
-  //     return SizedBox(
-  //       height: 250,
-  //       child: Center(
-  //         child: Icon(Icons.image, size: 100, color: Colors.grey[400]),
-  //       ),
-  //     );
-  //   }
-
-  //   // If only one image, show it simply
-  //   if (imagesToShow.length == 1) {
-  //     return SizedBox(
-  //       height: 250,
-  //       child: Container(
-  //         width: double.infinity,
-  //         child: Image.network(
-  //           imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
-  //           fit: BoxFit.cover,
-  //           errorBuilder:
-  //               (context, error, stackTrace) =>
-  //                   const Center(child: Icon(Icons.broken_image)),
-  //         ),
-  //       ),
-  //     );
-  //   }
-
-  //   // Multiple images - show as horizontal scrollable list
-  //   return Column(
-  //     children: [
-  //       // Main image display
-  //       SizedBox(
-  //         height: 200,
-  //         child: Container(
-  //           width: double.infinity,
-  //           child: Image.network(
-  //             imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
-  //             fit: BoxFit.cover,
-  //             errorBuilder:
-  //                 (context, error, stackTrace) =>
-  //                     const Center(child: Icon(Icons.broken_image)),
-  //           ),
-  //         ),
-  //       ),
-
-  //       // Thumbnail scrollable row
-  //       if (imagesToShow.length > 1)
-  //         Container(
-  //           height: 50,
-  //           margin: const EdgeInsets.only(top: 8),
-  //           child: ListView.builder(
-  //             scrollDirection: Axis.horizontal,
-  //             padding: const EdgeInsets.symmetric(horizontal: 16),
-  //             itemCount: imagesToShow.length,
-  //             itemBuilder: (context, index) {
-  //               return Container(
-  //                 width: 50,
-  //                 height: 50,
-  //                 margin: const EdgeInsets.only(right: 8),
-  //                 decoration: BoxDecoration(
-  //                   border: Border.all(
-  //                     color: index == 0 ? Colors.blue : Colors.grey[300]!,
-  //                     width: 2,
-  //                   ),
-  //                   borderRadius: BorderRadius.circular(8),
-  //                 ),
-  //                 child: ClipRRect(
-  //                   borderRadius: BorderRadius.circular(6),
-  //                   child: Image.network(
-  //                     imagesToShow[index].url!.replaceFirst(
-  //                       'localhost',
-  //                       LOCAL_IP,
-  //                     ),
-  //                     fit: BoxFit.cover,
-  //                     errorBuilder:
-  //                         (context, error, stackTrace) =>
-  //                             const Icon(Icons.broken_image, size: 20),
-  //                   ),
-  //                 ),
-  //               );
-  //             },
-  //           ),
-  //         ),
-  //     ],
-  //   );
-  // }
   Widget _buildProductImages(ProductModel product) {
-    // Prioritize the full image list if available
     List<ImageModel> imagesToShow = [];
 
     if (product.images != null && product.images!.isNotEmpty) {
@@ -271,28 +179,39 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       return SizedBox(
         height: 250,
         width: double.infinity,
-        child: Image.network(
-          imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
+        child: CachedNetworkImage(
+          imageUrl: imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
           fit: BoxFit.cover,
-          errorBuilder:
-              (context, error, stackTrace) =>
+          placeholder:
+              (context, url) => const Center(
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+          errorWidget:
+              (context, url, error) =>
                   const Center(child: Icon(Icons.broken_image)),
         ),
       );
     }
 
-    // Multiple images - show main image + thumbnails
+    // Multiple images
     return Column(
       children: [
-        // Main image
+        // Main Image
         SizedBox(
           height: 200,
           width: double.infinity,
-          child: Image.network(
-            imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
+          child: CachedNetworkImage(
+            imageUrl: imagesToShow.first.url!.replaceFirst(
+              'localhost',
+              LOCAL_IP,
+            ),
             fit: BoxFit.cover,
-            errorBuilder:
-                (context, error, stackTrace) =>
+            placeholder:
+                (context, url) => const Center(
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+            errorWidget:
+                (context, url, error) =>
                     const Center(child: Icon(Icons.broken_image)),
           ),
         ),
@@ -319,14 +238,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(6),
-                  child: Image.network(
-                    imagesToShow[index].url!.replaceFirst(
+                  child: CachedNetworkImage(
+                    imageUrl: imagesToShow[index].url!.replaceFirst(
                       'localhost',
                       LOCAL_IP,
                     ),
                     fit: BoxFit.cover,
-                    errorBuilder:
-                        (context, error, stackTrace) =>
+                    placeholder:
+                        (context, url) => const Center(
+                          child: SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        ),
+                    errorWidget:
+                        (context, url, error) =>
                             const Icon(Icons.broken_image, size: 20),
                   ),
                 ),

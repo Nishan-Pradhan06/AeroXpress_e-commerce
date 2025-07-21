@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constant/api.dart';
 import '../models/products_model.dart';
@@ -43,16 +44,23 @@ class _ProductImagesState extends State<ProductImages> {
 
     return Column(
       children: [
-        SizedBox(
+      SizedBox(
           width: 238,
           child: AspectRatio(
             aspectRatio: 1,
-            child: Image.network(
-              imageUrls[selectedImage],
+            child: CachedNetworkImage(
+              imageUrl: imageUrls[selectedImage],
               fit: BoxFit.cover,
-              errorBuilder:
-                  (context, error, stackTrace) =>
-                      const Icon(Icons.broken_image),
+              placeholder:
+                  (context, url) => const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+              errorWidget:
+                  (context, url, error) => const Icon(
+                    Icons.broken_image,
+                    size: 32,
+                    color: Colors.grey,
+                  ),
             ),
           ),
         ),

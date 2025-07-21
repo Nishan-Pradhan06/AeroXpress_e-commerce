@@ -70,7 +70,7 @@ dependencies:
   khalti_checkout_flutter: ^1.0.0-dev.8
   video_player: ^2.10.0
   video_player_android: ^2.8.7
-  shorebird_code_push: ^2.0.4
+  # shorebird_code_push: ^2.0.4
 
 dev_dependencies:
   flutter_test:

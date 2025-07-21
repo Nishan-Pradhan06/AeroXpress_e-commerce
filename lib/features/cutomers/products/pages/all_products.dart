@@ -25,8 +25,7 @@ class GetAllProducts extends StatelessWidget {
               failure: (failure) => const ProductCardSkeleton(),
               loaded: (products) {
                 // Optionally limit to max 5 items
-                final displayedProducts =
-                    products.length > 5 ? products.sublist(0, 5) : products;
+                final displayedProducts = products;
 
                 return CustomPadding(
                   child: GridView.builder(

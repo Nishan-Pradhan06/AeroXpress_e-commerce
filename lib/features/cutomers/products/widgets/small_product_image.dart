@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SmallProductImage extends StatefulWidget {
   const SmallProductImage({
@@ -36,7 +37,21 @@ class _SmallProductImageState extends State<SmallProductImage> {
             ).withOpacity(widget.isSelected ? 1 : 0),
           ),
         ),
-        child: Image.network(widget.image),
+        child: CachedNetworkImage(
+          imageUrl: widget.image,
+          fit: BoxFit.cover,
+          placeholder:
+              (context, url) => const Center(
+                child: SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+          errorWidget:
+              (context, url, error) =>
+                  const Icon(Icons.broken_image, size: 24, color: Colors.grey),
+        ),
       ),
     );
   }

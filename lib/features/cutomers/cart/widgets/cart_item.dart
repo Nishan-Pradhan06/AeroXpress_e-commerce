@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constant/api.dart';
@@ -40,11 +41,22 @@ class CartItemWidget extends StatelessWidget {
                 item.product.vendor?.logo != null
                     ? ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        'http://$LOCAL_IP:5000${item.product.vendor!.logo}',
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            'http://$LOCAL_IP:5000${item.product.vendor!.logo}',
                         fit: BoxFit.cover,
-                        errorBuilder:
-                            (context, error, stackTrace) => const Icon(
+                        placeholder:
+                            (context, url) => const Center(
+                              child: SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            ),
+                        errorWidget:
+                            (context, url, error) => const Icon(
                               Icons.image_outlined,
                               size: 30,
                               color: Colors.grey,

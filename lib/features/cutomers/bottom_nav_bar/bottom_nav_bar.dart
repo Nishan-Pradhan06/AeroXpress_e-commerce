@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shorebird_code_push/shorebird_code_push.dart';
+// import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:upgrader/upgrader.dart';
 import 'package:deal_sell/core/constant/bottom_nav_icon_constant.dart';
 import '../../../core/helpers/url_launcher_helper.dart';
@@ -22,7 +22,7 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
-  final shoreBirdUpdater = ShorebirdUpdater();
+  // final shoreBirdUpdater = ShorebirdUpdater();
 
   final List<Widget> _screens = [
     HomeScreen(),
@@ -31,37 +31,37 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     ProfileScreen(),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    // Show development mode alert after the first frame is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _startCheckingForUpdates();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Show development mode alert after the first frame is built
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     _startCheckingForUpdates();
+  //   });
+  // }
 
-  Timer? _timer;
-  _startCheckingForUpdates() {
-    _timer = Timer.periodic(Duration(seconds: 3), (_) => _checkForUpdates());
-  }
+  // Timer? _timer;
+  // _startCheckingForUpdates() {
+  //   _timer = Timer.periodic(Duration(seconds: 3), (_) => _checkForUpdates());
+  // }
 
-  void _checkForUpdates() async {
-    final status = await shoreBirdUpdater.checkForUpdate();
-    if (status == UpdateStatus.outdated) {
-      _timer?.cancel();
-      shoreBirdUpdater.update();
-      if (!mounted) return;
-      _showBanner();
-    }
+  // void _checkForUpdates() async {
+  //   final status = await shoreBirdUpdater.checkForUpdate();
+  //   if (status == UpdateStatus.outdated) {
+  //     _timer?.cancel();
+  //     shoreBirdUpdater.update();
+  //     if (!mounted) return;
+  //     _showBanner();
+  //   }
 
-    log('_shorebird');
-  }
+  //   log('_shorebird');
+  // }
 
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _timer?.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
