@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deal_sell/core/theme/app_color.dart';
+import 'package:deal_sell/core/widget/cached_network_image_with_fallback.dart';
 import 'package:deal_sell/core/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -196,25 +197,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     // Multiple images
     return Column(
       children: [
-        // Main Image
-        SizedBox(
-          height: 200,
-          width: double.infinity,
-          child: CachedNetworkImage(
-            imageUrl: imagesToShow.first.url!.replaceFirst(
+      
+        CachedNetworkImageWithFallback(imageUrl: imagesToShow.first.url!.replaceFirst(
               'localhost',
               LOCAL_IP,
-            ),
-            fit: BoxFit.cover,
-            placeholder:
-                (context, url) => const Center(
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-            errorWidget:
-                (context, url, error) =>
-                    const Center(child: Icon(Icons.broken_image)),
-          ),
-        ),
+            ),),
 
         // Thumbnails
         Container(

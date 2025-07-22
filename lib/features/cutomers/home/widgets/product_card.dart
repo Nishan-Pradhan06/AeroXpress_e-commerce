@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deal_sell/core/widget/cached_network_image_with_fallback.dart';
 import 'package:deal_sell/features/cutomers/products/models/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -106,51 +107,9 @@ class ProductCard extends StatelessWidget {
     }
 
     log("img$imageUrl");
-
     // If we have an image URL, display it
     if (imageUrl != null && imageUrl.isNotEmpty) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: CachedNetworkImage(
-          imageUrl: getProductImageUrl(imageUrl),
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
-          placeholder:
-              (context, url) => Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: AppColors.lightTheme.brandPrimary,
-                ),
-              ),
-          errorWidget:
-              (context, url, error) => Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF979797).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.broken_image,
-                      size: 32,
-                      color: const Color(0xFF979797).withOpacity(0.7),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'No Image',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: const Color(0xFF979797).withOpacity(0.7),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-        ),
+      return CachedNetworkImageWithFallback(imageUrl:  getProductImageUrl(imageUrl),
       );
     }
 

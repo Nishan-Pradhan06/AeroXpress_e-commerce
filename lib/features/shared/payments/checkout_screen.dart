@@ -9,6 +9,8 @@ import 'package:khalti_checkout_flutter/khalti_checkout_flutter.dart';
 import '../../../core/constant/api.dart';
 import '../../../core/widget/custom_card.dart';
 import '../../cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
+import '../../cutomers/cart/models/cart_model.dart';
+import '../orders/bloc/create_orders/create_orders_bloc.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -19,7 +21,6 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   String selectedPaymentMethod = 'Khalti';
-  var selectedShippingMethod = '';
 
   final _formKey = GlobalKey<FormState>();
 
@@ -32,9 +33,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _countryController = TextEditingController();
 
   late final Future<Khalti?> khalti;
-
   String pidx = 'https://test-pay.khalti.com/?pidx=zD3CEmCoC7Sm2pmfvuhbCR';
-
   PaymentResult? paymentResult;
 
   @override
@@ -54,6 +53,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         setState(() {
           this.paymentResult = paymentResult;
         });
+        _createOrder();
         khalti.close(context);
       },
       onMessage: (
@@ -85,7 +85,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           elevation: 0.1,
           color: Colors.white,
           child: AppBar(
-            // automaticallyImplyLeading: false,
             scrolledUnderElevation: 0,
             backgroundColor: Colors.white,
             elevation: 0,
@@ -99,7 +98,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
-          spacing: 10,
           children: [
             _buildOrderSummaryCard(context, theme),
             _buildShippingAddressCard(theme),
@@ -120,28 +118,64 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ],
         ),
         child: SafeArea(
-          child: FutureBuilder(
-            future: khalti,
-            initialData: null,
-            builder: (context, snapshot) {
-              final khaltiSnapshot = snapshot.data;
-              if (khaltiSnapshot == null) {
-                return const CircularProgressIndicator.adaptive();
+          child: CustomButtonPrimary(
+            height: 40,
+            onPressed: () async {
+              if (_formKey.currentState!.validate()) {
+                if (selectedPaymentMethod == 'Khalti') {
+                  final khaltiInstance = await khalti;
+                  khaltiInstance?.open(context);
+                } else {
+                  _createOrder();
+                }
               }
-              return CustomButtonPrimary(
-                height: 40,
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    khaltiSnapshot.open(context);
-                    // _placeOrder();
-                  }
-                },
-                title: 'Place Order',
-              );
             },
+            title: 'Place Order',
           ),
         ),
       ),
+    );
+  }
+
+  void _createOrder() {
+    final shippingAddress = {
+      "recipientName": _nameController.text,
+      "phone": _phoneController.text,
+      "street": _streetController.text,
+      "city": _cityController.text,
+      "state": _stateController.text,
+      "postalCode": _postalCodeController.text,
+      "country": _countryController.text,
+    };
+
+    final cartState = context.read<GetCartBloc>().state;
+
+    cartState.maybeWhen(
+      loaded: (cartData) {
+        final items =
+            cartData.items
+                .map(
+                  (item) => {
+                    "productId": item.product.id,
+                    "quantity": item.quantity,
+                  },
+                )
+                .toList();
+
+        final payload = {
+          "items": items,
+          "paymentMethod": selectedPaymentMethod,
+          "customerNote": "",
+          "shippingAddress": shippingAddress,
+        };
+
+        context.read<CreateOrdersBloc>().add(
+          CreateOrdersEvent.createOrders(payload: payload),
+        );
+      },
+      orElse: () {
+        debugPrint("Cart not loaded yet or some other state is active.");
+      },
     );
   }
 

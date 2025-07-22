@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deal_sell/core/theme/app_theme.dart';
+import 'package:deal_sell/core/widget/cached_network_image_with_fallback.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
 import 'package:deal_sell/features/shared/user_profile/views/customer_profile/edit_profile.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
@@ -640,28 +641,7 @@ class NetworkImageWithLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(radius)),
-      child: CachedNetworkImage(
-        fit: fit,
-        imageUrl: src,
-        width: radius * 2,
-        height: radius * 2,
-        imageBuilder:
-            (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(image: imageProvider, fit: fit),
-              ),
-            ),
-        placeholder:
-            (context, url) => Container(
-              color: Colors.grey[300],
-              child: const Icon(Icons.person, color: Colors.grey),
-            ),
-        errorWidget:
-            (context, url, error) => Container(
-              color: Colors.grey[300],
-              child: const Icon(Icons.person, color: Colors.grey),
-            ),
-      ),
+      child: CachedNetworkImageWithFallback(imageUrl: src, fit: fit),
     );
   }
 }

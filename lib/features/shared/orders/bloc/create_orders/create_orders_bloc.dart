@@ -11,8 +11,8 @@ part 'create_orders_bloc.freezed.dart';
 class CreateOrdersBloc extends Bloc<CreateOrdersEvent, CreateOrdersState> {
   final OrderRepository _orderRepository;
 
-  CreateOrdersBloc({required OrderRepository orderRepository})
-    : _orderRepository = orderRepository,
+  CreateOrdersBloc({required OrderRepository repo})
+    : _orderRepository = repo,
       super(CreateOrdersState.initial()) {
     on<_CreateOrders>(_onCreateOrders);
   }

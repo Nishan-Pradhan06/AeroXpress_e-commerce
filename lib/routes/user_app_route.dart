@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:deal_sell/common/extension/path_extension.dart';
+import 'package:deal_sell/features/shared/orders/bloc/create_orders/create_orders_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../core/dl/dependency_injection.dart';
@@ -123,7 +124,11 @@ List<GoRoute> userAppRoutes = [
   GoRoute(
     path: AppRoutesName.checkoutScreen.path,
     name: AppRoutesName.checkoutScreen,
-    builder: (context, state) => CheckoutScreen(),
+    builder:
+        (context, state) => BlocProvider(
+          create: (_) => CreateOrdersBloc(repo: sl<OrderRepository>()),
+          child: CheckoutScreen(),
+        ),
   ),
   GoRoute(
     path: AppRoutesName.allOrders.path,
