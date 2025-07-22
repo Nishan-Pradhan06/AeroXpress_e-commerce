@@ -9,13 +9,13 @@ import 'package:deal_sell/features/cutomers/cart/bloc/shipping_options/shipping_
 import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
 import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
 import 'package:deal_sell/features/shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
+import 'package:deal_sell/features/shared/payments/bloc/khalti_paymenet_initiate_bloc.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:upgrader/upgrader.dart';
 import 'core/dl/dependency_injection.dart';
 import 'core/services/once_cache_service.dart';
 import 'core/theme/app_theme.dart';
@@ -40,7 +40,7 @@ void main() async {
   await Firebase.initializeApp();
 
   // Only call clearSavedSettings() during testing to reset internal values.
-  await Upgrader.clearSavedSettings();
+  // await Upgrader.clearSavedSettings();
 
   //dependency Injection service locator
   await setupServiceLocator();
@@ -80,6 +80,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<UserSignInBloc>()),
         BlocProvider(create: (context) => sl<AddToCartBloc>()),
         BlocProvider(create: (context) => sl<DeleteCartBloc>()),
+        BlocProvider(create: (context) => sl<KhaltiPaymenetInitiateBloc>()),
         BlocProvider(
           create:
               (context) =>

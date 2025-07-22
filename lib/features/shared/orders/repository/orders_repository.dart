@@ -8,11 +8,11 @@ abstract interface class OrderRepository {
   FutureEither<List<OrderModel>> getVendorOrders({int page = 1});
   FutureEither<OrderModel> createOrder(Map<String, dynamic> payload);
 
-  FutureEither<OrderModel> confirmCodPayment(String orderId);
-
-  // FutureEither<OrderModel> initiateKhalti(Map<String, dynamic> payload);
+  FutureEither<String> confirmCodPayment(int orderId);
+  FutureEither<String> khaltiInitiate(int orderId);
+  // http://localhost:5000/api/payments/khalti/initiate
+  // FutureEither<OrderModel> intitiateKhalti(Map<String, dynamic> payload);
   FutureEither<OrderModel> verifyKhalti({required String token});
-
 }
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -65,33 +65,29 @@ class OrderRepositoryImpl implements OrderRepository {
     });
   }
 
-
   @override
-  FutureEither<OrderModel> confirmCodPayment(String orderId) async {
+  FutureEither<String> confirmCodPayment(int orderId) async {
     final response = await _apiService.post<Map>(
       'payments/cod/confirm',
       data: {'orderId': orderId},
     );
 
     return response.fold((failure) => Left(failure), (data) {
-      final orderJson = data['data']['order'];
-      final order = OrderModel.fromJson(orderJson);
-      return Right(order);
+      return Right("Sucessfully confirmed COD payment for order ID: $orderId");
     });
   }
 
-
-// @override
-//   FutureEither<OrderModel> initiateKhalti(Map<String, dynamic> payload) async {
-//     final response = await _apiService.post<Map>(
-//       'payments/khalti/inisitate',
-//       data: payload,
-//     );
-//     return response.fold((f) => Left(f), (data) {
-//       final token = data['data']['token'] as String;
-//       return Right(OrderModel(khaltiToken: token)); // wrap token in model
-//     });
-//   }
+  // @override
+  //   FutureEither<OrderModel> initiateKhalti(Map<String, dynamic> payload) async {
+  //     final response = await _apiService.post<Map>(
+  //       'payments/khalti/inisitate',
+  //       data: payload,
+  //     );
+  //     return response.fold((f) => Left(f), (data) {
+  //       final token = data['data']['token'] as String;
+  //       return Right(OrderModel(khaltiToken: token)); // wrap token in model
+  //     });
+  //   }
 
   @override
   FutureEither<OrderModel> verifyKhalti({required String token}) async {
@@ -105,4 +101,20 @@ class OrderRepositoryImpl implements OrderRepository {
     });
   }
 
+  @override
+  FutureEither<String> khaltiInitiate(int orderId) async {
+    final response = await _apiService.post<Map>(
+      'payments/khalti/initiate',
+      data: {
+        'orderId': orderId,
+        "returnUrl": "http://localhost:5173/orders/success",
+        "cancelUrl": "http://localhost:5173/orders/cancel",
+      },
+    );
+
+    return response.fold((failure) => Left(failure), (data) {
+      final url = data['data']['paymentUrl'] as String;
+      return Right(url);
+    });
+  }
 }

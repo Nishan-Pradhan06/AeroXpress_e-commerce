@@ -20,28 +20,42 @@ mixin _$CreateOrdersEvent {
   Map<String, dynamic> get payload => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Map<String, dynamic> payload) createOrders,
+    required TResult Function(Map<String, dynamic> payload)
+    createOrderWithCashOnDelivery,
+    required TResult Function(Map<String, dynamic> payload)
+    createORderWithKhalti,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Map<String, dynamic> payload)? createOrders,
+    TResult? Function(Map<String, dynamic> payload)?
+    createOrderWithCashOnDelivery,
+    TResult? Function(Map<String, dynamic> payload)? createORderWithKhalti,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Map<String, dynamic> payload)? createOrders,
+    TResult Function(Map<String, dynamic> payload)?
+    createOrderWithCashOnDelivery,
+    TResult Function(Map<String, dynamic> payload)? createORderWithKhalti,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_CreateOrders value) createOrders,
+    required TResult Function(_CreateOrdersWithCashOnDelivery value)
+    createOrderWithCashOnDelivery,
+    required TResult Function(_CreateOrdersWithKhalti value)
+    createORderWithKhalti,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CreateOrders value)? createOrders,
+    TResult? Function(_CreateOrdersWithCashOnDelivery value)?
+    createOrderWithCashOnDelivery,
+    TResult? Function(_CreateOrdersWithKhalti value)? createORderWithKhalti,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CreateOrders value)? createOrders,
+    TResult Function(_CreateOrdersWithCashOnDelivery value)?
+    createOrderWithCashOnDelivery,
+    TResult Function(_CreateOrdersWithKhalti value)? createORderWithKhalti,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 
@@ -91,24 +105,28 @@ class _$CreateOrdersEventCopyWithImpl<$Res, $Val extends CreateOrdersEvent>
 }
 
 /// @nodoc
-abstract class _$$CreateOrdersImplCopyWith<$Res>
+abstract class _$$CreateOrdersWithCashOnDeliveryImplCopyWith<$Res>
     implements $CreateOrdersEventCopyWith<$Res> {
-  factory _$$CreateOrdersImplCopyWith(
-    _$CreateOrdersImpl value,
-    $Res Function(_$CreateOrdersImpl) then,
-  ) = __$$CreateOrdersImplCopyWithImpl<$Res>;
+  factory _$$CreateOrdersWithCashOnDeliveryImplCopyWith(
+    _$CreateOrdersWithCashOnDeliveryImpl value,
+    $Res Function(_$CreateOrdersWithCashOnDeliveryImpl) then,
+  ) = __$$CreateOrdersWithCashOnDeliveryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Map<String, dynamic> payload});
 }
 
 /// @nodoc
-class __$$CreateOrdersImplCopyWithImpl<$Res>
-    extends _$CreateOrdersEventCopyWithImpl<$Res, _$CreateOrdersImpl>
-    implements _$$CreateOrdersImplCopyWith<$Res> {
-  __$$CreateOrdersImplCopyWithImpl(
-    _$CreateOrdersImpl _value,
-    $Res Function(_$CreateOrdersImpl) _then,
+class __$$CreateOrdersWithCashOnDeliveryImplCopyWithImpl<$Res>
+    extends
+        _$CreateOrdersEventCopyWithImpl<
+          $Res,
+          _$CreateOrdersWithCashOnDeliveryImpl
+        >
+    implements _$$CreateOrdersWithCashOnDeliveryImplCopyWith<$Res> {
+  __$$CreateOrdersWithCashOnDeliveryImplCopyWithImpl(
+    _$CreateOrdersWithCashOnDeliveryImpl _value,
+    $Res Function(_$CreateOrdersWithCashOnDeliveryImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of CreateOrdersEvent
@@ -117,7 +135,7 @@ class __$$CreateOrdersImplCopyWithImpl<$Res>
   @override
   $Res call({Object? payload = null}) {
     return _then(
-      _$CreateOrdersImpl(
+      _$CreateOrdersWithCashOnDeliveryImpl(
         payload:
             null == payload
                 ? _value._payload
@@ -130,9 +148,11 @@ class __$$CreateOrdersImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CreateOrdersImpl implements _CreateOrders {
-  const _$CreateOrdersImpl({required final Map<String, dynamic> payload})
-    : _payload = payload;
+class _$CreateOrdersWithCashOnDeliveryImpl
+    implements _CreateOrdersWithCashOnDelivery {
+  const _$CreateOrdersWithCashOnDeliveryImpl({
+    required final Map<String, dynamic> payload,
+  }) : _payload = payload;
 
   final Map<String, dynamic> _payload;
   @override
@@ -144,14 +164,14 @@ class _$CreateOrdersImpl implements _CreateOrders {
 
   @override
   String toString() {
-    return 'CreateOrdersEvent.createOrders(payload: $payload)';
+    return 'CreateOrdersEvent.createOrderWithCashOnDelivery(payload: $payload)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CreateOrdersImpl &&
+            other is _$CreateOrdersWithCashOnDeliveryImpl &&
             const DeepCollectionEquality().equals(other._payload, _payload));
   }
 
@@ -164,33 +184,44 @@ class _$CreateOrdersImpl implements _CreateOrders {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CreateOrdersImplCopyWith<_$CreateOrdersImpl> get copyWith =>
-      __$$CreateOrdersImplCopyWithImpl<_$CreateOrdersImpl>(this, _$identity);
+  _$$CreateOrdersWithCashOnDeliveryImplCopyWith<
+    _$CreateOrdersWithCashOnDeliveryImpl
+  >
+  get copyWith => __$$CreateOrdersWithCashOnDeliveryImplCopyWithImpl<
+    _$CreateOrdersWithCashOnDeliveryImpl
+  >(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Map<String, dynamic> payload) createOrders,
+    required TResult Function(Map<String, dynamic> payload)
+    createOrderWithCashOnDelivery,
+    required TResult Function(Map<String, dynamic> payload)
+    createORderWithKhalti,
   }) {
-    return createOrders(payload);
+    return createOrderWithCashOnDelivery(payload);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Map<String, dynamic> payload)? createOrders,
+    TResult? Function(Map<String, dynamic> payload)?
+    createOrderWithCashOnDelivery,
+    TResult? Function(Map<String, dynamic> payload)? createORderWithKhalti,
   }) {
-    return createOrders?.call(payload);
+    return createOrderWithCashOnDelivery?.call(payload);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Map<String, dynamic> payload)? createOrders,
+    TResult Function(Map<String, dynamic> payload)?
+    createOrderWithCashOnDelivery,
+    TResult Function(Map<String, dynamic> payload)? createORderWithKhalti,
     required TResult orElse(),
   }) {
-    if (createOrders != null) {
-      return createOrders(payload);
+    if (createOrderWithCashOnDelivery != null) {
+      return createOrderWithCashOnDelivery(payload);
     }
     return orElse();
   }
@@ -198,35 +229,43 @@ class _$CreateOrdersImpl implements _CreateOrders {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_CreateOrders value) createOrders,
+    required TResult Function(_CreateOrdersWithCashOnDelivery value)
+    createOrderWithCashOnDelivery,
+    required TResult Function(_CreateOrdersWithKhalti value)
+    createORderWithKhalti,
   }) {
-    return createOrders(this);
+    return createOrderWithCashOnDelivery(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CreateOrders value)? createOrders,
+    TResult? Function(_CreateOrdersWithCashOnDelivery value)?
+    createOrderWithCashOnDelivery,
+    TResult? Function(_CreateOrdersWithKhalti value)? createORderWithKhalti,
   }) {
-    return createOrders?.call(this);
+    return createOrderWithCashOnDelivery?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CreateOrders value)? createOrders,
+    TResult Function(_CreateOrdersWithCashOnDelivery value)?
+    createOrderWithCashOnDelivery,
+    TResult Function(_CreateOrdersWithKhalti value)? createORderWithKhalti,
     required TResult orElse(),
   }) {
-    if (createOrders != null) {
-      return createOrders(this);
+    if (createOrderWithCashOnDelivery != null) {
+      return createOrderWithCashOnDelivery(this);
     }
     return orElse();
   }
 }
 
-abstract class _CreateOrders implements CreateOrdersEvent {
-  const factory _CreateOrders({required final Map<String, dynamic> payload}) =
-      _$CreateOrdersImpl;
+abstract class _CreateOrdersWithCashOnDelivery implements CreateOrdersEvent {
+  const factory _CreateOrdersWithCashOnDelivery({
+    required final Map<String, dynamic> payload,
+  }) = _$CreateOrdersWithCashOnDeliveryImpl;
 
   @override
   Map<String, dynamic> get payload;
@@ -235,6 +274,177 @@ abstract class _CreateOrders implements CreateOrdersEvent {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CreateOrdersImplCopyWith<_$CreateOrdersImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CreateOrdersWithCashOnDeliveryImplCopyWith<
+    _$CreateOrdersWithCashOnDeliveryImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CreateOrdersWithKhaltiImplCopyWith<$Res>
+    implements $CreateOrdersEventCopyWith<$Res> {
+  factory _$$CreateOrdersWithKhaltiImplCopyWith(
+    _$CreateOrdersWithKhaltiImpl value,
+    $Res Function(_$CreateOrdersWithKhaltiImpl) then,
+  ) = __$$CreateOrdersWithKhaltiImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Map<String, dynamic> payload});
+}
+
+/// @nodoc
+class __$$CreateOrdersWithKhaltiImplCopyWithImpl<$Res>
+    extends _$CreateOrdersEventCopyWithImpl<$Res, _$CreateOrdersWithKhaltiImpl>
+    implements _$$CreateOrdersWithKhaltiImplCopyWith<$Res> {
+  __$$CreateOrdersWithKhaltiImplCopyWithImpl(
+    _$CreateOrdersWithKhaltiImpl _value,
+    $Res Function(_$CreateOrdersWithKhaltiImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of CreateOrdersEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? payload = null}) {
+    return _then(
+      _$CreateOrdersWithKhaltiImpl(
+        payload:
+            null == payload
+                ? _value._payload
+                : payload // ignore: cast_nullable_to_non_nullable
+                    as Map<String, dynamic>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$CreateOrdersWithKhaltiImpl implements _CreateOrdersWithKhalti {
+  const _$CreateOrdersWithKhaltiImpl({
+    required final Map<String, dynamic> payload,
+  }) : _payload = payload;
+
+  final Map<String, dynamic> _payload;
+  @override
+  Map<String, dynamic> get payload {
+    if (_payload is EqualUnmodifiableMapView) return _payload;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_payload);
+  }
+
+  @override
+  String toString() {
+    return 'CreateOrdersEvent.createORderWithKhalti(payload: $payload)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CreateOrdersWithKhaltiImpl &&
+            const DeepCollectionEquality().equals(other._payload, _payload));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_payload));
+
+  /// Create a copy of CreateOrdersEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreateOrdersWithKhaltiImplCopyWith<_$CreateOrdersWithKhaltiImpl>
+  get copyWith =>
+      __$$CreateOrdersWithKhaltiImplCopyWithImpl<_$CreateOrdersWithKhaltiImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Map<String, dynamic> payload)
+    createOrderWithCashOnDelivery,
+    required TResult Function(Map<String, dynamic> payload)
+    createORderWithKhalti,
+  }) {
+    return createORderWithKhalti(payload);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Map<String, dynamic> payload)?
+    createOrderWithCashOnDelivery,
+    TResult? Function(Map<String, dynamic> payload)? createORderWithKhalti,
+  }) {
+    return createORderWithKhalti?.call(payload);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Map<String, dynamic> payload)?
+    createOrderWithCashOnDelivery,
+    TResult Function(Map<String, dynamic> payload)? createORderWithKhalti,
+    required TResult orElse(),
+  }) {
+    if (createORderWithKhalti != null) {
+      return createORderWithKhalti(payload);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CreateOrdersWithCashOnDelivery value)
+    createOrderWithCashOnDelivery,
+    required TResult Function(_CreateOrdersWithKhalti value)
+    createORderWithKhalti,
+  }) {
+    return createORderWithKhalti(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CreateOrdersWithCashOnDelivery value)?
+    createOrderWithCashOnDelivery,
+    TResult? Function(_CreateOrdersWithKhalti value)? createORderWithKhalti,
+  }) {
+    return createORderWithKhalti?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CreateOrdersWithCashOnDelivery value)?
+    createOrderWithCashOnDelivery,
+    TResult Function(_CreateOrdersWithKhalti value)? createORderWithKhalti,
+    required TResult orElse(),
+  }) {
+    if (createORderWithKhalti != null) {
+      return createORderWithKhalti(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CreateOrdersWithKhalti implements CreateOrdersEvent {
+  const factory _CreateOrdersWithKhalti({
+    required final Map<String, dynamic> payload,
+  }) = _$CreateOrdersWithKhaltiImpl;
+
+  @override
+  Map<String, dynamic> get payload;
+
+  /// Create a copy of CreateOrdersEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CreateOrdersWithKhaltiImplCopyWith<_$CreateOrdersWithKhaltiImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }

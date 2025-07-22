@@ -1,9 +1,13 @@
 part of 'create_orders_bloc.dart';
 
 @freezed
-class CreateOrdersEvent with _$CreateOrdersEvent {
+abstract class CreateOrdersEvent with _$CreateOrdersEvent {
   // Include payload for creating order
-  const factory CreateOrdersEvent.createOrders({
+  const factory CreateOrdersEvent.createOrderWithCashOnDelivery({
     required Map<String, dynamic> payload,
-  }) = _CreateOrders;
+  }) = _CreateOrdersWithCashOnDelivery;
+
+  const factory CreateOrdersEvent.createORderWithKhalti({
+    required Map<String, dynamic> payload,
+  }) = _CreateOrdersWithKhalti;
 }

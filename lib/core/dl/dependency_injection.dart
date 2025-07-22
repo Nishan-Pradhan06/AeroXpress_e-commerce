@@ -15,6 +15,7 @@ import 'package:deal_sell/features/cutomers/category/repository/category_reposit
 import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
 import 'package:deal_sell/features/cutomers/products/blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
 import 'package:deal_sell/features/cutomers/products/repository/products_repository.dart';
+import 'package:deal_sell/features/shared/payments/bloc/khalti_paymenet_initiate_bloc.dart';
 import 'package:deal_sell/features/shared/user_profile/repository/my_profile_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -42,7 +43,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => CategoryBloc(repo: sl()));
   sl.registerLazySingleton(() => AddToCartBloc(repo: sl()));
   sl.registerLazySingleton(() => GetCartBloc(repo: sl()));
-  sl.registerLazySingleton(() => DeleteCartBloc(repo: sl()));
+  sl.registerFactory(() => DeleteCartBloc(repo: sl()));
   sl.registerLazySingleton(() => ShippingOptionsBloc(repo: sl()));
   sl.registerLazySingleton(() => AllOrderBloc(repo: sl()));
   sl.registerLazySingleton(() => VendorOrdersBloc(repo: sl()));
@@ -52,6 +53,7 @@ Future<void> setupServiceLocator() async {
 
   //###---------------CUBIT--------------###
   sl.registerLazySingleton(() => LogoutCubit(repo: sl()));
+  sl.registerLazySingleton(() => KhaltiPaymenetInitiateBloc(repo: sl()));
 
   //###------------REPOSITORY-----------###
   sl.registerLazySingleton<AuthRepository>(

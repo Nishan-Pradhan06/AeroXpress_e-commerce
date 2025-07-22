@@ -26,6 +26,14 @@ class _CartScreenState extends State<CartScreen> {
     await Future.delayed(const Duration(seconds: 1));
   }
 
+  late DeleteCartBloc _deleteCartBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _deleteCartBloc = sl<DeleteCartBloc>();
+  }
+
   @override
   void didChangeDependencies() {
     sl<GetCartBloc>().add(GetCartEvent.getCart());
@@ -33,12 +41,13 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   void _onDeleteCart() {
-    context.read<DeleteCartBloc>().add(const DeleteCartEvent.deleteCart());
+    _deleteCartBloc.add(const DeleteCartEvent.deleteCart());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<DeleteCartBloc, DeleteCartState>(
+      bloc: _deleteCartBloc,
       listener: (context, state) {
         state.whenOrNull(
           loading: () => AppLoadingDialog.show(context),

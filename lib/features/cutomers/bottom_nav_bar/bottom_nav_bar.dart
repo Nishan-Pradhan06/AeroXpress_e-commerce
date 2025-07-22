@@ -65,131 +65,49 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return UpgradeAlert(
-      // Prevent the dialog from being dismissed by tapping outside
-      barrierDismissible: false,
-
-      // Prevent back button from closing dialog
-      shouldPopScope: () => false,
-
-      // Show release notes if available
-      showReleaseNotes: true,
-
-      // Show Ignore button (you may disable in production)
-      showIgnore: true,
-
-      // Show Later button (you may disable in production)
-      showLater: true,
-
-      // Set dialog type based on platform
-      dialogStyle:
-          Platform.isAndroid
-              ? UpgradeDialogStyle.material
-              : UpgradeDialogStyle.cupertino,
-
-      // Optional: Customize iOS button style
-      // cupertinoButtonTextStyle: const TextStyle(color: Colors.blue),
-
-      // Control how often the alert appears again after "Later"
-      upgrader: Upgrader(
-        // Useful for debug: show frequently
-        debugDisplayAlways: true,
-        debugLogging: true,
-
-        // Duration before it prompts again after "Later"
-        durationUntilAlertAgain: const Duration(seconds: 10),
-
-        // Optional: specify minimum app version to enforce
-        // minAppVersion: '2.0.0',
-
-        // Optional: show different language (e.g., 'en', 'ne')
-        // languageCode: 'en',
-
-        // Optional: set a custom controller for platform-specific behavior
-        // storeController: CustomUpgraderStoreController(),
-
-        // Optional: override device or OS platform
-        // upgraderDevice: UpgraderDevice.android,
-        // upgraderOS: UpgraderOS.android,
-
-        // Called before displaying the dialog. Return false to block.
-        willDisplayUpgrade: ({
-          required bool display,
-          String? installedVersion,
-          UpgraderVersionInfo? versionInfo,
-        }) {
-          if (display) {
-            log(
-              'Upgrade available: Installed=$installedVersion → Store=${versionInfo?.appStoreVersion}',
-            );
-          } else {
-            log('No upgrade shown. Installed version: $installedVersion');
-          }
-        },
-      ),
-
-      // Called when user presses "Update"
-      onUpdate: () {
-        urlLauncherWithFallback(context, playStoreUrl); // Your Play Store URL
-        return true;
-      },
-
-      // Called when user presses "Later"
-      onLater: () {
-        log('User pressed later button');
-        return true;
-      },
-
-      // Called when user presses "Ignore"
-      onIgnore: () {
-        log('User pressed ignore button');
-        return true;
-      },
-
-      child: Scaffold(
-        body: IndexedStack(index: _currentIndex, children: _screens),
-        // persistentFooterButtons: [],/
-        bottomNavigationBar: Material(
-          elevation: 8,
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(BottomNavIconConstant.home),
-                activeIcon: SvgPicture.asset(BottomNavIconConstant.homeBold),
-                label: 'Home',
+    return Scaffold(
+      body: IndexedStack(index: _currentIndex, children: _screens),
+      // persistentFooterButtons: [],/
+      bottomNavigationBar: Material(
+        elevation: 8,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(BottomNavIconConstant.home),
+              activeIcon: SvgPicture.asset(BottomNavIconConstant.homeBold),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(BottomNavIconConstant.category),
+              activeIcon: SvgPicture.asset(
+                BottomNavIconConstant.categoryBold,
               ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(BottomNavIconConstant.category),
-                activeIcon: SvgPicture.asset(
-                  BottomNavIconConstant.categoryBold,
-                ),
-                label: 'Category',
+              label: 'Category',
+            ),
+            BottomNavigationBarItem(
+              icon: CustomBadge(
+                count: '4',
+                child: SvgPicture.asset(BottomNavIconConstant.cart),
               ),
-              BottomNavigationBarItem(
-                icon: CustomBadge(
-                  count: '4',
-                  child: SvgPicture.asset(BottomNavIconConstant.cart),
-                ),
-                activeIcon: CustomBadge(
-                  count: '4',
-                  child: SvgPicture.asset(BottomNavIconConstant.cartBold),
-                ),
-                label: 'Cart',
+              activeIcon: CustomBadge(
+                count: '4',
+                child: SvgPicture.asset(BottomNavIconConstant.cartBold),
               ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(BottomNavIconConstant.profile),
-                activeIcon: SvgPicture.asset(BottomNavIconConstant.profileBold),
-                label: 'Profile',
-              ),
-            ],
-          ),
+              label: 'Cart',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(BottomNavIconConstant.profile),
+              activeIcon: SvgPicture.asset(BottomNavIconConstant.profileBold),
+              label: 'Profile',
+            ),
+          ],
         ),
       ),
     );

@@ -1,15 +1,21 @@
 import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:deal_sell/core/widget/custom_button.dart';
-import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:khalti_checkout_flutter/khalti_checkout_flutter.dart';
+
+import 'package:deal_sell/core/utils/app_loading_dialogs.dart';
+import 'package:deal_sell/core/widget/custom_button.dart';
+import 'package:deal_sell/core/widget/custom_toast.dart';
+import 'package:deal_sell/features/cutomers/cart/bloc/delete_cart/delete_cart_bloc.dart';
+import 'package:deal_sell/features/shared/payments/bloc/khalti_paymenet_initiate_bloc.dart';
+import 'package:deal_sell/routes/app_route_names.dart';
+
 import '../../../core/constant/api.dart';
 import '../../../core/widget/custom_card.dart';
 import '../../cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
-import '../../cutomers/cart/models/cart_model.dart';
 import '../orders/bloc/create_orders/create_orders_bloc.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -20,7 +26,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  String selectedPaymentMethod = 'Khalti';
+  String selectedPaymentMethod = 'KHALTI';
 
   final _formKey = GlobalKey<FormState>();
 
@@ -32,28 +38,39 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
 
-  late final Future<Khalti?> khalti;
-  String pidx = 'https://test-pay.khalti.com/?pidx=zD3CEmCoC7Sm2pmfvuhbCR';
+  // Khalti instance
+  Khalti? khaltiInstance;
   PaymentResult? paymentResult;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> _initializeKhalti(String pidx) async {
     final payConfig = KhaltiPayConfig(
-      publicKey: '1db0691eb0ce459588eba0c81a2b560e',
+      publicKey: '082dd5258935429582e20776f2f4b24e',
       pidx: pidx,
       environment: Environment.test,
     );
 
-    khalti = Khalti.init(
+    khaltiInstance = await Khalti.init(
       enableDebugging: true,
       payConfig: payConfig,
       onPaymentResult: (paymentResult, khalti) {
-        log(paymentResult.toString());
+        log('Payment Result: ${paymentResult.toString()}');
         setState(() {
           this.paymentResult = paymentResult;
         });
-        _createOrder();
+
+        // Handle successful payment
+        if (paymentResult.payload?.status == 'Completed') {
+          CustomToast.showSuccess("Payment completed successfully!");
+          context.pushReplacementNamed(AppRoutesName.allOrders);
+          context.read<DeleteCartBloc>().add(DeleteCartEvent.deleteCart());
+          context.read<GetCartBloc>().add(GetCartEvent.getCart());
+        }
+
         khalti.close(context);
       },
       onMessage: (
@@ -64,73 +81,126 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         needsPaymentConfirmation,
       }) async {
         log(
-          'Description: $description, Status Code: $statusCode, Event: $event, NeedsPaymentConfirmation: $needsPaymentConfirmation',
+          'Khalti Message - Description: $description, Status Code: $statusCode, Event: $event',
         );
+
+        if (statusCode != null && statusCode >= 400) {
+          CustomToast.showError('Payment failed: $description');
+        }
+
         khalti.close(context);
       },
-      onReturn: () {
-        context.goNamed(AppRoutesName.customerHome);
-      },
+      onReturn: () => log('Successfully redirected to return_url.'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colorScheme.background,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: Material(
-          elevation: 0.1,
-          color: Colors.white,
-          child: AppBar(
-            scrolledUnderElevation: 0,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: const Text(
-              "Checkout",
-              style: TextStyle(color: Colors.black),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CreateOrdersBloc, CreateOrdersState>(
+          listener: (context, state) {
+            state.whenOrNull(
+              loading: () => AppLoadingDialog.show(context),
+              loaded: (message) {
+                AppLoadingDialog.hide(context);
+                if (selectedPaymentMethod == "KHALTI") {
+                  // message is the order ID
+                  context.read<KhaltiPaymenetInitiateBloc>().add(
+                    KhaltiPaymenetInitiateEvent.initiate(int.parse(message)),
+                  );
+                  return;
+                }
+                CustomToast.showSuccess("Successfully placed order");
+                context.pushReplacementNamed(AppRoutesName.allOrders);
+                context.read<DeleteCartBloc>().add(
+                  DeleteCartEvent.deleteCart(),
+                );
+                context.read<GetCartBloc>().add(GetCartEvent.getCart());
+              },
+              failure: (failure) {
+                AppLoadingDialog.hide(context);
+                CustomToast.showError(failure.message);
+              },
+            );
+          },
+        ),
+        BlocListener<KhaltiPaymenetInitiateBloc, KhaltiPaymenetInitiateState>(
+          listener: (context, state) {
+            state.whenOrNull(
+              loading: () => AppLoadingDialog.show(context),
+              loaded: (khaltiPaymentState) async {
+                AppLoadingDialog.hide(context);
+
+                // Initialize Khalti with the pidx from the payment state
+                await _initializeKhalti(khaltiPaymentState.pidx);
+
+                // Open Khalti payment interface
+                if (khaltiInstance != null) {
+                  khaltiInstance!.open(context);
+                } else {
+                  CustomToast.showError('Failed to initialize Khalti payment');
+                }
+              },
+              failure: (failure) {
+                AppLoadingDialog.hide(context);
+                CustomToast.showError(failure.message);
+              },
+            );
+          },
+        ),
+      ],
+      child: Scaffold(
+        backgroundColor: theme.colorScheme.background,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Material(
+            elevation: 0.1,
+            color: Colors.white,
+            child: AppBar(
+              scrolledUnderElevation: 0,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              title: const Text(
+                "Checkout",
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          children: [
-            _buildOrderSummaryCard(context, theme),
-            _buildShippingAddressCard(theme),
-            _buildPaymentMethodCard(theme),
-          ],
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            children: [
+              _buildOrderSummaryCard(context, theme),
+              _buildShippingAddressCard(theme),
+              _buildPaymentMethodCard(theme),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              offset: Offset(0, -5),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: CustomButtonPrimary(
-            height: 40,
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                if (selectedPaymentMethod == 'Khalti') {
-                  final khaltiInstance = await khalti;
-                  khaltiInstance?.open(context);
-                } else {
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                offset: const Offset(0, -5),
+              ),
+            ],
+          ),
+          child: SafeArea(
+            child: CustomButtonPrimary(
+              height: 40,
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
                   _createOrder();
                 }
-              }
-            },
-            title: 'Place Order',
+              },
+              title: 'Place Order',
+            ),
           ),
         ),
       ),
@@ -169,9 +239,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           "shippingAddress": shippingAddress,
         };
 
-        context.read<CreateOrdersBloc>().add(
-          CreateOrdersEvent.createOrders(payload: payload),
-        );
+        if (selectedPaymentMethod == "COD") {
+          context.read<CreateOrdersBloc>().add(
+            CreateOrdersEvent.createOrderWithCashOnDelivery(payload: payload),
+          );
+        } else if (selectedPaymentMethod == "KHALTI") {
+          context.read<CreateOrdersBloc>().add(
+            CreateOrdersEvent.createORderWithKhalti(payload: payload),
+          );
+        }
       },
       orElse: () {
         debugPrint("Cart not loaded yet or some other state is active.");
@@ -427,7 +503,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             const SizedBox(height: 16),
             _buildPaymentOption(
               theme,
-              'Khalti',
+              'KHALTI',
               'Khalti',
               'Pay with Khalti wallet',
               Icons.account_balance_wallet,
@@ -435,23 +511,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             const SizedBox(height: 12),
             _buildPaymentOption(
               theme,
-              'eSewa',
-              'eSewa',
-              'Pay with eSewa wallet',
-              Icons.account_balance_wallet,
-            ),
-            const SizedBox(height: 12),
-            _buildPaymentOption(
-              theme,
-              'Card',
-              'Card',
-              'Pay with debit/credit card',
-              Icons.credit_card,
-            ),
-            const SizedBox(height: 12),
-            _buildPaymentOption(
-              theme,
-              'Cash',
+              'COD',
               'Cash on Delivery',
               'Pay with cash on delivery',
               Icons.money,
@@ -483,7 +543,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         groupValue: selectedPaymentMethod,
         onChanged: (String? newValue) {
           setState(() {
-            selectedPaymentMethod = newValue!;
+            selectedPaymentMethod = newValue!.toUpperCase();
           });
         },
         title: Row(
@@ -504,28 +564,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
     );
   }
-
-  // void _placeOrder() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Order Placed Successfully!'),
-  //         content: Text(
-  //           'Your order has been placed and will be processed soon.',
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: Text('OK'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   void dispose() {
