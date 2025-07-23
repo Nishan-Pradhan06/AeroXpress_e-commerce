@@ -3,7 +3,7 @@ import 'package:deal_sell/features/cutomers/cart/bloc/get_cart/get_cart_bloc.dar
 import 'package:deal_sell/features/cutomers/cart/models/cart_item_model.dart';
 import 'package:deal_sell/features/cutomers/cart/models/cart_summary_model.dart';
 import 'package:deal_sell/features/cutomers/cart/widgets/cart_item.dart';
-import 'package:deal_sell/features/cutomers/products/models/vendor_model.dart';
+import 'package:deal_sell/features/shared/products/models/vendor_model.dart';
 import 'package:deal_sell/core/dl/dependency_injection.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
 import 'package:flutter/material.dart';

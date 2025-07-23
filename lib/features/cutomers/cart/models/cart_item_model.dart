@@ -1,4 +1,4 @@
-import '../../products/models/products_model.dart';
+import '../../../shared/products/models/products_model.dart';
 
 class CartItemModel {
   final int id;

@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deal_sell/core/widget/cached_network_image_with_fallback.dart';
-import 'package:deal_sell/features/cutomers/products/models/products_model.dart';
+import 'package:deal_sell/features/shared/products/models/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

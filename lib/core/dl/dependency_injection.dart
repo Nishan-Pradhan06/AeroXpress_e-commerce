@@ -12,9 +12,9 @@ import 'package:deal_sell/features/cutomers/cart/bloc/shipping_options/shipping_
 import 'package:deal_sell/features/cutomers/cart/repository/cart_repository.dart';
 import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
 import 'package:deal_sell/features/cutomers/category/repository/category_repository.dart';
-import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
-import 'package:deal_sell/features/cutomers/products/blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
-import 'package:deal_sell/features/cutomers/products/repository/products_repository.dart';
+import 'package:deal_sell/features/shared/products/blocs/all_products/products_bloc.dart';
+import 'package:deal_sell/features/shared/products/blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
+import 'package:deal_sell/features/shared/products/repository/products_repository.dart';
 import 'package:deal_sell/features/shared/payments/bloc/khalti_payment_initiate/khalti_payment_initiate_bloc.dart';
 import 'package:deal_sell/features/shared/user_profile/repository/my_profile_repository.dart';
 import 'package:dio/dio.dart';

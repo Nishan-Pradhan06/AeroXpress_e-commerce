@@ -1,5 +1,5 @@
 import 'package:deal_sell/core/state/bloc_base_state.dart';
-import 'package:deal_sell/features/cutomers/products/models/products_model.dart';
+import 'package:deal_sell/features/shared/products/models/products_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

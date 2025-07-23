@@ -1,6 +1,6 @@
-import 'package:deal_sell/features/cutomers/products/models/image_model.dart';
+import 'package:deal_sell/features/shared/products/models/image_model.dart';
 
-import '../../category/models/category_model.dart';
+import '../../../cutomers/category/models/category_model.dart';
 import 'vendor_model.dart';
 
 class ProductModel {

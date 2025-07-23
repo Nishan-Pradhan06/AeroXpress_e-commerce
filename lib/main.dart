@@ -7,7 +7,7 @@ import 'package:deal_sell/features/cutomers/cart/bloc/delete_cart/delete_cart_bl
 import 'package:deal_sell/features/cutomers/cart/bloc/get_cart/get_cart_bloc.dart';
 import 'package:deal_sell/features/cutomers/cart/bloc/shipping_options/shipping_options_bloc.dart';
 import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
-import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
+import 'package:deal_sell/features/shared/products/blocs/all_products/products_bloc.dart';
 import 'package:deal_sell/features/shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
 import 'package:deal_sell/features/shared/payments/bloc/khalti_payment_initiate/khalti_payment_initiate_bloc.dart';
 import 'package:device_preview/device_preview.dart';
