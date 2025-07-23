@@ -1,8 +1,10 @@
 import 'package:deal_sell/features/shared/orders/model/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/helpers/no_internet_widget.dart';
+import '../../../../routes/app_route_names.dart';
 import '../../../shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
 
 class VendorOrderPage extends StatefulWidget {
@@ -216,9 +218,17 @@ class _VendorOrderPageState extends State<VendorOrderPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(_formatDate(order.createdAt)),
-                if (order.status == 'PENDING')
+                if (order.status != 'DELIVERED')
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(
+                        AppRoutesName.updateVendorStatus,
+                        extra: order,
+                      );
+                      context.read<VendorOrdersBloc>().add(
+                        const VendorOrdersEvent.getVendorOrders(),
+                      );
+                    },
                     child: const Text("Process"),
                   ),
               ],

@@ -25,4 +25,5 @@ class AppRoutesName {
   static const String vendorAnalytics = 'vendorAnalytics';
   static const String vendorCustomers = 'vendorCustomers';
   static const String vendorSettings = 'vendorSettings';
+  static const String updateVendorStatus = 'updateVendorStatus';
 }

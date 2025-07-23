@@ -8,6 +8,11 @@ abstract interface class OrderRepository {
   FutureEither<List<OrderModel>> getVendorOrders({int page = 1});
   FutureEither<OrderModel> createOrder(Map<String, dynamic> payload);
 
+  FutureEither<String> updateVendorOrderStatus({
+    required int orderId,
+    required String status,
+  });
+
   FutureEither<String> confirmCodPayment(int orderId);
   FutureEither<String> khaltiInitiate(int orderId);
   // http://localhost:5000/api/payments/khalti/initiate
@@ -75,6 +80,22 @@ class OrderRepositoryImpl implements OrderRepository {
     return response.fold((failure) => Left(failure), (data) {
       return Right("Sucessfully confirmed COD payment for order ID: $orderId");
     });
+  }
+
+  @override
+  FutureEither<String> updateVendorOrderStatus({
+    required int orderId,
+    required String status,
+  }) async {
+    final response = await _apiService.put<Map>(
+      'orders/vendors/orders/$orderId/status',
+      data: {'status': status},
+    );
+
+    return response.fold(
+      (failure) => Left(failure),
+      (data) => Right(data['message'] ?? 'Order status updated'),
+    );
   }
 
   // @override

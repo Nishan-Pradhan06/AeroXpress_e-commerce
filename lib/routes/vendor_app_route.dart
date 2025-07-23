@@ -1,7 +1,9 @@
 import 'package:deal_sell/common/extension/path_extension.dart';
 import 'package:go_router/go_router.dart';
+import '../features/shared/orders/model/order_model.dart';
 import '../features/vendor/dashboard/dashboard_page.dart';
 import '../features/vendor/orders/screen/orders_page.dart';
+import '../features/vendor/orders/screen/update_order_status_page.dart';
 import '../features/vendor/products/screens/product_page.dart';
 import '../features/vendor/settings/screen/setting_page.dart';
 import '../features/vendor/vendor_bottom_nav_bar/vendor_btn_nav.dart';
@@ -32,5 +34,13 @@ List<GoRoute> vendorAppRoutes = [
     path: AppRoutesName.vendorSettings.path,
     name: AppRoutesName.vendorSettings,
     builder: (context, state) => const SettingPage(),
+  ),
+ GoRoute(
+    path: AppRoutesName.updateVendorStatus.path,
+    name: AppRoutesName.updateVendorStatus,
+    builder: (context, state) {
+      final order = state.extra as OrderModel;
+      return ProcessOrderScreen(order: order);
+    },
   ),
 ];

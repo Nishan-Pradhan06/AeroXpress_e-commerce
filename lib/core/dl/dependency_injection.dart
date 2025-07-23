@@ -3,6 +3,7 @@ import 'package:deal_sell/core/network/dio_client.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
 import 'package:deal_sell/features/shared/orders/bloc/create_orders/create_orders_bloc.dart';
 import 'package:deal_sell/features/shared/orders/bloc/customer_orders/all_order_bloc.dart';
+import 'package:deal_sell/features/shared/orders/bloc/update_vendor_order_status/update_vendor_order_status_bloc.dart';
 import 'package:deal_sell/features/shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
 import 'package:deal_sell/features/shared/orders/repository/orders_repository.dart';
 import 'package:deal_sell/features/cutomers/cart/bloc/add_to_cart/add_to_cart_bloc.dart';
@@ -56,6 +57,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => LogoutCubit(repo: sl()));
   sl.registerLazySingleton(() => KhaltiPaymenetInitiateBloc(repo: sl()));
   sl.registerFactory(() => GetVendorsProductsBloc(repo: sl()));
+  sl.registerFactory(() => UpdateVendorOrderStatusBloc(repo: sl()));
 
   //###------------REPOSITORY-----------###
   sl.registerLazySingleton<AuthRepository>(
