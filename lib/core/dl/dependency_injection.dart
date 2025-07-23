@@ -14,6 +14,7 @@ import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
 import 'package:deal_sell/features/cutomers/category/repository/category_repository.dart';
 import 'package:deal_sell/features/shared/products/blocs/all_products/products_bloc.dart';
 import 'package:deal_sell/features/shared/products/blocs/get_products_by_slug/get_product_by_slug_bloc.dart';
+import 'package:deal_sell/features/shared/products/blocs/get_vendors_products/get_vendors_products_bloc.dart';
 import 'package:deal_sell/features/shared/products/repository/products_repository.dart';
 import 'package:deal_sell/features/shared/payments/bloc/khalti_payment_initiate/khalti_payment_initiate_bloc.dart';
 import 'package:deal_sell/features/shared/user_profile/repository/my_profile_repository.dart';
@@ -54,6 +55,7 @@ Future<void> setupServiceLocator() async {
   //###---------------CUBIT--------------###
   sl.registerLazySingleton(() => LogoutCubit(repo: sl()));
   sl.registerLazySingleton(() => KhaltiPaymenetInitiateBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetVendorsProductsBloc(repo: sl()));
 
   //###------------REPOSITORY-----------###
   sl.registerLazySingleton<AuthRepository>(

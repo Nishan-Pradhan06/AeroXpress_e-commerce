@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../core/theme/app_color.dart';
+import '../../../../core/widget/cached_network_image_with_fallback.dart';
 
 class EvProductCard extends StatelessWidget {
   final Map<String, dynamic> product;
@@ -30,10 +31,9 @@ class EvProductCard extends StatelessWidget {
                   height: 80,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    image: DecorationImage(
-                      image: NetworkImage(product['image']),
-                      fit: BoxFit.cover,
-                    ),
+                  ),
+                  child: CachedNetworkImageWithFallback(
+                    imageUrl: product['image'],
                   ),
                 ),
                 Gap(10),

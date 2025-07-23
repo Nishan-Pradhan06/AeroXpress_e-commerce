@@ -2,6 +2,7 @@ import 'package:deal_sell/features/shared/orders/model/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/helpers/no_internet_widget.dart';
 import '../../../shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
 
 class VendorOrderPage extends StatefulWidget {
@@ -13,7 +14,6 @@ class VendorOrderPage extends StatefulWidget {
 
 class _VendorOrderPageState extends State<VendorOrderPage> {
   String selectedFilter = 'ALL';
-  
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +54,12 @@ class _VendorOrderPageState extends State<VendorOrderPage> {
                   loading:
                       () => const Center(child: CircularProgressIndicator()),
                   failure:
-                      (failure) =>
-                          Center(child: Text("Error: ${failure.message}")),
+                      (failure) => Center(
+                        child: NoInternetWidget(
+                          message: failure.message,
+                          onPressed: () {},
+                        ),
+                      ),
                   loaded: (orders) {
                     final filtered =
                         selectedFilter == 'ALL'
