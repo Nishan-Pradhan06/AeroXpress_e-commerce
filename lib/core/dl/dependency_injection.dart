@@ -55,7 +55,7 @@ Future<void> setupServiceLocator() async {
   //###---------------CUBIT--------------###
   sl.registerLazySingleton(() => LogoutCubit(repo: sl()));
   sl.registerLazySingleton(() => KhaltiPaymenetInitiateBloc(repo: sl()));
-  sl.registerLazySingleton(() => GetVendorsProductsBloc(repo: sl()));
+  sl.registerFactory(() => GetVendorsProductsBloc(repo: sl()));
 
   //###------------REPOSITORY-----------###
   sl.registerLazySingleton<AuthRepository>(

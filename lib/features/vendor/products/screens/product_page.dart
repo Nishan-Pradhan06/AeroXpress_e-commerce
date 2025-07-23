@@ -10,8 +10,21 @@ import '../../../shared/products/blocs/get_vendors_products/get_vendors_products
 import '../widgets/ev_add_product_fab.dart';
 import '../widgets/ev_product_card.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<GetVendorsProductsBloc>().add(
+      GetVendorsProductsEvent.getVendorProducts(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +107,10 @@ class ProductPage extends StatelessWidget {
                       'price': double.tryParse(product.price) ?? 0,
                       'stock': product.stockQuantity,
                       'status': product.status,
-                      'image': product.images,
+                      'image':
+                          (product.images?.isNotEmpty ?? false)
+                              ? product.images!.first.url
+                              : null,
                       'sales': 0,
                     };
 

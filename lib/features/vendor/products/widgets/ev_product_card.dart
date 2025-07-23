@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import '../../../../core/helpers/image_url_helper.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/widget/cached_network_image_with_fallback.dart';
 
@@ -33,7 +34,7 @@ class EvProductCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: CachedNetworkImageWithFallback(
-                    imageUrl: product['image'],
+                    imageUrl: getProductImageUrl(product['image']),
                   ),
                 ),
                 Gap(10),
@@ -72,7 +73,7 @@ class EvProductCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '\$${product['price'].toStringAsFixed(2)}',
+                        'Rs. ${product['price'].toStringAsFixed(2)}',
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(

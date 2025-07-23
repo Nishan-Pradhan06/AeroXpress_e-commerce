@@ -16,6 +16,12 @@ class _VendorOrderPageState extends State<VendorOrderPage> {
   String selectedFilter = 'ALL';
 
   @override
+  void initState() {
+    super.initState();
+    context.read<VendorOrdersBloc>().add(VendorOrdersEvent.getVendorOrders());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
