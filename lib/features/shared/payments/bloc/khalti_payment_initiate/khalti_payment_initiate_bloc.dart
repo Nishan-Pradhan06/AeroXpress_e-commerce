@@ -3,9 +3,9 @@ import 'package:deal_sell/features/shared/orders/repository/orders_repository.da
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'khalti_paymenet_initiate_event.dart';
-part 'khalti_paymenet_initiate_state.dart';
-part 'khalti_paymenet_initiate_bloc.freezed.dart';
+part 'khalti_payment_initiate_event.dart';
+part 'khalti_payment_initiate_state.dart';
+part 'khalti_payment_initiate_bloc.freezed.dart';
 
 class KhaltiPaymenetInitiateBloc
     extends Bloc<KhaltiPaymenetInitiateEvent, KhaltiPaymenetInitiateState> {

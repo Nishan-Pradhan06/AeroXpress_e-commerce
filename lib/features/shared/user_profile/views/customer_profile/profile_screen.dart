@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deal_sell/core/theme/app_theme.dart';
+import 'package:deal_sell/core/utils/role_utils.dart';
 import 'package:deal_sell/core/widget/cached_network_image_with_fallback.dart';
 import 'package:deal_sell/features/auth/cubit/logout_cubit.dart';
 import 'package:deal_sell/features/shared/user_profile/views/customer_profile/edit_profile.dart';
@@ -67,10 +68,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _buildProfileHeaderCard(),
 
               // Profile Header Options Card
-              _buildProfileHeaderOptionsCard(),
+              CustomerOnlyWidget(child: _buildProfileHeaderOptionsCard()),
 
               // Become Seller Card
-              _buildBecomeSellerCard(),
+              CustomerOnlyWidget(child: _buildBecomeSellerCard()),
 
               // Account Settings Card
               _buildAccountSettingsCard(),

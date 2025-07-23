@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'khalti_paymenet_initiate_bloc.dart';
+part of 'khalti_payment_initiate_bloc.dart';
 
 typedef KhaltiPaymenetInitiateState = BaseState<KhaltiPaymentState>;
 

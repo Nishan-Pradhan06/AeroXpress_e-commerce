@@ -9,7 +9,7 @@ import 'package:deal_sell/features/cutomers/cart/bloc/shipping_options/shipping_
 import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
 import 'package:deal_sell/features/cutomers/products/blocs/all_products/products_bloc.dart';
 import 'package:deal_sell/features/shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
-import 'package:deal_sell/features/shared/payments/bloc/khalti_paymenet_initiate_bloc.dart';
+import 'package:deal_sell/features/shared/payments/bloc/khalti_payment_initiate/khalti_payment_initiate_bloc.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';

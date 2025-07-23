@@ -10,7 +10,7 @@ import 'package:deal_sell/core/utils/app_loading_dialogs.dart';
 import 'package:deal_sell/core/widget/custom_button.dart';
 import 'package:deal_sell/core/widget/custom_toast.dart';
 import 'package:deal_sell/features/cutomers/cart/bloc/delete_cart/delete_cart_bloc.dart';
-import 'package:deal_sell/features/shared/payments/bloc/khalti_paymenet_initiate_bloc.dart';
+import 'package:deal_sell/features/shared/payments/bloc/khalti_payment_initiate/khalti_payment_initiate_bloc.dart';
 import 'package:deal_sell/routes/app_route_names.dart';
 
 import '../../../core/constant/api.dart';
