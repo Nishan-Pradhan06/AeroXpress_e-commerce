@@ -92,98 +92,13 @@ Each feature folder (e.g., `auth`, `customers`, `shared`, `vendor`) contains:
 
 ---
 
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                          |                         
-|                                                   
-|                                                   
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-|
-
-
+<table>
+  <tr>
+    <td><img src="https://source.unsplash.com/250x500/?ecommerce,app" width="250"/></td>
+    <td><img src="https://source.unsplash.com/250x500/?checkout,app" width="250"/></td>
+    <td><img src="https://source.unsplash.com/250x500/?login,app" width="250"/></td>
+  </tr>
+</table>
 
 ---
 
