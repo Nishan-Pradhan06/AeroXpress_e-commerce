@@ -21,11 +21,15 @@ A full-featured multi-role (Customer/Vendor/Admin) E-Commerce application built 
 
 ## 🧱 Folder Structure (Frontend)
 
-
-
+`lib/`
+`├── common/ # Shared widgets, errors, typedefs, extensions`
+`├── core/ # Core utilities (theme, config, network, services, etc.)`
+`├── features/ # Feature-based folders for modularity (auth, vendor, customer, shared)`
+`├── routes/ # App route management using GoRouter`
+`└── main.dart # Entry point`
 
 Each feature folder (e.g., `auth`, `customers`, `shared`, `vendor`) contains:
-- `bloc/` or `controller/`
+- `bloc/`
 - `model/`
 - `view/`
 - `repository/`
@@ -44,6 +48,7 @@ Each feature folder (e.g., `auth`, `customers`, `shared`, `vendor`) contains:
   - Product browsing
   - Add to cart
   - Checkout with **Khalti** payment integration
+  - Checkout with **COD** payment
   - Order tracking
 
 - 🧑‍💼 **Vendor Features**
@@ -74,7 +79,7 @@ Each feature folder (e.g., `auth`, `customers`, `shared`, `vendor`) contains:
 
 | Purpose                   | Package Name                  |
 |--------------------------|-------------------------------|
-| State Management         | `flutter_bloc`, `provider`    |
+| State Management         | `flutter_bloc`                |
 | API Requests             | `dio`, `pretty_dio_logger`    |
 | Persistence              | `shared_preferences`, `flutter_secure_storage` |
 | Routing                  | `go_router`                   |
@@ -87,17 +92,98 @@ Each feature folder (e.g., `auth`, `customers`, `shared`, `vendor`) contains:
 
 ---
 
-## 🔄 Recent Major Commits
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                          |                         
+|                                                   
+|                                                   
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
 
-| Folder      | Commit Message                      | Date       |
-|-------------|--------------------------------------|------------|
-| `core`      | completed order process              | Yesterday  |
-| `features`  | completed order process              | Yesterday  |
-| `routes`    | completed order process              | Yesterday  |
-| `customers` | shift the products files             | Yesterday  |
-| `auth`      | update profile UI                    | Last Week  |
-| `common`    | completed the register implementation| Last Month |
-| `utils`     | khalti payment                       | Yesterday  |
+
 
 ---
 
@@ -110,8 +196,8 @@ Each feature folder (e.g., `auth`, `customers`, `shared`, `vendor`) contains:
 ## 🎓 Academic Info
 
 - 🎓 **Semester**: 5th Semester
-- 🏫 **Institution**: *(You can add your college name here)*
-- 📘 **Course**: Mobile Application Development / Project Work
+- 🏫 **Institution**: *Itahari Namuna College*
+- 📘 **Course**: MIS and E-Business / Project Work
 
 ---
 
