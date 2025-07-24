@@ -21,12 +21,12 @@ A full-featured multi-role (Customer/Vendor/Admin) E-Commerce application built 
 
 ## 🧱 Folder Structure (Frontend)
 
-`lib/`
-`├── common/ # Shared widgets, errors, typedefs, extensions`
-`├── core/ # Core utilities (theme, config, network, services, etc.)`
-`├── features/ # Feature-based folders for modularity (auth, vendor, customer, shared)`
-`├── routes/ # App route management using GoRouter`
-`└── main.dart # Entry point`
+- `lib/`
+- `├── common/ # Shared widgets, errors, typedefs, extensions`
+- `├── core/ # Core utilities (theme, config, network, services, etc.)`
+- `├── features/ # Feature-based folders for modularity (auth, vendor, customer, shared)`
+- `├── routes/ # App route management using GoRouter`
+- `└── main.dart # Entry point`
 
 Each feature folder (e.g., `auth`, `customers`, `shared`, `vendor`) contains:
 - `bloc/`
