@@ -92,11 +92,29 @@ Each feature folder (e.g., `auth`, `customers`, `shared`, `vendor`) contains:
 
 ---
 
+## Screenshots of Application
 <table>
   <tr>
-    <td><img src="https://source.unsplash.com/250x500/?ecommerce,app" width="250"/></td>
-    <td><img src="https://source.unsplash.com/250x500/?checkout,app" width="250"/></td>
-    <td><img src="https://source.unsplash.com/250x500/?login,app" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/login.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/register.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/customer1.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/customer2.jpg" width="250"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/customer3.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/customer4.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/customer5.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/customer6.jpg" width="250"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/customer7.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/customer8.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/vendor1.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/vendor2.jpg" width="250"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/vendor3.jpg" width="250"/></td>
+    <td><img src="https://github.com/Nishan-Pradhan06/AeroXpress_e-commerce/blob/ecommerce/assets/screenshots/vendor4.jpg" width="250"/></td>
   </tr>
 </table>
 
