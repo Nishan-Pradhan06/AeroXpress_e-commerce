@@ -17,7 +17,10 @@ abstract interface class OrderRepository {
   FutureEither<String> khaltiInitiate(int orderId);
   // http://localhost:5000/api/payments/khalti/initiate
   // FutureEither<OrderModel> intitiateKhalti(Map<String, dynamic> payload);
-  FutureEither<OrderModel> verifyKhalti({required String token});
+  FutureEither<String> verifyKhalti({
+    required int orderId,
+    required String pidx,
+  });
 }
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -111,14 +114,19 @@ class OrderRepositoryImpl implements OrderRepository {
   //   }
 
   @override
-  FutureEither<OrderModel> verifyKhalti({required String token}) async {
+  FutureEither<String> verifyKhalti({
+    required String pidx,
+    required int orderId,
+  }) async {
     final response = await _apiService.post<Map>(
       'payments/khalti/verify',
-      data: {'token': token},
+      data: {
+        {"pidx": pidx, "orderId": orderId},
+      },
     );
+
     return response.fold((f) => Left(f), (data) {
-      final orderJson = data['data']['order'];
-      return Right(OrderModel.fromJson(orderJson));
+      return Right(data['message'] ?? 'Payment verified');
     });
   }
 

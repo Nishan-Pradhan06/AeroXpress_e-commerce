@@ -14,6 +14,7 @@ class KhaltiPaymenetInitiateBloc
     : _orderRepository = repo,
       super(BaseState.initial()) {
     on<_Initiate>(_onInitiate);
+ 
   }
 
   Future<void> _onInitiate(
@@ -34,6 +35,7 @@ class KhaltiPaymenetInitiateBloc
     );
   }
 
+ 
   String extractPidxFromUrl(String paymentUrl) {
     final uri = Uri.parse(paymentUrl);
     return uri.queryParameters['pidx'] ?? '';

@@ -8,6 +8,7 @@ import 'package:deal_sell/features/cutomers/cart/bloc/get_cart/get_cart_bloc.dar
 import 'package:deal_sell/features/cutomers/cart/bloc/shipping_options/shipping_options_bloc.dart';
 import 'package:deal_sell/features/cutomers/category/bloc/category_bloc.dart';
 import 'package:deal_sell/features/shared/orders/bloc/update_vendor_order_status/update_vendor_order_status_bloc.dart';
+import 'package:deal_sell/features/shared/payments/bloc/verify_khalti/verify_khalti_bloc.dart';
 import 'package:deal_sell/features/shared/products/blocs/all_products/products_bloc.dart';
 import 'package:deal_sell/features/shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
 import 'package:deal_sell/features/shared/payments/bloc/khalti_payment_initiate/khalti_payment_initiate_bloc.dart';
@@ -124,6 +125,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<OnBoardingCubit>()),
         BlocProvider(create: (context) => sl<FabCubit>()),
         BlocProvider(create: (context) => sl<LogoutCubit>()),
+        BlocProvider(create: (context) => sl<VerifyKhaltiBloc>()),
       ],
       child: ShadApp.custom(
         appBuilder: (context) {

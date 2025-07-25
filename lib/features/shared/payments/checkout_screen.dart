@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deal_sell/features/shared/payments/bloc/verify_khalti/verify_khalti_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -41,6 +42,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   // Khalti instance
   Khalti? khaltiInstance;
   PaymentResult? paymentResult;
+  int? orderId;
 
   @override
   void initState() {
@@ -66,6 +68,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         // Handle successful payment
         if (paymentResult.payload?.status == 'Completed') {
           CustomToast.showSuccess("Payment completed successfully!");
+          context.read<VerifyKhaltiBloc>().add(
+            VerifyKhaltiEvent.verify(pidx: pidx, orderId: orderId!),
+          );
           context.pushReplacementNamed(AppRoutesName.allOrders);
           context.read<DeleteCartBloc>().add(DeleteCartEvent.deleteCart());
           context.read<GetCartBloc>().add(GetCartEvent.getCart());
@@ -107,6 +112,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 AppLoadingDialog.hide(context);
                 if (selectedPaymentMethod == "KHALTI") {
                   // message is the order ID
+                  orderId = int.parse(message);
+
                   context.read<KhaltiPaymenetInitiateBloc>().add(
                     KhaltiPaymenetInitiateEvent.initiate(int.parse(message)),
                   );
@@ -228,6 +235,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   (item) => {
                     "productId": item.product.id,
                     "quantity": item.quantity,
+                    "vendorId": item.product.vendor!.id,
                   },
                 )
                 .toList();
