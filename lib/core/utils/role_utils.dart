@@ -61,10 +61,10 @@ class RoleBasedWidget extends StatelessWidget {
                       ? child
                       : (errorWidget ?? const SizedBox.shrink()),
           loaded: (profile) {
-            final userRole = profile.role?.toUpperCase();
+            final userRole = profile.role.toUpperCase();
 
             // If user has no role, don't show content
-            if (userRole == null || userRole.isEmpty) {
+            if (userRole.isEmpty) {
               return fallback ?? const SizedBox.shrink();
             }
 
@@ -192,7 +192,7 @@ extension RoleHelper on BuildContext {
   String? get userRole {
     final state = read<GetUserProfileBloc>().state;
     return state.maybeWhen(
-      loaded: (profile) => profile.role?.toUpperCase(),
+      loaded: (profile) => profile.role.toUpperCase(),
       orElse: () => null,
     );
   }
