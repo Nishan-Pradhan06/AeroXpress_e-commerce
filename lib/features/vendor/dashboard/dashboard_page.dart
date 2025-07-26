@@ -1,9 +1,4 @@
-import 'package:deal_sell/core/theme/app_theme.dart';
-import 'package:deal_sell/features/vendor/dashboard/widget/dashboard_card.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'widget/stats_overview.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -34,73 +29,66 @@ class DashboardPage extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          spacing: AppTheme.space8,
-
-          children: [EvStatsOverview(), _buildInventoryAlert()],
-        ),
-      ),
+      body: EvStatsOverview(),
     );
   }
 
-  Widget _buildInventoryAlert() {
-    return EvDashboardCard(
-          title: 'Inventory Alerts',
-          icon: PhosphorIconsRegular.warning,
-          iconColor: Colors.orange,
-          child: Column(
-            children: [
-              _buildAlertItem(
-                'Low Stock',
-                '3 products need restocking',
-                Colors.orange,
-              ),
-              const Gap(12),
-              _buildAlertItem(
-                'Out of Stock',
-                '1 product unavailable',
-                Colors.red,
-              ),
-              const Gap(12),
-              _buildAlertItem(
-                'Expiring Soon',
-                '2 products expire in 7 days',
-                Colors.blue,
-              ),
-            ],
-          ),
-        )
-        .animate()
-        .fadeIn(duration: 500.ms, delay: 300.ms)
-        .slideX(begin: 0.3, end: 0);
-  }
+  // Widget _buildInventoryAlert() {
+  //   return EvDashboardCard(
+  //         title: 'Inventory Alerts',
+  //         icon: PhosphorIconsRegular.warning,
+  //         iconColor: Colors.orange,
+  //         child: Column(
+  //           children: [
+  //             _buildAlertItem(
+  //               'Low Stock',
+  //               '3 products need restocking',
+  //               Colors.orange,
+  //             ),
+  //             const Gap(12),
+  //             _buildAlertItem(
+  //               'Out of Stock',
+  //               '1 product unavailable',
+  //               Colors.red,
+  //             ),
+  //             const Gap(12),
+  //             _buildAlertItem(
+  //               'Expiring Soon',
+  //               '2 products expire in 7 days',
+  //               Colors.blue,
+  //             ),
+  //           ],
+  //         ),
+  //       )
+  //       .animate()
+  //       .fadeIn(duration: 500.ms, delay: 300.ms)
+  //       .slideX(begin: 0.3, end: 0);
+  // }
 
-  Widget _buildAlertItem(String title, String subtitle, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.2)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
-          const Gap(12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text(title), Text(subtitle)],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildAlertItem(String title, String subtitle, Color color) {
+  //   return Container(
+  //     padding: const EdgeInsets.all(12),
+  //     decoration: BoxDecoration(
+  //       color: color.withOpacity(0.1),
+  //       borderRadius: BorderRadius.circular(8),
+  //       border: Border.all(color: color.withOpacity(0.2)),
+  //     ),
+  //     child: Row(
+  //       children: [
+  //         Container(
+  //           width: 8,
+  //           height: 8,
+  //           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+  //         ),
+  //         const Gap(12),
+  //         Expanded(
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [Text(title), Text(subtitle)],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

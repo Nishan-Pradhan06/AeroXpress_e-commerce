@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deal_sell/core/theme/app_theme.dart';
 import 'package:deal_sell/core/utils/role_utils.dart';
 import 'package:deal_sell/core/widget/cached_network_image_with_fallback.dart';

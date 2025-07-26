@@ -13,6 +13,7 @@ import 'package:deal_sell/features/shared/products/blocs/all_products/products_b
 import 'package:deal_sell/features/shared/orders/bloc/vendor_orders/vendor_orders_bloc.dart';
 import 'package:deal_sell/features/shared/payments/bloc/khalti_payment_initiate/khalti_payment_initiate_bloc.dart';
 import 'package:deal_sell/features/shared/products/blocs/get_vendors_products/get_vendors_products_bloc.dart';
+import 'package:deal_sell/features/vendor/dashboard/cubit/vendor_stats_cubit.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -124,6 +125,7 @@ class MyApp extends StatelessWidget {
         //###---------------CUBIT-------------###
         BlocProvider(create: (context) => sl<OnBoardingCubit>()),
         BlocProvider(create: (context) => sl<FabCubit>()),
+        BlocProvider(create: (context) => sl<VendorStatsCubit>()),
         BlocProvider(create: (context) => sl<LogoutCubit>()),
         BlocProvider(create: (context) => sl<VerifyKhaltiBloc>()),
       ],
