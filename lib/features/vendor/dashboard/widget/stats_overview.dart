@@ -25,9 +25,7 @@ class _EvStatsOverviewState extends State<EvStatsOverview> {
     return BlocBuilder<VendorStatsCubit, VendorStatsState>(
       builder: (context, state) {
         if (state.status == 'loading') {
-          return const Center(
-            child: Column(children: [CircularProgressIndicator()]),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (state.status == 'failure') {
