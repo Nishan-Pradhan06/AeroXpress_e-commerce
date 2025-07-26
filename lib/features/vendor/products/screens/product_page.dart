@@ -61,69 +61,76 @@ class _ProductPageState extends State<ProductPage> {
             },
 
             loaded: (products) {
-              return ListView(
-                padding: const EdgeInsets.all(10),
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildStatCard(
-                          'Total Products',
-                          '${products.length}',
-                          PhosphorIconsRegular.package,
-                          Colors.blue[500]!,
-                          context,
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<GetVendorsProductsBloc>().add(
+                    GetVendorsProductsEvent.getVendorProducts(),
+                  );
+                },
+                child: ListView(
+                  padding: const EdgeInsets.all(10),
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildStatCard(
+                            'Total Products',
+                            '${products.length}',
+                            PhosphorIconsRegular.package,
+                            Colors.blue[500]!,
+                            context,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: _buildStatCard(
-                          'Low Stock',
-                          '${products.where((p) => p.stockQuantity < 10 && p.stockQuantity > 0).length}',
-                          PhosphorIconsRegular.warning,
-                          Colors.orange,
-                          context,
+                        Expanded(
+                          child: _buildStatCard(
+                            'Low Stock',
+                            '${products.where((p) => p.stockQuantity < 10 && p.stockQuantity > 0).length}',
+                            PhosphorIconsRegular.warning,
+                            Colors.orange,
+                            context,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: _buildStatCard(
-                          'Out of Stock',
-                          '${products.where((p) => p.stockQuantity == 0).length}',
-                          PhosphorIconsRegular.x,
-                          AppColors.darkTheme.statusError,
-                          context,
+                        Expanded(
+                          child: _buildStatCard(
+                            'Out of Stock',
+                            '${products.where((p) => p.stockQuantity == 0).length}',
+                            PhosphorIconsRegular.x,
+                            AppColors.darkTheme.statusError,
+                            context,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  ...products.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final product = entry.value;
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    ...products.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final product = entry.value;
 
-                    final productMap = {
-                      'id': product.slug,
-                      'name': product.name,
-                      'category': product.categoryName,
-                      'price': double.tryParse(product.price) ?? 0,
-                      'stock': product.stockQuantity,
-                      'status': product.status,
-                      'image':
-                          (product.images?.isNotEmpty ?? false)
-                              ? product.images!.first.url
-                              : null,
-                      'sales': 0,
-                    };
+                      final productMap = {
+                        'id': product.slug,
+                        'name': product.name,
+                        'category': product.categoryName,
+                        'price': double.tryParse(product.price) ?? 0,
+                        'stock': product.stockQuantity,
+                        'status': product.status,
+                        'image':
+                            (product.images?.isNotEmpty ?? false)
+                                ? product.images!.first.url
+                                : null,
+                        'sales': 0,
+                      };
 
-                    return EvProductCard(
-                          product: productMap,
-                          onEdit: () {},
-                          onDelete: () {},
-                        )
-                        .animate()
-                        .fadeIn(duration: 500.ms, delay: (index * 100).ms)
-                        .slideX(begin: 0.3, end: 0);
-                  }),
-                ],
+                      return EvProductCard(
+                            product: productMap,
+                            onEdit: () {},
+                            onDelete: () {},
+                          )
+                          .animate()
+                          .fadeIn(duration: 500.ms, delay: (index * 100).ms)
+                          .slideX(begin: 0.3, end: 0);
+                    }),
+                  ],
+                ),
               );
             },
           );
