@@ -197,11 +197,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     // Multiple images
     return Column(
       children: [
-      
-        CachedNetworkImageWithFallback(imageUrl: imagesToShow.first.url!.replaceFirst(
-              'localhost',
-              LOCAL_IP,
-            ),),
+        CachedNetworkImageWithFallback(
+          imageUrl: imagesToShow.first.url!.replaceFirst('localhost', LOCAL_IP),
+        ),
 
         // Thumbnails
         Container(
@@ -320,30 +318,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           const SizedBox(height: 16),
 
           // Stock Status
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color:
-                  (product.stockQuantity ?? 0) > 0
-                      ? Colors.green.withOpacity(0.1)
-                      : Colors.red.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              (product.stockQuantity ?? 0) > 0
-                  ? 'In Stock (${product.stockQuantity} available)'
-                  : 'Out of Stock',
-              style: TextStyle(
-                color:
-                    (product.stockQuantity ?? 0) > 0
-                        ? Colors.green[700]
-                        : Colors.red[700],
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-              ),
-            ),
-          ),
-
+          // Container(
+          //   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          //   decoration: BoxDecoration(
+          //     color:
+          //         (product.stockQuantity ?? 0) > 0
+          //             ? Colors.green.withOpacity(0.1)
+          //             : Colors.red.withOpacity(0.1),
+          //     borderRadius: BorderRadius.circular(20),
+          //   ),
+          //   child: Text(
+          //     (product.stockQuantity ?? 0) > 0
+          //         ? 'In Stock (${product.stockQuantity} available)'
+          //         : 'Out of Stock',
+          //     style: TextStyle(
+          //       color:
+          //           (product.stockQuantity ?? 0) > 0
+          //               ? Colors.green[700]
+          //               : Colors.red[700],
+          //       fontWeight: FontWeight.w600,
+          //       fontSize: 12,
+          //     ),
+          //   ),
+          // ),
           const SizedBox(height: 20),
 
           // Description

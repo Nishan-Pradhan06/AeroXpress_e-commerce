@@ -294,7 +294,10 @@ class _OrdersScreenState extends State<OrdersScreen>
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      _buildPaymentStatusChip(order.paymentStatus),
+                      if (order.paymentMethod == 'KHALTI')
+                        _buildPaymentStatusChip('COMPLETED'),
+                      if (order.paymentMethod == 'COD')
+                        _buildPaymentStatusChip(order.paymentStatus),
                     ],
                   ),
                 ],
