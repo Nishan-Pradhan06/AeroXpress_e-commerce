@@ -29,6 +29,7 @@ class DioClient {
         responseBody: true,
         responseHeader: false,
         compact: false,
+        maxWidth: 120,
       ),
     );
 

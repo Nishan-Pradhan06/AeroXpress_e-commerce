@@ -120,9 +120,7 @@ class OrderRepositoryImpl implements OrderRepository {
   }) async {
     final response = await _apiService.post<Map>(
       'payments/khalti/verify',
-      data: {
-        {"pidx": pidx, "orderId": orderId},
-      },
+      data: {"pidx": pidx, "orderId": orderId},
     );
 
     return response.fold((f) => Left(f), (data) {
